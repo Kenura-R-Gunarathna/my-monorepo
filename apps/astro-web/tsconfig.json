@@ -4,11 +4,6 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@krag/react-ui": ["../../packages/react-ui/src/index.ts"],
-      "@krag/react-ui/*": ["../../packages/react-ui/src/*"]
-    }
+    "jsxImportSource": "react"
   }
 }

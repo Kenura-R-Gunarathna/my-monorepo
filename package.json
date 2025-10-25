@@ -7,11 +7,11 @@
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "dev:ui": "pnpm --filter @krag/react-ui dev",
     "dev:astro": "pnpm --filter astro-web dev",
-    "dev:electron": "pnpm --filter electron-app dev",
+    "dev:electron": "pnpm --filter electron-desktop dev",
     "build": "pnpm --recursive build",
     "build:ui": "pnpm --filter @krag/react-ui build",
     "build:astro": "pnpm --filter astro-web build",
-    "build:electron": "pnpm --filter electron-app build"
+    "build:electron": "pnpm --filter electron-desktop build"
   },
   "keywords": [],
   "author": "Kenura R. Gunarathna",

@@ -1,7 +1,7 @@
 # React UI Component Loading Fix
 
 ## Summary
-Fixed component loading issues between `packages/react-ui` and `apps/astro-web` in this monorepo setup. The main issues were improper package exports, missing entry point, and incorrect build configuration.
+Fixed component loading issues between `packages/react-ui` and consuming apps (`apps/astro-web` and `apps/electron-desktop`) in this monorepo setup. The main issues were improper package exports, missing entry point, and incorrect build configuration.
 
 ---
 
@@ -216,3 +216,72 @@ packages/react-ui/
 ```
 
 **Key Point:** Everything is exported through `src/index.ts` and built into `dist/` as a library.
+
+---
+
+## Electron Desktop Integration
+
+### Setup Steps
+
+1. **Added Tailwind CSS** to `apps/electron-desktop/package.json`:
+   ```json
+   {
+     "devDependencies": {
+       "@tailwindcss/vite": "^4.1.16",
+       "tailwindcss": "^4.1.16"
+     }
+   }
+   ```
+
+2. **Configured Vite** in `apps/electron-desktop/electron.vite.config.ts`:
+   ```typescript
+   import tailwindcss from '@tailwindcss/vite'
+   
+   export default defineConfig({
+     renderer: {
+       plugins: [react(), tailwindcss()],
+       css: {
+         postcss: {
+           plugins: []
+         }
+       }
+     }
+   })
+   ```
+
+3. **Imported Styles** in `apps/electron-desktop/src/renderer/src/assets/main.css`:
+   ```css
+   @import 'tailwindcss';
+   @import '@krag/react-ui/styles';
+   @import './base.css';
+   ```
+
+4. **Used Components** in `apps/electron-desktop/src/renderer/src/App.tsx`:
+   ```typescript
+   import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '@krag/react-ui'
+   
+   // Then use the components
+   <Card>
+     <CardHeader>
+       <CardTitle>React UI Components</CardTitle>
+       <CardDescription>Using components from @krag/react-ui</CardDescription>
+     </CardHeader>
+     <CardContent>
+       <Button onClick={() => console.log('Button clicked!')}>
+         Click me!
+       </Button>
+     </CardContent>
+   </Card>
+   ```
+
+### Running Electron App
+
+```bash
+# Build react-ui first
+pnpm build:ui
+
+# Run electron app
+pnpm dev:electron
+```
+
+The same package can now be used across Astro web apps, Electron desktop apps, and any other React-based application in the monorepo!
