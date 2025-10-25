@@ -2,15 +2,19 @@
   "name": "krag",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --recursive dev",
+    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "dev:ui": "pnpm --filter @krag/react-ui dev",
+    "dev:astro": "pnpm --filter astro-web dev",
+    "dev:electron": "pnpm --filter electron-app dev",
     "build": "pnpm --recursive build",
-    "test": "pnpm --recursive test",
-    "lint": "pnpm --recursive lint"
+    "build:ui": "pnpm --filter @krag/react-ui build",
+    "build:astro": "pnpm --filter astro-web build",
+    "build:electron": "pnpm --filter electron-app build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kenura R. Gunarathna",
   "license": "ISC",
   "packageManager": "pnpm@10.19.0",
   "devDependencies": {

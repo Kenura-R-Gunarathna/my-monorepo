@@ -1,17 +1,25 @@
 {
   "name": "astro-web",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.19.0",
   "dependencies": {
+    "@astrojs/react": "^4.4.0",
+    "@astrojs/tailwind": "^6.0.2",
     "@krag/react-ui": "workspace:*",
-    "@krag/zod-schema": "workspace:*"
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.15.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2"
   }
 }

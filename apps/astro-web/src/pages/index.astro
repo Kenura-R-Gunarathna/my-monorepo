@@ -1,0 +1,35 @@
+---
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '@krag/react-ui';
+import '@krag/react-ui/styles';
+
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro + React UI</title>
+  </head>
+  <body>
+    <main class="container mx-auto p-8">
+      <h1 class="text-4xl font-bold mb-8">Astro + React UI Components</h1>
+      
+      <div class="space-y-4">
+        <Button client:load>Click me!</Button>
+        
+        <Card client:load>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>This is a shadcn/ui card component</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Content goes here</p>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
+  </body>
+</html>
