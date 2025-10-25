@@ -2,6 +2,7 @@
 import { Hono } from 'hono'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { appRouter } from '@krag/trpc-api'
+import { config } from '@krag/config-astro'
 
 const app = new Hono().basePath('/api')
 

@@ -23,6 +23,9 @@ importers:
       '@astrojs/tailwind':
         specifier: ^6.0.2
         version: 6.0.2(astro@5.15.1(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1))(tailwindcss@4.1.16)
+      '@krag/config-astro':
+        specifier: workspace:*
+        version: link:../../packages/config-astro
       '@krag/react-ui':
         specifier: workspace:*
         version: link:../../packages/react-ui
@@ -75,6 +78,9 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^4.0.0
         version: 4.0.0(electron@38.4.0)
+      '@krag/config-electron':
+        specifier: workspace:*
+        version: link:../../packages/config-electron
       '@krag/react-ui':
         specifier: workspace:*
         version: link:../../packages/react-ui
@@ -145,6 +151,24 @@ importers:
       vite:
         specifier: ^7.1.6
         version: 7.1.12(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1)
+
+  packages/config-astro:
+    dependencies:
+      dotenv:
+        specifier: ^16.4.0
+        version: 16.6.1
+      zod:
+        specifier: ^3.22.0
+        version: 3.25.76
+
+  packages/config-electron:
+    dependencies:
+      dotenv:
+        specifier: ^16.4.0
+        version: 16.6.1
+      zod:
+        specifier: ^3.22.0
+        version: 3.25.76
 
   packages/react-ui:
     dependencies:

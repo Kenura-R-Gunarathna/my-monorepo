@@ -1,2 +1,10 @@
 node_modules
 .env
+.env.*.local
+.env.astro.*
+.env.electron.*
+
+# Allow example files
+!.env.astro.example
+!.env.electron.example
+!.env.example

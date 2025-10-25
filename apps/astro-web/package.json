@@ -12,6 +12,7 @@
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.4.0",
     "@astrojs/tailwind": "^6.0.2",
+    "@krag/config-astro": "workspace:*",
     "@krag/react-ui": "workspace:*",
     "@krag/trpc-api": "workspace:*",
     "@krag/zod-schema": "workspace:*",
