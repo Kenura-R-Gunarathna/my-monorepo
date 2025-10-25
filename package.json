@@ -11,7 +11,8 @@
     "build": "pnpm --recursive build",
     "build:ui": "pnpm --filter @krag/react-ui build",
     "build:astro": "pnpm --filter astro-web build",
-    "build:electron": "pnpm --filter electron-desktop build"
+    "build:electron": "pnpm --filter electron-desktop build",
+    "build:api": "pnpm --filter @krag/trpc-api build"
   },
   "keywords": [],
   "author": "Kenura R. Gunarathna",

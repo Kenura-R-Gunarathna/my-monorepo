@@ -1,0 +1,14 @@
+{
+    "name": "@krag/trpc-api",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+      ".": "./src/router/index.ts"
+    },
+    "dependencies": {
+      "@trpc/server": "^11.0.0",
+      "@krag/zod-schema": "workspace:*",
+      "zod": "^3.22.0"
+    }
+  }
