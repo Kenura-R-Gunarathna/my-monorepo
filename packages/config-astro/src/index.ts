@@ -2,7 +2,7 @@ import { loadEnv } from './loader'
 import { astroConfigSchema, type AstroConfig } from './schema'
 
 // Load environment variables
-loadEnv()
+loadEnv('../..')
 
 // Validate and export config
 let config: AstroConfig
