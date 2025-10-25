@@ -1,0 +1,16 @@
+{
+  "name": "krag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --parallel --recursive dev",
+    "build": "pnpm --recursive build",
+    "test": "pnpm --recursive test",
+    "lint": "pnpm --recursive lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.19.0"
+}

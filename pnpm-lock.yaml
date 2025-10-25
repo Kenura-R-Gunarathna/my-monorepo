@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  apps/astro-web:
+    dependencies:
+      '@krag/react-ui':
+        specifier: workspace:*
+        version: link:../../packages/react-ui
+      '@krag/zod-schema':
+        specifier: workspace:*
+        version: link:../../packages/zod-schema
+
+  packages/react-ui: {}
+
+  packages/zod-schema: {}
