@@ -38,7 +38,6 @@ export const userRouter = router({
     }))
     .mutation(async ({ input, ctx }) => {
       // Additional conditional check possible here
-      // @ts-expect-error - ctx type will be extended by app
       const canUpdate = ctx.ability.can('update', 'User');
       
       if (!canUpdate) {
@@ -65,7 +64,6 @@ export const userRouter = router({
   // Get current user's permissions
   myPermissions: protectedProcedure
     .query(async ({ ctx }) => {
-      // @ts-expect-error - ctx type will be extended by app
       return ctx.permissions;
     }),
 
