@@ -18,14 +18,14 @@ import "../styles/global.css";
       <h1 class="text-4xl font-bold mb-8">Astro + React UI Components</h1>
       
       <div class="space-y-4">
-        <Button client:load>Click me!</Button>
+        <Button client:load variant="default" size="md" className="">Click me!</Button>
         
-        <Card client:load>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>This is a shadcn/ui card component</CardDescription>
+        <Card client:load className="">
+          <CardHeader className="">
+            <CardTitle className="">Card Title</CardTitle>
+            <CardDescription className="">This is a shadcn/ui card component</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="">
             <p>Content goes here</p>
           </CardContent>
         </Card>
