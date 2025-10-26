@@ -2,7 +2,7 @@ import { loadEnv } from './loader'
 import { electronConfigSchema, type ElectronConfig } from './schema'
 
 // Load environment variables
-loadEnv()
+loadEnv('../..')
 
 // Validate and export config
 let config: ElectronConfig

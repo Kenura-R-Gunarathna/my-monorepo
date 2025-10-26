@@ -20,5 +20,11 @@
   "packageManager": "pnpm@10.19.0",
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
   }
 }

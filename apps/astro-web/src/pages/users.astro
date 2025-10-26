@@ -1,0 +1,44 @@
+---
+// Example: Using database in Astro API route
+import { getWebDb, users } from '@krag/database-web';
+import { eq } from 'drizzle-orm';
+import { config } from '@krag/config-astro';
+
+// Option 1: Use environment variable
+const db = getWebDb(config.DATABASE_URL);
+
+// Option 2: Pass DATABASE_URL directly
+// const db = getWebDb(import.meta.env.DATABASE_URL);
+
+// Fetch all users
+const allUsers = await db.select().from(users);
+
+// Fetch single user
+const user = await db.select().from(users).where(eq(users.id, 1));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Users</title>
+  </head>
+  <body>
+    <main class="container mx-auto p-8">
+      <h1 class="text-4xl font-bold mb-8">Users from Database</h1>
+      
+      <div class="space-y-4">
+        {allUsers.map((user) => (
+          <div class="p-4 border rounded">
+            <h2 class="text-xl font-bold">{user.firstName} {user.lastName}</h2>
+            <p class="text-gray-600">{user.email}</p>
+            <p class="text-sm text-gray-400">
+              Status: {user.isActive ? 'Active' : 'Inactive'}
+            </p>
+          </div>
+        ))}
+      </div>
+    </main>
+  </body>
+</html>

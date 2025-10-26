@@ -5,7 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [
+      externalizeDepsPlugin({
+        exclude: ['@krag/config-electron', '@krag/database-desktop', '@krag/database-core']
+      })
+    ]
   },
   preload: {
     plugins: [externalizeDepsPlugin()]

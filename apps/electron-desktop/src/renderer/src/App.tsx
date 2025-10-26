@@ -16,7 +16,7 @@ function App(): React.JSX.Element {
       <p className="tip">
         Please try pressing <code>F12</code> to open the devTool
       </p>
-      
+
       {/* React UI Components Demo */}
       <div className="mt-8 space-y-4 max-w-md w-full px-4">
         <Card>
@@ -26,9 +26,7 @@ function App(): React.JSX.Element {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <Button onClick={() => console.log('Button clicked!')}>
-                Click me!
-              </Button>
+              <Button onClick={() => console.log('Button clicked!')}>Click me!</Button>
               <Button variant="outline" onClick={ipcHandle}>
                 Send IPC Message
               </Button>
