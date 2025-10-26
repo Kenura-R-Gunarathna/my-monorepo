@@ -1,13 +1,13 @@
-import { mysqlTable, int, timestamp, boolean, primaryKey, index, json, text } from 'drizzle-orm/mysql-core';
+import { mysqlTable, bigint, timestamp, boolean, primaryKey, index, json, text } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { users } from './users';
 import { permissions } from './permissions';
 
 // Individual permission overrides (your second approach - exceptional cases)
 export const userPermissions = mysqlTable('user_permissions', {
-  userId: int('user_id').notNull()
+  userId: bigint('user_id', { mode: 'number', unsigned: true }).notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  permissionId: int('permission_id').notNull()
+  permissionId: bigint('permission_id', { mode: 'number', unsigned: true }).notNull()
     .references(() => permissions.id, { onDelete: 'cascade' }),
   
   // true = GRANT this permission, false = REVOKE this permission
@@ -20,7 +20,7 @@ export const userPermissions = mysqlTable('user_permissions', {
   expiresAt: timestamp('expires_at'),
   
   // Audit trail
-  grantedBy: int('granted_by').references(() => users.id),
+  grantedBy: bigint('granted_by', { mode: 'number', unsigned: true }).references(() => users.id),
   grantedAt: timestamp('granted_at').defaultNow().notNull(),
   notes: text('notes'), // Why was this granted?
 }, (table) => [

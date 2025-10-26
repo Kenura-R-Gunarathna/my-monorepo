@@ -1,4 +1,4 @@
-import { mysqlTable, serial, varchar, int, boolean, timestamp, index } from 'drizzle-orm/mysql-core';
+import { mysqlTable, serial, varchar, bigint, boolean, timestamp, index } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { roles } from './roles';
 import { userPermissions } from './user-permissions';
@@ -8,7 +8,7 @@ export const users = mysqlTable('users', {
   email: varchar('email', { length: 255 }).notNull().unique(),
   firstName: varchar('first_name', { length: 255 }).notNull(),
   lastName: varchar('last_name', { length: 255 }).notNull(),
-  roleId: int('role_id').notNull()
+  roleId: bigint('role_id', { mode: 'number', unsigned: true }).notNull()
     .references(() => roles.id, { onDelete: 'restrict' }),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

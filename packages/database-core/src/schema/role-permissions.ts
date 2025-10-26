@@ -1,4 +1,4 @@
-import { mysqlTable, int, timestamp, primaryKey, index, text, json } from 'drizzle-orm/mysql-core';
+import { mysqlTable, bigint, timestamp, primaryKey, index, text, json } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { roles } from './roles';
 import { permissions } from './permissions';
@@ -6,16 +6,16 @@ import { users } from './users';
 
 // Junction table - connects roles to permissions
 export const rolePermissions = mysqlTable('role_permissions', {
-  roleId: int('role_id').notNull()
+  roleId: bigint('role_id', { mode: 'number', unsigned: true }).notNull()
     .references(() => roles.id, { onDelete: 'cascade' }),
-  permissionId: int('permission_id').notNull()
+  permissionId: bigint('permission_id', { mode: 'number', unsigned: true }).notNull()
     .references(() => permissions.id, { onDelete: 'cascade' }),
   
   // Optional: Conditions for conditional permissions
   conditions: json('conditions').$type<Record<string, any>>(), // { authorId: '${userId}' }
   
   // Audit fields
-  grantedBy: int('granted_by').references(() => users.id), // Who granted this?
+  grantedBy: bigint('granted_by', { mode: 'number', unsigned: true }).references(() => users.id), // Who granted this?
   grantedAt: timestamp('granted_at').defaultNow().notNull(),
   notes: text('notes'), // Why was this granted?
 }, (table) => [
