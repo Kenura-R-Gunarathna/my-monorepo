@@ -1,15 +1,23 @@
-import { mysqlTable, serial, varchar, text, timestamp, boolean, json, int, index } from 'drizzle-orm/mysql-core'
+import { mysqlTable, serial, varchar, text, boolean, timestamp } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
+import { rolePermissions } from './role-permissions';
+import { users } from './users';
 
-// Roles Table
+// Roles table - just role metadata, NO permissions stored here
 export const roles = mysqlTable('roles', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull().unique(),
   description: text('description'),
-  permissions: json('permissions').notNull(), // Array of permission strings
-  isActive: boolean('is_active').default(true),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow().onUpdateNow(),
-})
+  isActive: boolean('is_active').default(true).notNull(),
+  isSystemRole: boolean('is_system_role').default(false).notNull(), // Can't be deleted
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
+});
 
-export type Role = typeof roles.$inferSelect
-export type NewRole = typeof roles.$inferInsert
+export const rolesRelations = relations(roles, ({ many }) => ({
+  rolePermissions: many(rolePermissions),
+  users: many(users),
+}));
+
+export type Role = typeof roles.$inferSelect;
+export type NewRole = typeof roles.$inferInsert;
