@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import * as coreSchema from '@krag/database-core/schema';
-import * as webSchema from './schema';
+import * as webSchema from '@/packages/database-web/schema';
 
 const schema = { ...coreSchema, ...webSchema };
 

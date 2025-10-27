@@ -1,6 +1,6 @@
 // packages/trpc-api/src/router/users.ts
-import { router, publicProcedure } from '../trpc'
-import { protectedProcedure, requirePermission, requireAbility } from '../middleware/permissions'
+import { router, publicProcedure } from '@/packages/trpc-api/trpc'
+import { protectedProcedure, requirePermission, requireAbility } from '@/packages/trpc-api/middleware/permissions'
 import { userSchema, createUserInput } from '@krag/zod-schema'
 import { z } from 'zod'
 

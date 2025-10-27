@@ -1,5 +1,5 @@
-import { loadEnv } from './loader'
-import { astroConfigSchema, type AstroConfig } from './schema'
+import { loadEnv } from '@/packages/config-astro/loader'
+import { astroConfigSchema, type AstroConfig } from '@/packages/config-astro/schema'
 
 // Load environment variables
 loadEnv('../..')

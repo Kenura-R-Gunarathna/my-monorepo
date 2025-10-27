@@ -6,6 +6,7 @@
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./auth-schema": "./src/auth-schema.ts",
     "./auth": "./src/auth.ts",
     "./client": "./src/client.ts",
     "./types": "./src/types.ts",

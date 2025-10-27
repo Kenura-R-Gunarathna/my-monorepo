@@ -1,7 +1,7 @@
 import { mysqlTable, serial, varchar, bigint, boolean, timestamp, index } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
-import { roles } from './roles';
-import { userPermissions } from './user-permissions';
+import { roles } from '@/packages/database-core/schema/roles';
+import { userPermissions } from '@/packages/database-core/schema/user-permissions';
 
 export const users = mysqlTable('users', {
   id: serial('id').primaryKey(),

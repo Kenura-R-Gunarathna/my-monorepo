@@ -1,5 +1,5 @@
-import { getDb } from './connection';
-import { permissions, roles, rolePermissions, users } from './schema';
+import { getDb } from '@/packages/database-core/connection';
+import { permissions, roles, rolePermissions, users } from '@/packages/database-core/schema';
 
 async function seed() {
   const db = await getDb();

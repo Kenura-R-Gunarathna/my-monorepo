@@ -1,5 +1,5 @@
-import { loadEnv } from './loader'
-import { electronConfigSchema, type ElectronConfig } from './schema'
+import { loadEnv } from '@/packages/config-electron/loader'
+import { electronConfigSchema, type ElectronConfig } from '@/packages/config-electron/schema'
 
 // Load environment variables
 loadEnv('../..')

@@ -1,6 +1,6 @@
 // packages/trpc-api/src/router/index.ts
-import { router, publicProcedure } from '../trpc'
-import { userRouter } from './users'
+import { router, publicProcedure } from '@/packages/trpc-api/trpc'
+import { userRouter } from '@/packages/trpc-api/router/users'
 // import { postRouter } from './posts'
 
 export const appRouter = router({

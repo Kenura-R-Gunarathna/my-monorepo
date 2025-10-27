@@ -1,8 +1,8 @@
 // packages/trpc-api/src/router/admin/permissions.ts
 import { z } from 'zod';
-import { protectedProcedure, requirePermission } from '../../middleware/permissions';
-import { router } from '../../trpc';
-import { getUserPermissions } from '../../utils/permissions/resolver';
+import { protectedProcedure, requirePermission } from '@/packages/trpc-api/middleware/permissions';
+import { router } from '@/packages/trpc-api/trpc';
+import { getUserPermissions } from '@/packages/trpc-api/utils/permissions/resolver';
 
 export const adminPermissionsRouter = router({
   // Grant individual permission to user

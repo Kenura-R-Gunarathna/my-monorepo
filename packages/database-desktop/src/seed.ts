@@ -1,5 +1,5 @@
-import { getDesktopDb } from './connection';
-import { users, localCache } from './index';
+import { getDesktopDb } from '@/packages/database-desktop/connection';
+import { user, localCache } from '@/packages/database-desktop/index';
 
 async function seed() {
   console.log('🌱 Seeding database-desktop...');

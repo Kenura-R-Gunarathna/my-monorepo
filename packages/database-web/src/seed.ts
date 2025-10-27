@@ -1,5 +1,5 @@
-import { getWebDb } from './connection';
-import { users } from '@krag/database-core';
+import { getWebDb } from '@/packages/database-web/connection';
+import { user } from '@krag/better-auth';
 import { eq } from 'drizzle-orm';
 
 async function seed() {
@@ -8,7 +8,7 @@ async function seed() {
   const db = getWebDb();
 
   // Example: Insert sample users
-  const newUser = await db.insert(users).values([
+  const newUser = await db.insert(user).values([
     {
       email: 'john@example.com',
       firstName: 'John',

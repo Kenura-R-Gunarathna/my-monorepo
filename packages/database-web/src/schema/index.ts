@@ -2,8 +2,8 @@
 export * from '@krag/better-auth/schema'
 
 // Your custom schemas
-export * from './analytics'
-export * from './roles'
-export * from './permissions'
-export * from './role-permissions'
-export * from './user-permissions'
+export * from '@/packages/database-web/schema/analytics'
+export * from '@/packages/database-web/schema/roles'
+export * from '@/packages/database-web/schema/permissions'
+export * from '@/packages/database-web/schema/role-permissions'
+export * from '@/packages/database-web/schema/user-permissions'

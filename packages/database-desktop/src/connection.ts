@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import type { MySql2Database } from 'drizzle-orm/mysql2';
 import * as coreSchema from '@krag/database-core/schema';
-import * as desktopSchema from './schema';
+import * as desktopSchema from '@/packages/database-desktop/schema';
 
 const schema = { ...coreSchema, ...desktopSchema };
 

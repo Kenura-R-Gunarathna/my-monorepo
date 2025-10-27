@@ -1,6 +1,6 @@
 import { mysqlTable, serial, varchar, text, boolean, timestamp } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
-import { rolePermissions } from './role-permissions'
+import { rolePermissions } from '@/packages/database-web/schema/role-permissions'
 import { user } from '@krag/better-auth/schema'
 
 // Roles table - defines roles in the system

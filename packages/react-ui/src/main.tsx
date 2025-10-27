@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './styles/globals.css'
-import App from './App.tsx'
-import './styles/globals.css';
+import '@/packages/react-ui/styles/globals.css'
+import App from '@/packages/react-ui/App.tsx'
+import '@/packages/react-ui/styles/globals.css';
 
-export { Card } from './components/ui/card';
-export { Button } from './components/ui/button';
+export { Card } from '@/packages/react-ui/components/ui/card';
+export { Button } from '@/packages/react-ui/components/ui/button';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

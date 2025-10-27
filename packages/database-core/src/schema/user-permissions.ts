@@ -1,7 +1,7 @@
 import { mysqlTable, bigint, timestamp, boolean, primaryKey, index, json, text } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
-import { users } from './users';
-import { permissions } from './permissions';
+import { users } from '@/packages/database-core/schema/users';
+import { permissions } from '@/packages/database-core/schema/permissions';
 
 // Individual permission overrides (your second approach - exceptional cases)
 export const userPermissions = mysqlTable('user_permissions', {

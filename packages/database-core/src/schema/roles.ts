@@ -1,7 +1,7 @@
 import { mysqlTable, serial, varchar, text, boolean, timestamp } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
-import { rolePermissions } from './role-permissions';
-import { users } from './users';
+import { rolePermissions } from '@/packages/database-core/schema/role-permissions';
+import { users } from '@/packages/database-core/schema/users';
 
 // Roles table - just role metadata, NO permissions stored here
 export const roles = mysqlTable('roles', {

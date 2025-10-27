@@ -13,7 +13,11 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationMap": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/packages/database-desktop/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*", "drizzle.config.ts"],
   "exclude": ["node_modules", "dist", "drizzle"]
