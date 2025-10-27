@@ -5,7 +5,9 @@
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./src/schema": "./src/schema/index.ts",
+    "./src/schema/*": "./src/schema/*.ts"
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "@krag/database-core": "workspace:*",
+    "@krag/better-auth": "workspace:*",
     "drizzle-orm": "^0.44.7",
     "mysql2": "^3.15.3"
   },

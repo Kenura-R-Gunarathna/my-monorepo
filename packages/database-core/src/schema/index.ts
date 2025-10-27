@@ -1,6 +1,2 @@
-export * from './users';
-export * from './roles';
-export * from './permissions';
-export * from './role-permissions';
-export * from './user-permissions';
-export * from './sync_queue';
+// Only common/shared schemas that both web and desktop need
+export * from './sync_queue'
