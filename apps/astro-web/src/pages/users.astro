@@ -1,6 +1,6 @@
 ---
 // Example: Using database in Astro API route
-import { getWebDb, users } from '@krag/database-web';
+import { getWebDb, user } from '@krag/database-web';
 import { eq } from 'drizzle-orm';
 import { config } from '@krag/config-astro';
 
@@ -11,10 +11,10 @@ const db = getWebDb(config.DATABASE_URL);
 // const db = getWebDb(import.meta.env.DATABASE_URL);
 
 // Fetch all users
-const allUsers = await db.select().from(users);
+const allUsers = await db.select().from(user);
 
-// Fetch single user
-const user = await db.select().from(users).where(eq(users.id, 1));
+// Fetch single user (note: id is a string type)
+const selectedUser = await db.select().from(user).where(eq(user.id, "1"));
 ---
 
 <html lang="en">
@@ -29,12 +29,12 @@ const user = await db.select().from(users).where(eq(users.id, 1));
       <h1 class="text-4xl font-bold mb-8">Users from Database</h1>
       
       <div class="space-y-4">
-        {allUsers.map((user) => (
+        {allUsers.map((selectedUser) => (
           <div class="p-4 border rounded">
-            <h2 class="text-xl font-bold">{user.firstName} {user.lastName}</h2>
-            <p class="text-gray-600">{user.email}</p>
+            <h2 class="text-xl font-bold">{selectedUser.firstName} {selectedUser.lastName}</h2>
+            <p class="text-gray-600">{selectedUser.email}</p>
             <p class="text-sm text-gray-400">
-              Status: {user.isActive ? 'Active' : 'Inactive'}
+              Status: {selectedUser.isActive ? 'Active' : 'Inactive'}
             </p>
           </div>
         ))}
