@@ -1,0 +1,38 @@
+---
+import { SignupForm, QueryProvider } from "@krag/react-ui"
+import '@krag/react-ui/styles';
+
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+</head>
+<body>
+  <div class="flex min-h-screen items-center justify-center p-4">
+    <QueryProvider client:load>
+      <SignupForm
+        client:load
+        onSubmit={async (data) => {
+          const response = await fetch("/api/auth/sign-up", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          })
+          
+          if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.message || "Failed to create account")
+          }
+          
+          window.location.href = "/dashboard"
+        }}
+      />
+    </QueryProvider>
+  </div>
+</body>
+</html>

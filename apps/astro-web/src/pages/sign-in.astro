@@ -1,0 +1,41 @@
+---
+import { LoginForm, QueryProvider } from "@krag/react-ui"
+import '@krag/react-ui/styles';
+
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+</head>
+<body>
+  <div class="flex min-h-screen items-center justify-center p-4">
+    <QueryProvider client:load>
+      <LoginForm
+        client:load
+        onSubmit={async (data) => {
+          const response = await fetch("/api/auth/sign-in", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          })
+          
+          if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.message || "Failed to sign in")
+          }
+          
+          window.location.href = "/dashboard"
+        }}
+        onSocialLogin={(provider) => {
+          window.location.href = `/api/auth/${provider}`
+        }}
+      />
+    </QueryProvider>
+  </div>
+</body>
+</html>

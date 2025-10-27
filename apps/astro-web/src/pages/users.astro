@@ -3,6 +3,9 @@
 import { getWebDb, user } from '@krag/database-web';
 import { eq } from 'drizzle-orm';
 import { config } from '@krag/config-astro';
+import '@krag/react-ui/styles';
+
+import "../styles/global.css";
 
 // Option 1: Use environment variable
 const db = getWebDb(config.DATABASE_URL);
