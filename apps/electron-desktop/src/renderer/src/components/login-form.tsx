@@ -21,7 +21,7 @@ import {
 import { Input } from "@/packages/react-ui/components/ui/input"
 import { useNavigate } from "@tanstack/react-router"
 
-export function LoginForm({
+export function SigninForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {

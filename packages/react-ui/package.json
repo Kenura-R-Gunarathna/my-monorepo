@@ -11,6 +11,7 @@
   ],
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
@@ -18,7 +19,7 @@
     "./styles": "./dist/index.css"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch --mode development",
     "build": "vite build && tsc --project tsconfig.build.json",
     "lint": "eslint .",
     "preview": "vite preview"

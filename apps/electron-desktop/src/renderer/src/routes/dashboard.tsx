@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Dashboard } from '@/packages/react-ui'
+import { Dashboard } from '@krag/react-ui'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,

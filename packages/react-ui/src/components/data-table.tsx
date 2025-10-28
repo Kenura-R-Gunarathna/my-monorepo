@@ -51,16 +51,16 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { useIsMobile } from "@/packages/react-ui/hooks/use-mobile"
-import { Badge } from "@/packages/react-ui/components/ui/badge"
-import { Button } from "@/packages/react-ui/components/ui/button"
+import { useIsMobile } from "../hooks/use-mobile"
+import { Badge } from "./ui/badge"
+import { Button } from "./ui/button"
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/packages/react-ui/components/ui/chart"
-import { Checkbox } from "@/packages/react-ui/components/ui/checkbox"
+} from "./ui/chart"
+import { Checkbox } from "./ui/checkbox"
 import {
   Drawer,
   DrawerClose,
@@ -70,7 +70,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/packages/react-ui/components/ui/drawer"
+} from "./ui/drawer"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -78,17 +78,17 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/packages/react-ui/components/ui/dropdown-menu"
-import { Input } from "@/packages/react-ui/components/ui/input"
-import { Label } from "@/packages/react-ui/components/ui/label"
+} from "./ui/dropdown-menu"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/packages/react-ui/components/ui/select"
-import { Separator } from "@/packages/react-ui/components/ui/separator"
+} from "./ui/select"
+import { Separator } from "./ui/separator"
 import {
   Table,
   TableBody,
@@ -96,13 +96,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/packages/react-ui/components/ui/table"
+} from "./ui/table"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/packages/react-ui/components/ui/tabs"
+} from "./ui/tabs"
 import { dashboardTableSchema } from "@krag/zod-schema"
 
 // Create a separate component for the drag handle
@@ -524,7 +524,7 @@ export function DataTable({
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
             {table.getFilteredRowModel().rows.length} row(s) selected.
           </div>
-          <div className="flex w-full items-center gap-8 lg:w-fit">
+          <div className="flex items-center gap-8 w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
                 Rows per page

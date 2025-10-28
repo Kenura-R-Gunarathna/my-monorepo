@@ -19,13 +19,17 @@ import {
 } from "../../components/ui/field"
 import { Input } from "../../components/ui/input"
 
-interface SignupFormProps {
-  className?: string
-  onSubmit?: (data: {
+export interface SignupFormData{
+  formData: {
     name: string
     email: string
     password: string
-  }) => Promise<void> | void
+  }
+}
+
+interface SignupFormProps {
+  className?: string
+  onSubmit?: (data: SignupFormData['formData']) => Promise<void> | void
 }
 
 export function SignupForm({

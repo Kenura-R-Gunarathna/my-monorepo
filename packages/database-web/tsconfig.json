@@ -16,7 +16,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/packages/database-web/*": ["./src/*"] // Path alias can be used. but use iff onyl needed!
+      "@/packages/database-web/*": ["./src/*"] // Path alias can be used. but use if only needed!
     }
   },
   "include": ["src/**/*", "drizzle.config.ts"],

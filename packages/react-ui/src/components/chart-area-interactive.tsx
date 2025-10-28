@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
-import { useIsMobile } from "@/packages/react-ui/hooks/use-mobile"
+import { useIsMobile } from "../hooks/use-mobile"
 import {
   Card,
   CardAction,
@@ -11,24 +11,24 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/packages/react-ui/components/ui/card"
+} from "./ui/card"
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/packages/react-ui/components/ui/chart"
+} from "./ui/chart"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/packages/react-ui/components/ui/select"
+} from "./ui/select"
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@/packages/react-ui/components/ui/toggle-group"
+} from "./ui/toggle-group"
 
 export const description = "An interactive area chart"
 
@@ -170,9 +170,9 @@ export function ChartAreaInteractive() {
         <CardTitle>Total Visitors</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Total for the last 3 months
+            Total for the last {timeRange === "90d" ? "3 months" : timeRange === "30d" ? "30 days" : "7 days"}
           </span>
-          <span className="@[540px]/card:hidden">Last 3 months</span>
+          <span className="@[540px]/card:hidden">Last {timeRange === "90d" ? "3 months" : timeRange === "30d" ? "30 days" : "7 days"}</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -188,7 +188,7 @@ export function ChartAreaInteractive() {
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+              className="flex w-40 *:data-[slot=select-value]:block *:data-[slot=select-value]:truncate @[767px]/card:hidden"
               size="sm"
               aria-label="Select a value"
             >

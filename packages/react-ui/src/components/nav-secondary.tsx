@@ -9,7 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/packages/react-ui/components/ui/sidebar"
+} from "./ui/sidebar"
 
 export function NavSecondary({
   items,

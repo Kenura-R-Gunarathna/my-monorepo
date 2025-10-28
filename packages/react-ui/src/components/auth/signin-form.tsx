@@ -2,14 +2,14 @@
 
 import { useForm } from "@tanstack/react-form"
 import { cn } from "../../lib/utils"
-import { Button } from "../../components/ui/button"
+import { Button } from "../ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card"
+} from "../ui/card"
 import {
   Field,
   FieldDescription,
@@ -17,10 +17,10 @@ import {
   FieldLabel,
   FieldSeparator,
   FieldError,
-} from "../../components/ui/field"
-import { Input } from "../../components/ui/input"
+} from "../ui/field"
+import { Input } from "../ui/input"
 
-export interface LoginFormData{
+export interface SigninFormData{
   formData: {
     email: string
     password: string
@@ -28,18 +28,18 @@ export interface LoginFormData{
   socialProvider: "apple" | "google"
 }
 
-interface LoginFormProps {
+interface SigninFormProps {
   className?: string
-  onSubmit?: (data: LoginFormData["formData"]) => Promise<void> | void
-  onSocialLogin?: (provider: LoginFormData["socialProvider"]) => void
+  onSubmit?: (data: SigninFormData["formData"]) => Promise<void> | void
+  onSocialLogin?: (provider: SigninFormData["socialProvider"]) => void
 }
 
-export function LoginForm({
+export function SigninForm({
   className,
   onSubmit,
   onSocialLogin,
   ...props
-}: LoginFormProps) {
+}: SigninFormProps) {
   const form = useForm({
     defaultValues: {
       email: "",

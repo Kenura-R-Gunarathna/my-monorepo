@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/packages/react-ui/components/ui/dropdown-menu"
+} from "./ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -23,7 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/packages/react-ui/components/ui/sidebar"
+} from "./ui/sidebar"
 
 export function NavDocuments({
   items,

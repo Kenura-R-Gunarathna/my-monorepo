@@ -274,7 +274,7 @@ import { createContext } from '@/packages/trpc-api/context'      "@/packages/bet
 
 
 
-// Zod Schemas      "@/packages/casl-permissions/*": ["packages/casl-permissions/src/*"],import { LoginForm } from '@/packages/react-ui/components/auth/login-form'
+// Zod Schemas      "@/packages/casl-permissions/*": ["packages/casl-permissions/src/*"],import { SigninForm } from '@/packages/react-ui/components/auth/login-form'
 
 import { 
 
@@ -646,7 +646,7 @@ import { import { Button } from '@/packages/react-ui/components/ui/button'  // S
 
 import { Button } from '@/packages/react-ui/components/ui/button'
 
-For packages using Vite (like `react-ui`), you also need to configure `vite.config.ts`:import { LoginForm } from '@/packages/react-ui/components/auth/login-form'
+For packages using Vite (like `react-ui`), you also need to configure `vite.config.ts`:import { SigninForm } from '@/packages/react-ui/components/auth/login-form'
 
 ```
 

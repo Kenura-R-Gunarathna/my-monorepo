@@ -1,14 +1,14 @@
-import { AppSidebar } from "@/packages/react-ui/components/app-sidebar"
-import { ChartAreaInteractive } from "@/packages/react-ui/components/chart-area-interactive"
-import { DataTable } from "@/packages/react-ui/components/data-table"
-import { SectionCards } from "@/packages/react-ui/components/section-cards"
-import { SiteHeader } from "@/packages/react-ui/components/site-header"
+import { AppSidebar } from "./app-sidebar"
+import { ChartAreaInteractive } from "./chart-area-interactive"
+import { DataTable } from "./data-table"
+import { SectionCards } from "./section-cards"
+import { SiteHeader } from "./site-header"
 import {
   SidebarInset,
   SidebarProvider,
-} from "@/packages/react-ui/components/ui/sidebar"
+} from "./ui/sidebar"
 
-import data from "@/packages/react-ui/data/dashboard.json"
+import data from "../data/dashboard.json"
 
 export interface DashboardProps {
   /**

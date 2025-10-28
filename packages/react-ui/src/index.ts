@@ -1,8 +1,8 @@
 // Import styles
-import '@/packages/react-ui/styles/globals.css';
+import './styles/globals.css';
 
 // Export all UI components
-export { Button, buttonVariants } from '@/packages/react-ui/components/ui/button';
+export { Button, buttonVariants } from './components/ui/button';
 export { 
   Card, 
   CardHeader, 
@@ -11,10 +11,10 @@ export {
   CardAction, 
   CardDescription, 
   CardContent 
-} from '@/packages/react-ui/components/ui/card';
-export { Input } from '@/packages/react-ui/components/ui/input';
-export { Label } from '@/packages/react-ui/components/ui/label';
-export { Separator } from '@/packages/react-ui/components/ui/separator';
+} from './components/ui/card';
+export { Input } from './components/ui/input';
+export { Label } from './components/ui/label';
+export { Separator } from './components/ui/separator';
 export {
   Field,
   FieldLabel,
@@ -26,11 +26,11 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
-} from '@/packages/react-ui/components/ui/field';
+} from './components/ui/field';
 
 // Export additional UI components
-export { Avatar, AvatarImage, AvatarFallback } from '@/packages/react-ui/components/ui/avatar';
-export { Badge, badgeVariants } from '@/packages/react-ui/components/ui/badge';
+export { Avatar, AvatarImage, AvatarFallback } from './components/ui/avatar';
+export { Badge, badgeVariants } from './components/ui/badge';
 export {
   Breadcrumb,
   BreadcrumbList,
@@ -39,7 +39,7 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
-} from '@/packages/react-ui/components/ui/breadcrumb';
+} from './components/ui/breadcrumb';
 export {
   ChartContainer,
   ChartTooltip,
@@ -47,8 +47,8 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
-} from '@/packages/react-ui/components/ui/chart';
-export { Checkbox } from '@/packages/react-ui/components/ui/checkbox';
+} from './components/ui/chart';
+export { Checkbox } from './components/ui/checkbox';
 export {
   Drawer,
   DrawerPortal,
@@ -60,7 +60,7 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
-} from '@/packages/react-ui/components/ui/drawer';
+} from './components/ui/drawer';
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -77,7 +77,7 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
-} from '@/packages/react-ui/components/ui/dropdown-menu';
+} from './components/ui/dropdown-menu';
 export {
   Select,
   SelectGroup,
@@ -89,7 +89,7 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
-} from '@/packages/react-ui/components/ui/select';
+} from './components/ui/select';
 export {
   Sheet,
   SheetTrigger,
@@ -99,7 +99,7 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-} from '@/packages/react-ui/components/ui/sheet';
+} from './components/ui/sheet';
 export {
   Sidebar,
   SidebarContent,
@@ -125,9 +125,9 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
-} from '@/packages/react-ui/components/ui/sidebar';
-export { Skeleton } from '@/packages/react-ui/components/ui/skeleton';
-export { Toaster } from '@/packages/react-ui/components/ui/sonner';
+} from './components/ui/sidebar';
+export { Skeleton } from './components/ui/skeleton';
+export { Toaster } from './components/ui/sonner';
 export {
   Table,
   TableHeader,
@@ -137,41 +137,41 @@ export {
   TableRow,
   TableCell,
   TableCaption,
-} from '@/packages/react-ui/components/ui/table';
-export { Tabs, TabsList, TabsTrigger, TabsContent } from '@/packages/react-ui/components/ui/tabs';
-export { Toggle, toggleVariants } from '@/packages/react-ui/components/ui/toggle';
+} from './components/ui/table';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
+export { Toggle, toggleVariants } from './components/ui/toggle';
 export {
   ToggleGroup,
   ToggleGroupItem,
-} from '@/packages/react-ui/components/ui/toggle-group';
+} from './components/ui/toggle-group';
 export {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
-} from '@/packages/react-ui/components/ui/tooltip';
+} from './components/ui/tooltip';
 
 // Export auth components
-export { LoginForm, type LoginFormData } from '@/packages/react-ui/components/auth/login-form';
-export { SignupForm } from '@/packages/react-ui/components/auth/signup-form';
+export { SigninForm, type SigninFormData } from './components/auth/signin-form';
+export { SignupForm, type SignupFormData } from './components/auth/signup-form';
 
 // Export dashboard components
-export { Dashboard } from '@/packages/react-ui/components/Dashboard';
-export { AppSidebar } from '@/packages/react-ui/components/app-sidebar';
-export { ChartAreaInteractive } from '@/packages/react-ui/components/chart-area-interactive';
-export { DataTable } from '@/packages/react-ui/components/data-table';
-export { SectionCards } from '@/packages/react-ui/components/section-cards';
-export { SiteHeader } from '@/packages/react-ui/components/site-header';
-export { NavDocuments } from '@/packages/react-ui/components/nav-documents';
-export { NavMain } from '@/packages/react-ui/components/nav-main';
-export { NavSecondary } from '@/packages/react-ui/components/nav-secondary';
-export { NavUser } from '@/packages/react-ui/components/nav-user';
+export { Dashboard } from './components/Dashboard';
+export { AppSidebar } from './components/app-sidebar';
+export { ChartAreaInteractive } from './components/chart-area-interactive';
+export { DataTable } from './components/data-table';
+export { SectionCards } from './components/section-cards';
+export { SiteHeader } from './components/site-header';
+export { NavDocuments } from './components/nav-documents';
+export { NavMain } from './components/nav-main';
+export { NavSecondary } from './components/nav-secondary';
+export { NavUser } from './components/nav-user';
 
 // Export providers
-export { QueryProvider } from '@/packages/react-ui/lib/query-provider';
+export { QueryProvider } from './lib/query-provider';
 
 // Export utilities
-export { cn } from '@/packages/react-ui/lib/utils';
+export { cn } from './lib/utils';
 
 // Export hooks
-export { useIsMobile } from '@/packages/react-ui/hooks/use-mobile';
+export { useIsMobile } from './hooks/use-mobile';
