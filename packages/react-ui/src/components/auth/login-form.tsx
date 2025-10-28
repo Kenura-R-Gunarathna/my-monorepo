@@ -20,10 +20,18 @@ import {
 } from "../../components/ui/field"
 import { Input } from "../../components/ui/input"
 
+export interface LoginFormData{
+  formData: {
+    email: string
+    password: string
+  },
+  socialProvider: "apple" | "google"
+}
+
 interface LoginFormProps {
   className?: string
-  onSubmit?: (data: { email: string; password: string }) => Promise<void> | void
-  onSocialLogin?: (provider: "apple" | "google") => void
+  onSubmit?: (data: LoginFormData["formData"]) => Promise<void> | void
+  onSocialLogin?: (provider: LoginFormData["socialProvider"]) => void
 }
 
 export function LoginForm({
