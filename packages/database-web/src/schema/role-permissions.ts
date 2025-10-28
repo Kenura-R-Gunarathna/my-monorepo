@@ -1,7 +1,7 @@
 import { mysqlTable, bigint, boolean, timestamp, primaryKey, index } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
-import { roles } from '@/packages/database-web/schema/roles'
-import { permissions } from '@/packages/database-web/schema/permissions'
+import { roles } from './roles'
+import { permissions } from './permissions'
 
 // Junction table: which permissions does each role have?
 export const rolePermissions = mysqlTable(

@@ -17,7 +17,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/packages/casl-permissions/*": ["./src/*"]
+      "@/packages/casl-permissions/*": ["./src/*"] // Path alias can be used. but use if only needed!
     }
   },
   "include": ["src/**/*"],

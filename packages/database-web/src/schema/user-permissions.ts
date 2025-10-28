@@ -1,12 +1,10 @@
 import { mysqlTable, varchar, bigint, boolean, timestamp, primaryKey, index } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
 import { user } from '@krag/better-auth/schema'
-import { permissions } from '@/packages/database-web/schema/permissions'
+import { permissions } from './permissions'
 
 // Junction table: individual permission overrides for specific users
-export const userPermissions = mysqlTable(
-  'user_permissions',
-  {
+export const userPermissions = mysqlTable('user_permissions', {
     userId: varchar('user_id', { length: 36 })
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),

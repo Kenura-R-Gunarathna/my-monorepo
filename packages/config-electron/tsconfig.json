@@ -17,7 +17,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/packages/config-electron/*": ["./src/*"]
+      "@/packages/config-electron/*": ["./src/*"] // Path alias can be used. but use if only needed!
     }
   },
   "include": ["src/**/*"],

@@ -2,9 +2,7 @@ import { mysqlTable, serial, varchar, text, timestamp, index, boolean } from 'dr
 
 // Core permissions table - defines what permissions exist in the system
 // CASL will use these to build abilities
-export const permissions = mysqlTable(
-  'permissions',
-  {
+export const permissions = mysqlTable('permissions', {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 100 }).notNull().unique(), // 'posts:create'
     resource: varchar('resource', { length: 50 }).notNull(), // 'posts'

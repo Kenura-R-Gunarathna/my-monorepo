@@ -1,4 +1,4 @@
-import type { Permission } from '@krag/database-core';
+// import type { Permission } from '@krag/database-core';
 
 export interface ResolvedPermission {
   id: number;

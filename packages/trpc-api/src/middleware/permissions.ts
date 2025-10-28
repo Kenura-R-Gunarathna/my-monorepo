@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
-import { t } from '@/packages/trpc-api/trpc';
-import { defineAbilitiesForUser } from '@/packages/trpc-api/utils/permissions/abilities';
-import { getUserPermissions } from '@/packages/trpc-api/utils/permissions/resolver';
+import { t } from '../trpc';
+import { defineAbilitiesForUser } from '../utils/permissions/abilities';
+import { getUserPermissions } from '../utils/permissions/resolver';
 
 /**
  * Middleware to attach user permissions to context

@@ -11,9 +11,9 @@ export const syncQueue = mysqlTable('sync_queue', {
   lastError: text('last_error'), // Error logging
   createdAt: timestamp('created_at').defaultNow(),
   syncedAt: timestamp('synced_at'), // When sync completed
-}, (table) => ({
-  syncedIdx: index('synced_idx').on(table.synced), // Query optimization
-}))
+}, (table) => [
+  index('synced_idx').on(table.synced),
+])
 
 export type SyncQueue = typeof syncQueue.$inferSelect
 export type NewSyncQueue = typeof syncQueue.$inferInsert

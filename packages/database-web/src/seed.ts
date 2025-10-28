@@ -1,38 +1,180 @@
-import { getWebDb } from '@/packages/database-web/connection';
-import { user } from '@krag/better-auth';
-import { eq } from 'drizzle-orm';
+import { getWebDb } from './connection';
+import { permissions, roles, rolePermissions } from './schema';
+// import { user } from '@krag/better-auth'
 
 async function seed() {
-  console.log('🌱 Seeding database-web...');
-  
   const db = getWebDb();
 
-  // Example: Insert sample users
-  const newUser = await db.insert(user).values([
-    {
-      email: 'john@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-    },
-    {
-      email: 'jane@example.com',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      isActive: true,
-    },
-  ]);
+  console.log('🌱 Starting database seed...');
 
-  console.log('✅ Inserted users:', newUser);
+  try {
+    // 1. Seed Permissions
+    console.log('📝 Creating permissions...');
+    const permissionData = [
+      // User Management
+      { name: 'users.create', resource: 'users', action: 'create', description: 'Create new users', category: 'users' },
+      { name: 'users.read', resource: 'users', action: 'read', description: 'View users', category: 'users' },
+      { name: 'users.update', resource: 'users', action: 'update', description: 'Update user details', category: 'users' },
+      { name: 'users.delete', resource: 'users', action: 'delete', description: 'Delete users', category: 'users' },
+      { name: 'users.manage-permissions', resource: 'users', action: 'manage-permissions', description: 'Grant/revoke user permissions', category: 'users' },
+      
+      // Role Management
+      { name: 'roles.create', resource: 'roles', action: 'create', description: 'Create new roles', category: 'roles' },
+      { name: 'roles.read', resource: 'roles', action: 'read', description: 'View roles', category: 'roles' },
+      { name: 'roles.update', resource: 'roles', action: 'update', description: 'Update role details', category: 'roles' },
+      { name: 'roles.delete', resource: 'roles', action: 'delete', description: 'Delete roles', category: 'roles' },
+      { name: 'roles.assign', resource: 'roles', action: 'assign', description: 'Assign roles to users', category: 'roles' },
+      
+      // Post/Content Management
+      { name: 'posts.create', resource: 'posts', action: 'create', description: 'Create new posts', category: 'content' },
+      { name: 'posts.read', resource: 'posts', action: 'read', description: 'View posts', category: 'content' },
+      { name: 'posts.update', resource: 'posts', action: 'update', description: 'Update posts', category: 'content' },
+      { name: 'posts.delete', resource: 'posts', action: 'delete', description: 'Delete posts', category: 'content' },
+      { name: 'posts.publish', resource: 'posts', action: 'publish', description: 'Publish posts', category: 'content' },
+      
+      // Settings Management
+      { name: 'settings.read', resource: 'settings', action: 'read', description: 'View settings', category: 'settings' },
+      { name: 'settings.update', resource: 'settings', action: 'update', description: 'Update settings', category: 'settings' },
+      
+      // Analytics
+      { name: 'analytics.read', resource: 'analytics', action: 'read', description: 'View analytics', category: 'analytics' },
+      { name: 'analytics.export', resource: 'analytics', action: 'export', description: 'Export analytics data', category: 'analytics' },
+      
+      // Super Admin - All permissions
+      { name: 'all.manage', resource: 'all', action: 'manage', description: 'Full system access', category: 'system' },
+    ];
 
-  // Add your web-specific seeding here
-  // Example: Insert posts, comments, etc.
+    await db.insert(permissions).values(permissionData);
+    console.log(`✅ Created ${permissionData.length} permissions`);
 
-  console.log('✅ Database-web seeded successfully!');
-  process.exit(0);
+    // Get permission IDs for role assignment
+    const allPermissions = await db.select().from(permissions);
+    const permissionMap = new Map(allPermissions.map(p => [p.name, p.id]));
+
+    // 2. Seed Roles
+    console.log('👥 Creating roles...');
+    const roleData = [
+      {
+        name: 'Super Admin',
+        description: 'Full system access - can do everything',
+        isSystemRole: true,
+        isActive: true,
+      },
+      {
+        name: 'Admin',
+        description: 'Administrative access - can manage users and content',
+        isSystemRole: true,
+        isActive: true,
+      },
+      {
+        name: 'Editor',
+        description: 'Content management - can create and edit content',
+        isSystemRole: true,
+        isActive: true,
+      },
+      {
+        name: 'Viewer',
+        description: 'Read-only access - can view content',
+        isSystemRole: true,
+        isActive: true,
+      },
+      {
+        name: 'User',
+        description: 'Basic user - limited permissions',
+        isSystemRole: true,
+        isActive: true,
+      },
+    ];
+
+    await db.insert(roles).values(roleData);
+    console.log(`✅ Created ${roleData.length} roles`);
+
+    // Get role IDs
+    const allRoles = await db.select().from(roles);
+    const roleMap = new Map(allRoles.map(r => [r.name, r.id]));
+
+    // 3. Assign Permissions to Roles
+    console.log('🔗 Assigning permissions to roles...');
+    
+    const rolePermissionData = [
+      // Super Admin - All permissions
+      {
+        roleId: roleMap.get('Super Admin')!,
+        permissionId: permissionMap.get('all.manage')!,
+      },
+      
+      // Admin - Most permissions except super admin
+      ...['users.create', 'users.read', 'users.update', 'users.delete', 'users.manage-permissions',
+          'roles.read', 'roles.assign',
+          'posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish',
+          'settings.read', 'settings.update',
+          'analytics.read', 'analytics.export'].map(permName => ({
+        roleId: roleMap.get('Admin')!,
+        permissionId: permissionMap.get(permName)!,
+      })),
+      
+      // Editor - Content management
+      ...['users.read',
+          'posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish',
+          'settings.read',
+          'analytics.read'].map(permName => ({
+        roleId: roleMap.get('Editor')!,
+        permissionId: permissionMap.get(permName)!,
+      })),
+      
+      // Viewer - Read-only
+      ...['users.read',
+          'posts.read',
+          'settings.read',
+          'analytics.read'].map(permName => ({
+        roleId: roleMap.get('Viewer')!,
+        permissionId: permissionMap.get(permName)!,
+      })),
+      
+      // User - Basic permissions
+      ...['posts.read'].map(permName => ({
+        roleId: roleMap.get('User')!,
+        permissionId: permissionMap.get(permName)!,
+      })),
+    ];
+
+    await db.insert(rolePermissions).values(rolePermissionData);
+    console.log(`✅ Assigned ${rolePermissionData.length} permissions to roles`);
+
+    // // 4. Create a sample Super Admin user
+    // console.log('👤 Creating sample Super Admin user...');
+    // await db.insert(user).values({
+    //   id: crypto.randomUUID(),
+    //   name: 'John Doe',
+    //   email: 'admin@example.com',
+    //   emailVerified: false,
+    //   image: null,
+    // });
+    // console.log('✅ Created Super Admin user (admin@example.com)');
+
+    // console.log('\n✨ Database seeding completed successfully!\n');
+    // console.log('📊 Summary:');
+    // console.log(`   - ${permissionData.length} permissions created`);
+    // console.log(`   - ${roleData.length} roles created`);
+    // console.log(`   - ${rolePermissionData.length} role-permission mappings created`);
+    // console.log(`   - 1 sample admin user created`);
+    // console.log('\n🔑 Default Login:');
+    // console.log('   Email: admin@example.com');
+    // console.log('   Role: Super Admin\n');
+
+  } catch (error) {
+    console.error('❌ Error seeding database:', error);
+    throw error;
+  }
 }
 
-seed().catch((error) => {
-  console.error('❌ Seeding failed:', error);
-  process.exit(1);
-});
+// Run the seed function
+seed()
+  .then(() => {
+    console.log('✅ Seed script finished successfully');
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('❌ Seed script failed:', error);
+    process.exit(1);
+  });

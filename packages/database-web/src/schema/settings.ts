@@ -9,9 +9,9 @@ export const settings = mysqlTable('settings', {
   isPublic: boolean('is_public').default(false), // Can be exposed to frontend
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow().onUpdateNow(),
-}, (table) => ({
-  categoryIdx: index('category_idx').on(table.category),
-}))
+}, (table) => [
+  index('category_idx').on(table.category),
+])
 
 export type Setting = typeof settings.$inferSelect
 export type NewSetting = typeof settings.$inferInsert

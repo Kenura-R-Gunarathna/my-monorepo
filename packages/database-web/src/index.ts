@@ -2,7 +2,7 @@
 export * from '@krag/database-core';
 
 // Export web-specific tables
-export * from '@/packages/database-web/schema';
+export * from './schema';
 
 // Export web database connection
-export { getWebDb } from '@/packages/database-web/connection';
+export { getWebDb } from './connection';

@@ -1,1 +1,1 @@
-export * from '@/packages/database-desktop/schema/local_cache';
+export * from './local_cache';

@@ -1,5 +1,5 @@
 import { AbilityBuilder, PureAbility } from '@casl/ability';
-import { getUserPermissions, type ResolvedPermission } from '@/packages/trpc-api/utils/permissions/resolver';
+import { getUserPermissions, type ResolvedPermission } from './resolver';
 
 export type AppAbility = PureAbility<[string, string]>;
 

@@ -2,7 +2,7 @@
 export * from '@krag/database-core';
 
 // Export desktop-specific tables
-export * from '@/packages/database-desktop/schema';
+export * from './schema';
 
 // Export desktop database connection
-export { getDesktopDb, type DesktopDb } from '@/packages/database-desktop/connection';
+export { getDesktopDb, type DesktopDb } from './connection';

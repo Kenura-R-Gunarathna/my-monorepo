@@ -17,7 +17,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/packages/trpc-api/*": ["./src/*"]
+      "@/packages/trpc-api/*": ["./src/*"] // Path alias can be used. but use if only needed!
     }
   },
   "include": ["src/**/*"],
