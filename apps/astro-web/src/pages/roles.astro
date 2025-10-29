@@ -7,6 +7,6 @@ const response = await fetch(`${Astro.url.origin}/data/dashboard.json`);
 const tableData = await response.json();
 ---
 
-<Layout title="Dashboard">
-  <Dashboard data={tableData} showStats={true} client:load />
+<Layout title="Roles">
+  <Dashboard data={tableData} showStats={false} client:load />
 </Layout>

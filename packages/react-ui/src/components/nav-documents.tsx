@@ -24,6 +24,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar"
+import { useNavigation } from "../hooks/use-navigation"
 
 export function NavDocuments({
   items,
@@ -35,6 +36,7 @@ export function NavDocuments({
   }[]
 }) {
   const { isMobile } = useSidebar()
+  const { selectedGroup, selectedItem, setSelected } = useNavigation()
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -42,7 +44,11 @@ export function NavDocuments({
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton 
+              asChild
+              isActive={selectedGroup === 'navDocuments' && selectedItem === item.name}
+              onClick={() => setSelected('navDocuments', item.name, item.name)}
+            >
               <a href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

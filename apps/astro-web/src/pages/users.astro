@@ -1,47 +1,12 @@
 ---
-// Example: Using database in Astro API route
-import { getWebDb, user } from '@krag/database-web';
-import { eq } from 'drizzle-orm';
-import { config } from '@krag/config-astro';
-import '@krag/react-ui/styles';
+import Layout from '../layouts/DashboardLayout.astro';
+import { Dashboard } from '@krag/react-ui';
 
-import "../styles/global.css";
-
-// Option 1: Use environment variable
-const db = getWebDb(config.DATABASE_URL);
-
-// Option 2: Pass DATABASE_URL directly
-// const db = getWebDb(import.meta.env.DATABASE_URL);
-
-// Fetch all users
-const allUsers = await db.select().from(user);
-
-// Fetch single user (note: id is a string type)
-const selectedUser = await db.select().from(user).where(eq(user.id, "1"));
+// Fetch from public directory (works at build time in Astro)
+const response = await fetch(`${Astro.url.origin}/data/dashboard.json`);
+const tableData = await response.json();
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Users</title>
-  </head>
-  <body>
-    <main class="container mx-auto p-8">
-      <h1 class="text-4xl font-bold mb-8">Users from Database</h1>
-      
-      <div class="space-y-4">
-        {allUsers.map((selectedUser) => (
-          <div class="p-4 border rounded">
-            <h2 class="text-xl font-bold">{selectedUser.firstName} {selectedUser.lastName}</h2>
-            <p class="text-gray-600">{selectedUser.email}</p>
-            <p class="text-sm text-gray-400">
-              Status: {selectedUser.isActive ? 'Active' : 'Inactive'}
-            </p>
-          </div>
-        ))}
-      </div>
-    </main>
-  </body>
-</html>
+<Layout title="Users">
+  <Dashboard data={tableData} showStats={false} client:load />
+</Layout>

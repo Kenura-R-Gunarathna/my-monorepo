@@ -2,7 +2,6 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import { QueryProvider } from "@krag/react-ui"
 
-import '@krag/react-ui/styles';
 import "../styles/global.css";
 
 const { title } = Astro.props;
@@ -22,7 +21,7 @@ const { title } = Astro.props;
         <div class="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
           <GalleryVerticalEnd className="size-4" />
         </div>
-        Acme Inc.
+        KRAG Tech
       </a>
       <QueryProvider client:load>
         <slot />

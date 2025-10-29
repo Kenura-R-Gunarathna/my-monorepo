@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar"
+import { useNavigation } from "../hooks/use-navigation"
 
 export function NavSecondary({
   items,
@@ -21,13 +22,19 @@ export function NavSecondary({
     icon: Icon
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const { selectedGroup, selectedItem, setSelected } = useNavigation()
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton 
+                asChild
+                isActive={selectedGroup === 'navSecondary' && selectedItem === item.title}
+                onClick={() => setSelected('navSecondary', item.title, item.title)}
+              >
                 <a href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>

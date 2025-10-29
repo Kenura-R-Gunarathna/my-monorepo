@@ -129,6 +129,9 @@ importers:
       electron-updater:
         specifier: ^6.3.9
         version: 6.6.2
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
