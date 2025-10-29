@@ -7,6 +7,7 @@ import {
   IconTrash,
   type Icon,
 } from "@tabler/icons-react"
+import type { ComponentType, ReactNode } from "react"
 
 import {
   DropdownMenu,
@@ -28,15 +29,22 @@ import { useNavigation } from "../hooks/use-navigation"
 
 export function NavDocuments({
   items,
+  LinkComponent,
 }: {
   items: {
     name: string
     url: string
     icon: Icon
   }[]
+  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
 }) {
   const { isMobile } = useSidebar()
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
+
+  // Use provided LinkComponent or fallback to anchor tag
+  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
+    <a href={to} onClick={onClick}>{children}</a>
+  ))
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -47,12 +55,11 @@ export function NavDocuments({
             <SidebarMenuButton 
               asChild
               isActive={selectedGroup === 'navDocuments' && selectedItem === item.name}
-              onClick={() => setSelected('navDocuments', item.name, item.name)}
             >
-              <a href={item.url}>
+              <NavLink to={item.url} onClick={() => setSelected('navDocuments', item.name, item.name)}>
                 <item.icon />
                 <span>{item.name}</span>
-              </a>
+              </NavLink>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

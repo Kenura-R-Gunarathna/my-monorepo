@@ -16,6 +16,7 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react"
+import type { ComponentType, ReactNode } from "react"
 
 import { NavDocuments } from "./nav-documents"
 import { NavMain } from "./nav-main"
@@ -148,7 +149,11 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
+}
+
+export function AppSidebar({ LinkComponent, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -167,9 +172,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={data.navMain} LinkComponent={LinkComponent} />
+        <NavDocuments items={data.documents} LinkComponent={LinkComponent} />
+        <NavSecondary items={data.navSecondary} LinkComponent={LinkComponent} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

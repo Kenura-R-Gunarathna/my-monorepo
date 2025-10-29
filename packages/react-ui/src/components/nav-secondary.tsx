@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { type Icon } from "@tabler/icons-react"
+import type { ComponentType, ReactNode } from "react"
 
 import {
   SidebarGroup,
@@ -14,6 +15,7 @@ import { useNavigation } from "../hooks/use-navigation"
 
 export function NavSecondary({
   items,
+  LinkComponent,
   ...props
 }: {
   items: {
@@ -21,8 +23,14 @@ export function NavSecondary({
     url: string
     icon: Icon
   }[]
+  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
+
+  // Use provided LinkComponent or fallback to anchor tag
+  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
+    <a href={to} onClick={onClick}>{children}</a>
+  ))
 
   return (
     <SidebarGroup {...props}>
@@ -33,12 +41,11 @@ export function NavSecondary({
               <SidebarMenuButton 
                 asChild
                 isActive={selectedGroup === 'navSecondary' && selectedItem === item.title}
-                onClick={() => setSelected('navSecondary', item.title, item.title)}
               >
-                <a href={item.url}>
+                <NavLink to={item.url} onClick={() => setSelected('navSecondary', item.title, item.title)}>
                   <item.icon />
                   <span>{item.title}</span>
-                </a>
+                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

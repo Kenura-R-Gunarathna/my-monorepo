@@ -1,5 +1,5 @@
 import { IconCirclePlusFilled, type Icon } from "@tabler/icons-react"
-import { useState } from "react"
+import { useState, type ComponentType, type ReactNode } from "react"
 
 import { Button } from "./ui/button"
 import {
@@ -29,16 +29,23 @@ const quickCreateItems = [
 
 export function NavMain({
   items,
+  LinkComponent,
 }: {
   items: {
     title: string
     url: string
     icon?: Icon
   }[]
+  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
 }) {
   
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
   const [sheetOpen, setSheetOpen] = useState(false)
+
+  // Use provided LinkComponent or fallback to anchor tag
+  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
+    <a href={to} onClick={onClick}>{children}</a>
+  ))
 
   return (
     <SidebarGroup>
@@ -90,13 +97,12 @@ export function NavMain({
               <SidebarMenuButton 
                 asChild
                 isActive={selectedGroup === 'navMain' && selectedItem === item.title}
-                onClick={() => setSelected('navMain', item.title, item.title)}
                 tooltip={item.title}
               >
-                <a href={item.url}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-                </a>
+                <NavLink to={item.url} onClick={() => setSelected('navMain', item.title, item.title)}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
