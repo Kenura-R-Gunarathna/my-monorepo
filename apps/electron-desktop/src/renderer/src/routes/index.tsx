@@ -1,21 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Dashboard } from '@krag/react-ui'
-import { useState, useEffect } from 'react'
 
 export const Route = createFileRoute('/')({
   component: Index
 })
 
 function Index(): React.JSX.Element {
-  const [tableData, setTableData] = useState([])
-
-  useEffect(() => {
-    // Fetch data on component mount
-    fetch('/data/dashboard.json')
-      .then((res) => res.json())
-      .then((data) => setTableData(data))
-      .catch((err) => console.error('Failed to load dashboard data:', err))
-  }, [])
-
-  return <Dashboard data={tableData} showStats={true} />
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">Electron Desktop App</h1>
+      <p className="text-muted-foreground">This route is managed by electron app</p>
+    </div>
+  )
 }

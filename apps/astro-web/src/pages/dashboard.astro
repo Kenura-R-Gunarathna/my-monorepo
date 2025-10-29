@@ -1,0 +1,8 @@
+---
+import { App } from "@krag/react-ui"
+import Layout from '../layouts/DashboardLayout.astro';
+---
+
+<Layout title="Dashboard">
+  <App client:only="react" basepath="/dashboard" />
+</Layout>

@@ -156,6 +156,7 @@ export { SigninForm, type SigninFormData } from './components/auth/signin-form';
 export { SignupForm, type SignupFormData } from './components/auth/signup-form';
 
 // Export dashboard components
+export { App } from './components/App';
 export { AppSidebar } from './components/app-sidebar';
 export { ChartAreaInteractive } from './components/chart-area-interactive';
 export { DataTable } from './components/data-table';
