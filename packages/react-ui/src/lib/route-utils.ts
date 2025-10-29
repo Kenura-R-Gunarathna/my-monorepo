@@ -1,4 +1,4 @@
-import { useRouter } from '@tanstack/react-router'
+import { useRouter, useRouterState } from '@tanstack/react-router'
 import type { IconProps, Icon } from '@tabler/icons-react'
 
 export interface RouteMetadata {
@@ -54,8 +54,7 @@ export function useRouteNavigation() {
 
 // Get current page title from router
 export function usePageTitle(): string {
-  const router = useRouter()
-  const matches = router.state.matches
+  const matches = useRouterState({ select: (state) => state.matches })
   const currentMatch = matches[matches.length - 1]
   
   if (currentMatch?.staticData) {
