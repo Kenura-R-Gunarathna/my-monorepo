@@ -14,7 +14,10 @@ export interface DashboardProps {
   showStats?: boolean
 }
 
-export function Dashboard({ data: customData, showStats = false }: DashboardProps = {}) {
+export function Dashboard({
+  data: customData,
+  showStats = false
+}: DashboardProps = {}): React.JSX.Element {
   const tableData = customData || []
 
   return (
