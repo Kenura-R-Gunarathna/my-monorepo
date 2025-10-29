@@ -2,18 +2,18 @@ import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
 import { createFileRoute } from '@tanstack/react-router'
 import dashboardData from '../../public/data/dashboard.json'
-import { IconSettings } from '@tabler/icons-react'
+import { IconHelp } from '@tabler/icons-react'
 
 export interface DashboardProps {
   data?: DashboardTable[],
 }
 
-export const Route = createFileRoute('/settings')({
-  component: Settings,
+export const Route = createFileRoute('/help')({
+  component: Help,
   staticData: {
-    title: 'Settings',
-    description: 'Manage your account settings and preferences',
-    icon: IconSettings,
+    title: 'Help',
+    description: 'Get help and support for your account',
+    icon: IconHelp,
     group: 'secondary',
   },
   loader: async () => {
@@ -21,7 +21,7 @@ export const Route = createFileRoute('/settings')({
   }
 })
 
-export function Settings(): React.JSX.Element {
+export function Help(): React.JSX.Element {
   const { data } = Route.useLoaderData()
 
   return (

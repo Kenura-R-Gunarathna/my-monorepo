@@ -5,11 +5,9 @@ import {
   SectionCards,
   SiteHeader,
   SidebarInset,
-  SidebarProvider,
-  NavigationProvider
+  SidebarProvider
 } from '@krag/react-ui'
 import type { DashboardTable } from '@krag/zod-schema'
-import { Link } from '@tanstack/react-router'
 
 export interface DashboardProps {
   data?: DashboardTable[]
@@ -23,16 +21,15 @@ export function Dashboard({
   const tableData = customData || []
 
   return (
-    <NavigationProvider>
-      <SidebarProvider
-        style={
-          {
-            '--sidebar-width': 'calc(var(--spacing) * 72)',
-            '--header-height': 'calc(var(--spacing) * 12)'
-          } as React.CSSProperties
-        }
-      >
-        <AppSidebar variant="inset" LinkComponent={Link} />
+    <SidebarProvider
+      style={
+        {
+          '--sidebar-width': 'calc(var(--spacing) * 72)',
+          '--header-height': 'calc(var(--spacing) * 12)'
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
         <SidebarInset>
           <SiteHeader />
           <div className="flex flex-1 flex-col">
@@ -53,6 +50,5 @@ export function Dashboard({
           </div>
         </SidebarInset>
       </SidebarProvider>
-    </NavigationProvider>
   )
 }

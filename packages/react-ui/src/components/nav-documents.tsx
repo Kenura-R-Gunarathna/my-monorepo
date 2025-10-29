@@ -1,10 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import {
   IconDots,
   IconFolder,
   IconShare3,
   IconTrash,
+  type IconProps,
   type Icon,
 } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
@@ -28,21 +30,27 @@ import {
 
 export function NavDocuments({
   items,
+  maxVisible = 6,
 }: {
   items: {
-    name: string
+    title: string
     url: string
-    icon: Icon
+    icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>
   }[]
+  maxVisible?: number
 }) {
   const { isMobile } = useSidebar()
+  const [showAll, setShowAll] = useState(false)
+  
+  const visibleItems = showAll ? items : items.slice(0, maxVisible)
+  const hasMore = items.length > maxVisible
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Auth</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
+        {visibleItems.map((item) => (
+          <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild>
               <Link
                 to={item.url}
@@ -51,7 +59,7 @@ export function NavDocuments({
                 }}
               >
                 <item.icon />
-                <span>{item.name}</span>
+                <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
             <DropdownMenu>
@@ -86,12 +94,17 @@ export function NavDocuments({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
-        <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <IconDots className="text-sidebar-foreground/70" />
-            <span>More</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
+        {hasMore && (
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              onClick={() => setShowAll(!showAll)}
+              className="text-sidebar-foreground/70"
+            >
+              <IconDots className="text-sidebar-foreground/70" />
+              <span>{showAll ? 'Show Less' : 'More'}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        )}
       </SidebarMenu>
     </SidebarGroup>
   )

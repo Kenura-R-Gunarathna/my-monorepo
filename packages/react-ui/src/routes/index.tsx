@@ -1,20 +1,23 @@
 import { ChartAreaInteractive, DataTable, SectionCards } from "../index"
 import { createFileRoute } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import dashboardData from '../../public/data/dashboard.json'
+import { IconDashboard } from '@tabler/icons-react'
 
 export const Route = createFileRoute('/')({
   component: Index,
+  staticData: {
+    title: 'Dashboard',
+    description: 'View your dashboard overview and analytics',
+    icon: IconDashboard,
+    group: 'main',
+  },
+  loader: async () => {
+    return { data: dashboardData }
+  }
 })
 
 export function Index(): React.JSX.Element {
-  const [tableData, setTableData] = useState([])
-
-  useEffect(() => {
-    fetch('/data/dashboard.json')
-      .then((res) => res.json())
-      .then((data) => setTableData(data))
-      .catch((err) => console.error('Failed to load dashboard data:', err))
-  }, [])
+  const { data } = Route.useLoaderData()
 
   return (
   <>
@@ -24,6 +27,6 @@ export function Index(): React.JSX.Element {
       <ChartAreaInteractive />
     </div>
     
-    <DataTable data={tableData} />
+    <DataTable data={data} />
   </>)
 }

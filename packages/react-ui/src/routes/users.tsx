@@ -1,7 +1,8 @@
+import { createFileRoute } from '@tanstack/react-router'
+import { IconDatabase } from '@tabler/icons-react'
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
-import { createFileRoute } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import dashboardData from '../../public/data/dashboard.json'
 
 export interface DashboardProps {
   data?: DashboardTable[],
@@ -9,20 +10,22 @@ export interface DashboardProps {
 
 export const Route = createFileRoute('/users')({
   component: Users,
+  staticData: {
+    title: 'Users',
+    description: 'Manage user accounts and permissions',
+    icon: IconDatabase,
+    group: 'auth',
+  },
+  loader: async () => {
+    return { data: dashboardData }
+  }
 })
 
 export function Users(): React.JSX.Element {
-  const [tableData, setTableData] = useState([])
-
-  useEffect(() => {
-    fetch('/data/dashboard.json')
-      .then((res) => res.json())
-      .then((data) => setTableData(data))
-      .catch((err) => console.error('Failed to load dashboard data:', err))
-  }, [])
+  const { data } = Route.useLoaderData()
 
   return (
   <>
-    <DataTable data={tableData} />
+    <DataTable data={data} />
   </>)
 }

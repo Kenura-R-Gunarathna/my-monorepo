@@ -172,6 +172,7 @@ export { QueryProvider } from './lib/query-provider';
 
 // Export utilities
 export { cn } from './lib/utils';
+export { useRouteNavigation, usePageTitle } from './lib/route-utils';
 
 // Export hooks
 export { useIsMobile } from './hooks/use-mobile';
