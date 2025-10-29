@@ -1,22 +1,21 @@
 import * as React from "react"
 import {
   IconCamera,
-  IconChartBar,
+  // IconChartBar,
   IconDashboard,
   IconDatabase,
   IconFileAi,
   IconFileDescription,
   IconFileWord,
-  IconFolder,
+  // IconFolder,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
+  // IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
+  // IconUsers,
 } from "@tabler/icons-react"
-import type { ComponentType, ReactNode } from "react"
 
 import { NavDocuments } from "./nav-documents"
 import { NavMain } from "./nav-main"
@@ -44,26 +43,26 @@ const data = {
       url: "/",
       icon: IconDashboard,
     },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
+    // {
+    //   title: "Lifecycle",
+    //   url: "#",
+    //   icon: IconListDetails,
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: IconChartBar,
+    // },
+    // {
+    //   title: "Projects",
+    //   url: "#",
+    //   icon: IconFolder,
+    // },
+    // {
+    //   title: "Team",
+    //   url: "#",
+    //   icon: IconUsers,
+    // },
   ],
   navClouds: [
     {
@@ -130,30 +129,26 @@ const data = {
       icon: IconSearch,
     },
   ],
-  documents: [
+  auth: [
     {
-      name: "Data Library",
-      url: "#",
+      name: "Users",
+      url: "/users",
       icon: IconDatabase,
     },
     {
-      name: "Reports",
-      url: "#",
+      name: "Roles",
+      url: "/roles",
       icon: IconReport,
     },
     {
-      name: "Word Assistant",
-      url: "#",
+      name: "Permissions",
+      url: "/permissions",
       icon: IconFileWord,
     },
   ],
 }
 
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
-}
-
-export function AppSidebar({ LinkComponent, ...props }: AppSidebarProps) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -172,9 +167,9 @@ export function AppSidebar({ LinkComponent, ...props }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} LinkComponent={LinkComponent} />
-        <NavDocuments items={data.documents} LinkComponent={LinkComponent} />
-        <NavSecondary items={data.navSecondary} LinkComponent={LinkComponent} className="mt-auto" />
+        <NavMain items={data.navMain} />
+        <NavDocuments items={data.auth} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

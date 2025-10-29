@@ -1,14 +1,22 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@/packages/react-ui/styles/globals.css'
-import App from '@/packages/react-ui/App.tsx'
-import '@/packages/react-ui/styles/globals.css';
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
 
-export { Card } from '@/packages/react-ui/components/ui/card';
-export { Button } from '@/packages/react-ui/components/ui/button';
+import './styles/globals.css';
+
+// Create a new router instance
+const router = createRouter({ routeTree })
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+      <RouterProvider router={router} />
   </StrictMode>,
 )

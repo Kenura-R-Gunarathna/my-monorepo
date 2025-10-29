@@ -19,17 +19,18 @@
     "./styles": "./dist/index.css"
   },
   "scripts": {
+    "dev:ui-only": "vite dev",
     "dev": "vite build --watch --mode development",
     "build": "vite build && tsc --project tsconfig.build.json",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@krag/zod-schema": "workspace:*",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@krag/zod-schema": "workspace:*",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -45,6 +46,8 @@
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-router": "^1.133.32",
+    "@tanstack/react-router-devtools": "^1.133.32",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -63,6 +66,7 @@
     "@eslint/js": "^9.36.0",
     "@tailwindcss/vite": "^4.1.16",
     "@tanstack/eslint-plugin-query": "^5.91.2",
+    "@tanstack/router-plugin": "^1.133.32",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",

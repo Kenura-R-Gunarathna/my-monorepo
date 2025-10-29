@@ -158,7 +158,6 @@ export { SignupForm, type SignupFormData } from './components/auth/signup-form';
 // Export dashboard components
 export { AppSidebar } from './components/app-sidebar';
 export { ChartAreaInteractive } from './components/chart-area-interactive';
-export { Dashboard, type DashboardProps } from './components/Dashboard';
 export { DataTable } from './components/data-table';
 export { SectionCards } from './components/section-cards';
 export { Settings } from './components/Settings';
@@ -176,8 +175,3 @@ export { cn } from './lib/utils';
 
 // Export hooks
 export { useIsMobile } from './hooks/use-mobile';
-
-// Export context and hooks for navigation
-export { NavigationContext, type NavState } from './contexts/navigation-context'
-export { NavigationProvider } from './contexts/NavigationContext'
-export { useNavigation } from './hooks/use-navigation'

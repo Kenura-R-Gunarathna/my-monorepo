@@ -7,7 +7,7 @@ import {
   IconTrash,
   type Icon,
 } from "@tabler/icons-react"
-import type { ComponentType, ReactNode } from "react"
+import { Link } from "@tanstack/react-router"
 
 import {
   DropdownMenu,
@@ -25,53 +25,36 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar"
-import { useNavigation } from "../hooks/use-navigation"
 
 export function NavDocuments({
   items,
-  LinkComponent,
 }: {
   items: {
     name: string
     url: string
     icon: Icon
   }[]
-  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
 }) {
   const { isMobile } = useSidebar()
-  const { selectedGroup, selectedItem, setSelected } = useNavigation()
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Documents</SidebarGroupLabel>
+      <SidebarGroupLabel>Auth</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => {
-          const isActive = selectedGroup === 'navDocuments' && selectedItem === item.name
-          return (
-            <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton 
-                asChild
-                isActive={isActive}
+        {items.map((item) => (
+          <SidebarMenuItem key={item.name}>
+            <SidebarMenuButton asChild>
+              <Link
+                to={item.url}
+                activeProps={{
+                  className: 'font-medium'
+                }}
               >
-                {LinkComponent ? (
-                  <LinkComponent 
-                    to={item.url} 
-                    onClick={() => setSelected('navDocuments', item.name, item.name)}
-                  >
-                    <item.icon />
-                    <span>{item.name}</span>
-                  </LinkComponent>
-                ) : (
-                  <a 
-                    href={item.url} 
-                    onClick={() => setSelected('navDocuments', item.name, item.name)}
-                  >
-                    <item.icon />
-                    <span>{item.name}</span>
-                  </a>
-                )}
-              </SidebarMenuButton>
-              <DropdownMenu>
+                <item.icon />
+                <span>{item.name}</span>
+              </Link>
+            </SidebarMenuButton>
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
                   showOnHover
@@ -101,9 +84,8 @@ export function NavDocuments({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            </SidebarMenuItem>
-          )
-        })}
+          </SidebarMenuItem>
+        ))}
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <IconDots className="text-sidebar-foreground/70" />

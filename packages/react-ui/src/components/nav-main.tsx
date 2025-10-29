@@ -1,5 +1,6 @@
 import { IconCirclePlusFilled, type Icon } from "@tabler/icons-react"
-import { useState, type ComponentType, type ReactNode } from "react"
+import { useState } from "react"
+import { Link } from "@tanstack/react-router"
 
 import { Button } from "./ui/button"
 import {
@@ -17,7 +18,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar"
-import { useNavigation } from "../hooks/use-navigation"
 
 const quickCreateItems = [
   { title: "User", description: "Create a new user account" },
@@ -29,17 +29,13 @@ const quickCreateItems = [
 
 export function NavMain({
   items,
-  LinkComponent,
 }: {
   items: {
     title: string
     url: string
     icon?: Icon
   }[]
-  LinkComponent?: ComponentType<{ to: string; children: ReactNode; onClick?: () => void }>
 }) {
-  
-  const { selectedGroup, selectedItem, setSelected } = useNavigation()
   const [sheetOpen, setSheetOpen] = useState(false)
 
   return (
@@ -87,36 +83,22 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => {
-            const isActive = selectedGroup === 'navMain' && selectedItem === item.title
-            return (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton 
-                  asChild
-                  isActive={isActive}
-                  tooltip={item.title}
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <Link
+                  to={item.url}
+                  activeOptions={{ exact: item.url === '/' }}
+                  activeProps={{
+                    className: 'font-medium'
+                  }}
                 >
-                  {LinkComponent ? (
-                    <LinkComponent 
-                      to={item.url} 
-                      onClick={() => setSelected('navMain', item.title, item.title)}
-                    >
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </LinkComponent>
-                  ) : (
-                    <a 
-                      href={item.url} 
-                      onClick={() => setSelected('navMain', item.title, item.title)}
-                    >
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </a>
-                  )}
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )
-          })}
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
