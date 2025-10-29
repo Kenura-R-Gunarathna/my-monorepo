@@ -3,29 +3,29 @@
 import { useState } from "react"
 import {
   IconDots,
-  IconFolder,
-  IconShare3,
-  IconTrash,
+  // IconFolder,
+  // IconShare3,
+  // IconTrash,
   type IconProps,
   type Icon,
 } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "./ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
+  // SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+  // useSidebar,
 } from "./ui/sidebar"
 
 export function NavDocuments({
@@ -39,7 +39,7 @@ export function NavDocuments({
   }[]
   maxVisible?: number
 }) {
-  const { isMobile } = useSidebar()
+  // const { isMobile } = useSidebar()
   const [showAll, setShowAll] = useState(false)
   
   const visibleItems = showAll ? items : items.slice(0, maxVisible)
@@ -62,7 +62,7 @@ export function NavDocuments({
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
                   showOnHover
@@ -91,7 +91,7 @@ export function NavDocuments({
                   <span>Delete</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </SidebarMenuItem>
         ))}
         {hasMore && (

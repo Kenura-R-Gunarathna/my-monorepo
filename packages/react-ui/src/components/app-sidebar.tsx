@@ -1,6 +1,6 @@
 import * as React from "react"
 import { IconInnerShadowTop } from "@tabler/icons-react"
-import { useRouteNavigation } from "../lib/route-utils"
+import { useRouteNavigation, type NavItem } from "../lib/route-utils"
 import { NavDocuments } from "./nav-documents"
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
@@ -15,41 +15,39 @@ import {
   SidebarMenuItem,
 } from "./ui/sidebar"
 
-const staticData = {
+export interface AllRouteMetadata {
+  user: {
+    name: string
+    email: string
+    avatar: string
+  }
+  navMain: NavItem[]
+  auth: NavItem[]
+  navSecondary: NavItem[]
+}
+
+const staticData: AllRouteMetadata = {
   user: {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  navMain: [
-    // {
-    //   title: "Dashboard",
-    //   url: "/",
-    //   icon: IconDashboard,
-    // },
-  ],
-  auth: [
-  //   {
-  //     title: "Users",
-  //     url: "/users",
-  //     icon: IconUsers,
-  //   },
-  ],
-  navSecondary: [
-  //   {
-  //     title: "Settings",
-  //     url: "/settings",
-  //     icon: IconSettings,
-  //   },
-  ],
+  navMain: [],
+  auth: [],
+  navSecondary: [],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const routeNav = useRouteNavigation()
 
-  routeNav.navMain.push(...staticData.navMain)
-  routeNav.auth.push(...staticData.auth)
-  routeNav.navSecondary.push(...staticData.navSecondary)
+  const mergeAndSort = (target: NavItem[], source: NavItem[]) => {
+    target.push(...source)
+    target.sort((a, b) => a.groupOrder - b.groupOrder)
+  }
+
+  mergeAndSort(routeNav.navMain, staticData.navMain)
+  mergeAndSort(routeNav.auth, staticData.auth)
+  mergeAndSort(routeNav.navSecondary, staticData.navSecondary)
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>

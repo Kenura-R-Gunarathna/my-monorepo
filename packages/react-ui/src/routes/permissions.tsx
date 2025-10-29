@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { IconFileWord } from '@tabler/icons-react'
+import { IconChecklist } from '@tabler/icons-react'
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
 import dashboardData from '../../public/data/dashboard.json'
@@ -13,8 +13,9 @@ export const Route = createFileRoute('/permissions')({
   staticData: {
     title: 'Permissions',
     description: 'Manage system permissions and access control',
-    icon: IconFileWord,
+    icon: IconChecklist,
     group: 'auth',
+    groupOrder: 3,
   },
     loader: async () => {
       return { data: dashboardData }

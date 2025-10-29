@@ -15,6 +15,7 @@ export const Route = createFileRoute('/help')({
     description: 'Get help and support for your account',
     icon: IconHelp,
     group: 'secondary',
+    groupOrder: 1,
   },
   loader: async () => {
     return { data: dashboardData }

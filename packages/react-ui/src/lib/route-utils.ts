@@ -6,12 +6,14 @@ export interface RouteMetadata {
   description: string
   icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>
   group: 'main' | 'secondary' | 'auth'
+  groupOrder: number
 }
 
 export interface NavItem {
   title: string
   url: string
   icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>
+  groupOrder: number
 }
 
 export function useRouteNavigation() {
@@ -28,12 +30,13 @@ export function useRouteNavigation() {
   Object.values(routes).forEach((route) => {
     const staticData = route.options?.staticData as RouteMetadata | undefined
     if (staticData) {
-      const { title, icon, group } = staticData
+      const { title, icon, group, groupOrder } = staticData
       
       const navItem: NavItem = {
         title,
         url: route.to,
         icon: icon,
+        groupOrder,
       }
 
       if (group === 'main') {

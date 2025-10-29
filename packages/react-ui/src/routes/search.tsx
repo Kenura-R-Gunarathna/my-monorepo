@@ -15,6 +15,7 @@ export const Route = createFileRoute('/search')({
     description: 'Manage your account settings and preferences',
     icon: IconSearch,
     group: 'secondary',
+    groupOrder: 2,
   },
   loader: async () => {
     return { data: dashboardData }

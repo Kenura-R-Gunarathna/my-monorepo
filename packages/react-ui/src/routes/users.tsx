@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { IconDatabase } from '@tabler/icons-react'
+import { IconUsers } from '@tabler/icons-react'
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
 import dashboardData from '../../public/data/dashboard.json'
@@ -13,8 +13,9 @@ export const Route = createFileRoute('/users')({
   staticData: {
     title: 'Users',
     description: 'Manage user accounts and permissions',
-    icon: IconDatabase,
+    icon: IconUsers,
     group: 'auth',
+    groupOrder: 1,
   },
   loader: async () => {
     return { data: dashboardData }

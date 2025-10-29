@@ -10,6 +10,7 @@ export const Route = createFileRoute('/')({
     description: 'View your dashboard overview and analytics',
     icon: IconDashboard,
     group: 'main',
+    groupOrder: 1,
   },
   loader: async () => {
     return { data: dashboardData }
