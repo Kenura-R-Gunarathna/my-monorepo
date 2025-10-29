@@ -1,6 +1,6 @@
 import { ChartAreaInteractive, DataTable, SectionCards } from "../index"
 import { createFileRoute } from '@tanstack/react-router'
-import dashboardData from '../../public/data/dashboard.json'
+import dashboardData from '../data/dashboard.json'
 import { IconDashboard } from '@tabler/icons-react'
 
 export const Route = createFileRoute('/')({

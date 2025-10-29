@@ -1,7 +1,7 @@
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
 import { createFileRoute } from '@tanstack/react-router'
-import dashboardData from '../../public/data/dashboard.json'
+import dashboardData from '../data/dashboard.json'
 import { IconSettings } from '@tabler/icons-react'
 
 export interface DashboardProps {
