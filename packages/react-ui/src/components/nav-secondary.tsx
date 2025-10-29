@@ -27,28 +27,39 @@ export function NavSecondary({
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
 
-  // Use provided LinkComponent or fallback to anchor tag
-  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
-    <a href={to} onClick={onClick}>{children}</a>
-  ))
-
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton 
-                asChild
-                isActive={selectedGroup === 'navSecondary' && selectedItem === item.title}
-              >
-                <NavLink to={item.url} onClick={() => setSelected('navSecondary', item.title, item.title)}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </NavLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => {
+            const isActive = selectedGroup === 'navSecondary' && selectedItem === item.title
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton 
+                  asChild
+                  isActive={isActive}
+                >
+                  {LinkComponent ? (
+                    <LinkComponent 
+                      to={item.url} 
+                      onClick={() => setSelected('navSecondary', item.title, item.title)}
+                    >
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </LinkComponent>
+                  ) : (
+                    <a 
+                      href={item.url} 
+                      onClick={() => setSelected('navSecondary', item.title, item.title)}
+                    >
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

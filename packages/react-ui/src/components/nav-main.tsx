@@ -42,11 +42,6 @@ export function NavMain({
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
   const [sheetOpen, setSheetOpen] = useState(false)
 
-  // Use provided LinkComponent or fallback to anchor tag
-  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
-    <a href={to} onClick={onClick}>{children}</a>
-  ))
-
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -92,20 +87,36 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton 
-                asChild
-                isActive={selectedGroup === 'navMain' && selectedItem === item.title}
-                tooltip={item.title}
-              >
-                <NavLink to={item.url} onClick={() => setSelected('navMain', item.title, item.title)}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </NavLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => {
+            const isActive = selectedGroup === 'navMain' && selectedItem === item.title
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton 
+                  asChild
+                  isActive={isActive}
+                  tooltip={item.title}
+                >
+                  {LinkComponent ? (
+                    <LinkComponent 
+                      to={item.url} 
+                      onClick={() => setSelected('navMain', item.title, item.title)}
+                    >
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </LinkComponent>
+                  ) : (
+                    <a 
+                      href={item.url} 
+                      onClick={() => setSelected('navMain', item.title, item.title)}
+                    >
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </a>
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

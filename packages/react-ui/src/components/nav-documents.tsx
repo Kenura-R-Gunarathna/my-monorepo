@@ -41,27 +41,37 @@ export function NavDocuments({
   const { isMobile } = useSidebar()
   const { selectedGroup, selectedItem, setSelected } = useNavigation()
 
-  // Use provided LinkComponent or fallback to anchor tag
-  const NavLink = LinkComponent || (({ to, children, onClick }: { to: string; children: ReactNode; onClick?: () => void }) => (
-    <a href={to} onClick={onClick}>{children}</a>
-  ))
-
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Documents</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton 
-              asChild
-              isActive={selectedGroup === 'navDocuments' && selectedItem === item.name}
-            >
-              <NavLink to={item.url} onClick={() => setSelected('navDocuments', item.name, item.name)}>
-                <item.icon />
-                <span>{item.name}</span>
-              </NavLink>
-            </SidebarMenuButton>
-            <DropdownMenu>
+        {items.map((item) => {
+          const isActive = selectedGroup === 'navDocuments' && selectedItem === item.name
+          return (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton 
+                asChild
+                isActive={isActive}
+              >
+                {LinkComponent ? (
+                  <LinkComponent 
+                    to={item.url} 
+                    onClick={() => setSelected('navDocuments', item.name, item.name)}
+                  >
+                    <item.icon />
+                    <span>{item.name}</span>
+                  </LinkComponent>
+                ) : (
+                  <a 
+                    href={item.url} 
+                    onClick={() => setSelected('navDocuments', item.name, item.name)}
+                  >
+                    <item.icon />
+                    <span>{item.name}</span>
+                  </a>
+                )}
+              </SidebarMenuButton>
+              <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
                   showOnHover
@@ -91,8 +101,9 @@ export function NavDocuments({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </SidebarMenuItem>
-        ))}
+            </SidebarMenuItem>
+          )
+        })}
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <IconDots className="text-sidebar-foreground/70" />
