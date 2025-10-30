@@ -1,27 +1,10 @@
 ---
-import { SigninForm, type SigninFormData } from "@krag/react-ui"
+import { SignInCard } from "../components/sign-in";
 import Layout from '../layouts/AuthLayout.astro';
 ---
 
 <Layout title="Sign In">
-  <SigninForm
-    client:load
-    onSubmit={async (data: SigninFormData["formData"]) => {
-      const response = await fetch("/api/auth/sign-in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
-      
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.message || "Failed to sign in")
-      }
-      
-      Astro.redirect("/dashboard");
-    }}
-    onSocialLogin={(provider: SigninFormData["socialProvider"]) => {
-      Astro.redirect(`/api/auth/${provider}`);
-    }}
-  />
+  <div class="flex flex-col items-center justify-center py-12">
+    <SignInCard client:load />
+  </div>
 </Layout>

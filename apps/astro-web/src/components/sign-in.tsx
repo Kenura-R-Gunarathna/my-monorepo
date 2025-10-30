@@ -1,0 +1,261 @@
+"use client";
+
+import { useForm } from "@tanstack/react-form";
+import { signInSchema, type SignInInput } from "@krag/zod-schema";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+    Button,
+    Input,
+    Label,
+    Checkbox 
+} from "@krag/react-ui";
+import { signIn } from "../lib/auth-client";
+
+export function SignInCard() {
+	const form = useForm({
+		defaultValues: {
+			email: "",
+			password: "",
+			rememberMe: false,
+		} as SignInInput,
+		validators: {
+			onChange: signInSchema,
+		},
+		onSubmit: async ({ value }) => {
+			try {
+				await signIn.email({
+					email: value.email,
+					password: value.password,
+					rememberMe: value.rememberMe,
+					fetchOptions: {
+						onError(context) {
+							alert(context.error.message);
+						},
+					},
+					callbackURL: "/dashboard",
+				});
+			} catch (error) {
+				console.error("Sign in error:", error);
+			}
+		},
+	});
+
+	const handleSocialSignIn = async (provider: "github" | "google") => {
+		try {
+			await signIn.social({
+				provider,
+				callbackURL: "/dashboard",
+			});
+		} catch (error) {
+			console.error("Social sign in error:", error);
+		}
+	};
+
+	const handlePasskeySignIn = async () => {
+		try {
+			await signIn.passkey({
+				fetchOptions: {
+					onError(context) {
+						alert(context.error.message);
+					},
+					onSuccess() {
+						window.location.href = "/dashboard";
+					},
+				},
+			});
+		} catch (error) {
+			console.error("Passkey sign in error:", error);
+		}
+	};
+
+	return (
+		<Card className="max-w-md w-full">
+			<CardHeader>
+				<CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
+				<CardDescription className="text-xs md:text-sm">
+					Enter your email below to login to your account
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						form.handleSubmit();
+					}}
+				>
+					<div className="grid gap-4">
+						<div className="grid gap-2">
+							<form.Field name="email">
+								{(field) => (
+									<div className="grid gap-2">
+										<Label htmlFor={field.name}>Email</Label>
+										<Input
+											id={field.name}
+											type="email"
+											placeholder="m@example.com"
+											value={field.state.value}
+											onBlur={field.handleBlur}
+											onChange={(e) => field.handleChange(e.target.value)}
+										/>
+										{field.state.meta.errors.length > 0 && (
+											<span className="text-sm text-destructive">
+												{field.state.meta.errors[0]?.message}
+											</span>
+										)}
+									</div>
+								)}
+							</form.Field>
+
+							<form.Field name="password">
+								{(field) => (
+									<div className="grid gap-2">
+										<div className="flex items-center justify-between">
+											<Label htmlFor={field.name}>Password</Label>
+											<a
+												href="/forget-password"
+												className="ml-auto inline-block text-sm underline"
+											>
+												Forgot your password?
+											</a>
+										</div>
+										<Input
+											id={field.name}
+											type="password"
+											placeholder="Password"
+											value={field.state.value}
+											onBlur={field.handleBlur}
+											onChange={(e) => field.handleChange(e.target.value)}
+										/>
+										{field.state.meta.errors.length > 0 && (
+											<span className="text-sm text-destructive">
+												{field.state.meta.errors[0]?.message}
+											</span>
+										)}
+									</div>
+								)}
+							</form.Field>
+
+							<form.Field name="rememberMe">
+								{(field) => (
+									<div className="flex items-center gap-2">
+										<Checkbox
+											id={field.name}
+											checked={field.state.value}
+											onCheckedChange={(checked) =>
+												field.handleChange(checked as boolean)
+											}
+										/>
+										<Label
+											htmlFor={field.name}
+											className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+										>
+											Remember Me
+										</Label>
+									</div>
+								)}
+							</form.Field>
+
+							<form.Subscribe
+								selector={(state) => [state.isSubmitting, state.canSubmit]}
+							>
+								{([isSubmitting, canSubmit]) => (
+									<Button type="submit" disabled={!canSubmit || isSubmitting}>
+										{isSubmitting ? "Signing in..." : "Sign In"}
+									</Button>
+								)}
+							</form.Subscribe>
+						</div>
+
+						<Button
+							type="button"
+							className="gap-2"
+							variant="outline"
+							onClick={() => handleSocialSignIn("github")}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="1.2em"
+								height="1.2em"
+								viewBox="0 0 24 24"
+							>
+								<path
+									fill="currentColor"
+									d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"
+								/>
+							</svg>
+							Continue with GitHub
+						</Button>
+						<Button
+							type="button"
+							className="gap-2"
+							variant="outline"
+							onClick={() => handleSocialSignIn("google")}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="1.2em"
+								height="1.2em"
+								viewBox="0 0 512 512"
+							>
+								<path
+									fill="currentColor"
+									d="m473.16 221.48l-2.26-9.59H262.46v88.22H387c-12.93 61.4-72.93 93.72-121.94 93.72c-35.66 0-73.25-15-98.13-39.11a140.08 140.08 0 0 1-41.8-98.88c0-37.16 16.7-74.33 41-98.78s61-38.13 97.49-38.13c41.79 0 71.74 22.19 82.94 32.31l62.69-62.36C390.86 72.72 340.34 32 261.6 32c-60.75 0-119 23.27-161.58 65.71C58 139.5 36.25 199.93 36.25 256s20.58 113.48 61.3 155.6c43.51 44.92 105.13 68.4 168.58 68.4c57.73 0 112.45-22.62 151.45-63.66c38.34-40.4 58.17-96.3 58.17-154.9c0-24.67-2.48-39.32-2.59-39.96"
+								/>
+							</svg>
+							Continue with Google
+						</Button>
+						<Button
+							type="button"
+							className="gap-2"
+							variant="outline"
+							onClick={handlePasskeySignIn}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="18"
+								height="18"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" />
+								<path d="m21 2-9.6 9.6" />
+								<circle cx="7.5" cy="15.5" r="5.5" />
+							</svg>
+							Sign-In with Passkey
+						</Button>
+
+						<p className="text-sm text-center">
+							Don't have an account yet?{" "}
+							<a
+								href="/sign-up"
+								className="text-blue-600 dark:text-blue-400 underline"
+							>
+								Sign Up
+							</a>
+						</p>
+					</div>
+				</form>
+			</CardContent>
+			<CardFooter className="flex-col">
+				<div className="flex justify-center w-full border-t py-4">
+					<p className="text-center text-xs text-neutral-500">
+						Secured by{" "}
+						<span className="text-orange-600 dark:text-orange-400">
+							better-auth.
+						</span>
+					</p>
+				</div>
+			</CardFooter>
+		</Card>
+	);
+}

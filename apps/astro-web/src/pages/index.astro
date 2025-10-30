@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/RootLayout.astro';
+---
+
+<Layout>
+  <div class="min-h-[80vh] flex flex-col items-center justify-center px-6 md:px-0">
+    <h1 class="font-bold text-4xl text-black dark:text-white text-center mb-4">
+      Welcome to Your App
+    </h1>
+    <p class="text-center text-base md:text-lg mb-8 text-muted-foreground">
+      Powered by Better Auth and Astro
+    </p>
+    <div class="flex gap-4">
+      <a href="/sign-in">
+        <button class="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-md py-3 px-6 text-primary-foreground text-sm font-medium transition-colors">
+          Sign In
+        </button>
+      </a>
+      <a href="/dashboard">
+        <button class="bg-secondary hover:bg-secondary/80 flex items-center gap-2 rounded-md py-3 px-6 text-secondary-foreground text-sm font-medium transition-colors">
+          Dashboard
+        </button>
+      </a>
+    </div>
+  </div>
+</Layout>

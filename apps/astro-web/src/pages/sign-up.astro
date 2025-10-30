@@ -1,25 +1,10 @@
 ---
-import { SignupForm, type SignupFormData } from "@krag/react-ui"
-
+import { SignUpCard } from "../components/sign-up";
 import Layout from '../layouts/AuthLayout.astro';
 ---
 
 <Layout title="Sign Up">
-  <SignupForm
-    client:load
-    onSubmit={async (data: SignupFormData["formData"]) => {
-      const response = await fetch("/api/auth/sign-up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
-      
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.message || "Failed to create account")
-      }
-      
-      Astro.redirect("/dashboard");
-    }}
-  />
+  <div class="flex flex-col items-center justify-center py-12">
+    <SignUpCard client:load />
+  </div>
 </Layout>
