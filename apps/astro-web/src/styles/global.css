@@ -1,6 +1,9 @@
 @import "tailwindcss";
-@import "@krag/react-ui/styles";
 @import "tw-animate-css";
+
+@layer react-ui{
+  @import "@krag/react-ui/styles";
+}
 
 @custom-variant dark (&:is(.dark *));
 
