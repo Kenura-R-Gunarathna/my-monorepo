@@ -16,3 +16,4 @@ export type User = z.infer<typeof userSchema>
 export type CreateUserInput = z.infer<typeof createUserInput>
 
 export * from './data-tables'
+export * from './auth'
