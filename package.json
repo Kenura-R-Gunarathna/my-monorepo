@@ -12,7 +12,6 @@
     "build:ui": "pnpm --filter @krag/react-ui build",
     "build:astro": "pnpm --filter astro-web build",
     "build:electron": "pnpm --filter electron-desktop build",
-    "build:api": "pnpm --filter @krag/trpc-api build",
     "dev:astro:ui": "pnpm --parallel --filter astro-web --filter @krag/react-ui dev"
   },
   "keywords": [],

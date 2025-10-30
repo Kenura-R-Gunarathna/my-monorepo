@@ -1,7 +1,7 @@
 // apps/astro-web/src/server/index.ts
 import { Hono } from 'hono'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import { appRouter } from '@krag/trpc-api'
+import { appRouter } from './trpc/routers/_app'
 import { config } from '@krag/config-astro'
 
 const app = new Hono().basePath('/api')
@@ -12,7 +12,6 @@ app.use('*', async (c, next) => {
   await next()
 })
 
-// Health check
 app.get('/health', (c) => c.json({ status: 'ok' }))
 
 // tRPC endpoint - handle both GET and POST
@@ -22,7 +21,11 @@ app.on(['GET', 'POST'], '/trpc/*', async (c) => {
     endpoint: '/api/trpc',
     req: c.req.raw,
     createContext: async () => {
-      return {}
+      // TODO: Add proper context creation with session and DB
+      return {
+        session: null,
+        db: null as any,
+      }
     },
   })
 })

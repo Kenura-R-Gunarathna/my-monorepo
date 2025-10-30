@@ -2,6 +2,7 @@
 import { router } from '../trpc'
 import { authRouter } from './auth'
 import { userRouter } from './user'
+import { adminRouter } from './admin/_app'
 
 /**
  * Main tRPC router - combines all sub-routers
@@ -9,6 +10,7 @@ import { userRouter } from './user'
 export const appRouter = router({
   auth: authRouter,
   user: userRouter,
+  admin: adminRouter,
 })
 
 /**
