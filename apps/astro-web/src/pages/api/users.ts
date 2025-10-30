@@ -1,6 +1,6 @@
 // Example: Using database in Astro API endpoint
 import type { APIRoute } from 'astro';
-import { getWebDb, users } from '@krag/database-web';
+import { getWebDb, users } from '@krag/database-astro';
 import { eq } from 'drizzle-orm';
 
 export const GET: APIRoute = async ({ params, request }) => {

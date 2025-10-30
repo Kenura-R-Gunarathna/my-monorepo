@@ -145,7 +145,7 @@ export async function createContext({ req }) {
 
 ```typescript
 import { auth } from "@krag/better-auth";
-import { db } from "@krag/database-web";
+import { db } from "@krag/database-astro";
 
 const session = await auth.api.getSession({ headers });
 

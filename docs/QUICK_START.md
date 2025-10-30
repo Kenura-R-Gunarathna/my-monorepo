@@ -16,12 +16,12 @@ pnpm --filter @krag/database-core add drizzle-orm mysql2
 pnpm --filter @krag/database-core add -D drizzle-kit tsx
 
 rem Install for database-web
-pnpm --filter @krag/database-web add drizzle-orm mysql2
-pnpm --filter @krag/database-web add -D drizzle-kit tsx
+pnpm --filter @krag/database-astro add drizzle-orm mysql2
+pnpm --filter @krag/database-astro add -D drizzle-kit tsx
 
 rem Install for database-desktop
-pnpm --filter @krag/database-desktop add drizzle-orm mysql2
-pnpm --filter @krag/database-desktop add -D drizzle-kit tsx
+pnpm --filter @krag/database-electron add drizzle-orm mysql2
+pnpm --filter @krag/database-electron add -D drizzle-kit tsx
 
 rem Install drizzle-orm in apps (needed for queries)
 pnpm --filter astro-web add drizzle-orm
@@ -44,15 +44,15 @@ DATABASE_URL=mysql://root:@localhost:3306/my_monorepo
 ```cmd
 cd c:\laragon\www\test-monorepo-system\my-monorepo
 pnpm --filter @krag/database-core db:push
-pnpm --filter @krag/database-web db:push
-pnpm --filter @krag/database-desktop db:push
+pnpm --filter @krag/database-astro db:push
+pnpm --filter @krag/database-electron db:push
 ```
 
 ## 4️⃣ Seed Database (Optional)
 
 ```cmd
-pnpm --filter @krag/database-web db:seed
-pnpm --filter @krag/database-desktop db:seed
+pnpm --filter @krag/database-astro db:seed
+pnpm --filter @krag/database-electron db:seed
 ```
 
 ## 5️⃣ Test with Drizzle Studio
@@ -87,8 +87,8 @@ pnpm --filter @krag/database-core db:studio
 - ✅ `apps/electron-desktop/src/main/database.ts`
 
 ### Updated:
-- ✅ `apps/astro-web/package.json` (added @krag/database-web)
-- ✅ `apps/electron-desktop/package.json` (added @krag/database-desktop)
+- ✅ `apps/astro-web/package.json` (added @krag/database-astro)
+- ✅ `apps/electron-desktop/package.json` (added @krag/database-electron)
 
 ---
 
@@ -97,8 +97,8 @@ pnpm --filter @krag/database-core db:studio
 | Package | Used By | Contains |
 |---------|---------|----------|
 | `@krag/database-core` | Both | `users`, `roles`, `settings`, `sync_queue` |
-| `@krag/database-web` | Astro | Core + `analytics` (add more web tables here) |
-| `@krag/database-desktop` | Electron | Core + `local_cache` (add more desktop tables here) |
+| `@krag/database-astro` | Astro | Core + `analytics` (add more web tables here) |
+| `@krag/database-electron` | Electron | Core + `local_cache` (add more desktop tables here) |
 
 ---
 
@@ -106,7 +106,7 @@ pnpm --filter @krag/database-core db:studio
 
 ### Astro (any .astro page):
 ```typescript
-import { getWebDb, users } from '@krag/database-web';
+import { getWebDb, users } from '@krag/database-astro';
 
 // Option 1: Use environment variable
 const db = getWebDb();
@@ -119,7 +119,7 @@ const allUsers = await db.select().from(users);
 
 ### Electron (main process):
 ```typescript
-import { getDesktopDb, users, localCache } from '@krag/database-desktop';
+import { getDesktopDb, users, localCache } from '@krag/database-electron';
 
 // Option 1: Use environment variable
 const db = getDesktopDb();
@@ -142,7 +142,7 @@ Edit: `packages/database-desktop/src/schema/local_cache.ts`
 
 After adding tables, run:
 ```cmd
-pnpm --filter @krag/database-web db:push
+pnpm --filter @krag/database-astro db:push
 # or
-pnpm --filter @krag/database-desktop db:push
+pnpm --filter @krag/database-electron db:push
 ```

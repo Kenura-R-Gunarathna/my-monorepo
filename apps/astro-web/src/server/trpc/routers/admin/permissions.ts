@@ -2,7 +2,7 @@
 import { router, protectedProcedure } from '../../trpc'
 import { z } from 'zod'
 import { eq, and, like, desc, asc } from 'drizzle-orm'
-import { permissions, roles, rolePermissions, userPermissions } from '@krag/database-web'
+import { permissions, roles, rolePermissions, userPermissions } from '@krag/database-astro'
 import { 
   getUserPermissions, 
   userHasPermission, 

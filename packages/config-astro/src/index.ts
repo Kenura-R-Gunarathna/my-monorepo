@@ -1,5 +1,5 @@
+import { astroConfigSchema, type AstroConfig } from '@krag/zod-schema'
 import { loadEnv } from './loader'
-import { astroConfigSchema, type AstroConfig } from './schema'
 
 // Load environment variables
 loadEnv('../..')

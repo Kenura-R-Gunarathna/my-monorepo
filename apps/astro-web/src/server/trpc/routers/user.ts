@@ -2,7 +2,7 @@
 import { router, publicProcedure, protectedProcedure } from '../trpc'
 import { z } from 'zod'
 import { eq, count } from 'drizzle-orm'
-import { user, session } from '@krag/database-web'
+import { user, session } from '@krag/database-astro'
 import { updateProfileSchema } from '@krag/zod-schema'
 
 export const userRouter = router({

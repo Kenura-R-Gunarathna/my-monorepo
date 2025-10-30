@@ -1,5 +1,5 @@
 import { AbilityBuilder, createMongoAbility, MongoAbility } from '@casl/ability'
-import type { permissions, roles, user } from '@krag/database-web/src/schema'
+import type { permissions, roles, user } from '@krag/database-astro'
 
 // Infer types from Drizzle schema
 type User = typeof user.$inferSelect

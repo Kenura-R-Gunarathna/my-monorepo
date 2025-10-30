@@ -10,7 +10,7 @@ Successfully implemented Better Auth from `astro-working-example` into `apps/ast
 
 ### 2. Authentication Core
 - **`apps/astro-web/src/auth.ts`**: Better Auth server configuration using:
-  - `@krag/database-web` for database connection via Drizzle
+  - `@krag/database-astro` for database connection via Drizzle
   - `@krag/config-astro` for environment variables
   - Plugins: Passkey, Two-Factor Authentication
   - Social providers: Google, GitHub

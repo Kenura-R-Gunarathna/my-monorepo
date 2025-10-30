@@ -1,5 +1,5 @@
 {
-  "name": "@krag/database-desktop",
+  "name": "@krag/database-electron",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -14,10 +14,7 @@
     "db:seed": "tsx src/seed.ts"
   },
   "dependencies": {
-    "@krag/database-core": "workspace:*",
-    "dotenv": "^16.6.1",
-    "drizzle-orm": "^0.44.7",
-    "mysql2": "^3.15.3"
+    "@krag/config-electron": "workspace:*"
   },
   "keywords": [],
   "author": "",

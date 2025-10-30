@@ -150,7 +150,7 @@ my-monorepo/
 
 ### Package Naming Convention
 
-- **Internal packages:** `@krag/*` (e.g., `@krag/better-auth`, `@krag/database-web`)
+- **Internal packages:** `@krag/*` (e.g., `@krag/better-auth`, `@krag/database-astro`)
 - **Shared UI:** `@krag/react-ui`
 - **Config:** `@krag/config-astro`, `@krag/config-electron`
 
@@ -200,7 +200,7 @@ pnpm add -D @types/node
     "drizzle-orm": "^0.44.7",
     "mysql2": "^3.11.5",
     "@krag/config-astro": "workspace:*",
-    "@krag/database-web": "workspace:*"
+    "@krag/database-astro": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -274,7 +274,7 @@ auth-schema.ts (user, session, account, verification)
     ↓ (imported by)
 database-web/src/schema/index.ts
     ↓ (re-exports + custom schemas)
-@krag/database-web/src/schema (roles, permissions, analytics)
+@krag/database-astro/src/schema (roles, permissions, analytics)
 ```
 
 ### Step 1: Generate Better Auth Schema
@@ -458,8 +458,8 @@ import crypto from "crypto";
 import { betterAuth } from "better-auth";
 import type { BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { getWebDb } from "@krag/database-web";
-import * as schema from "@krag/database-web/src/schema";
+import { getWebDb } from "@krag/database-astro";
+import * as schema from "@krag/database-astro/src/schema";
 import { config } from "@krag/config-astro";
 
 const db = getWebDb();
@@ -1053,7 +1053,7 @@ if (session) {
 
 ```typescript
 import { AbilityBuilder, createMongoAbility, MongoAbility } from '@casl/ability'
-import type { permissions, roles, user } from '@krag/database-web/src/schema'
+import type { permissions, roles, user } from '@krag/database-astro/src/schema'
 
 type User = typeof user.$inferSelect
 type Permission = typeof permissions.$inferSelect
@@ -1128,7 +1128,7 @@ export function defineAbilitiesFor(
 
 ```typescript
 import { auth } from "@krag/better-auth";
-import { db } from "@krag/database-web";
+import { db } from "@krag/database-astro";
 import { defineAbilitiesFor } from "@krag/casl-permissions";
 
 const session = await auth.api.getSession({ headers });
@@ -1282,8 +1282,8 @@ import { authClient, $Infer } from "@krag/better-auth";
 import type { User, Session } from "@/lib/auth-types";
 
 // Database schemas
-import { user, session } from "@krag/database-web/src/schema";
-import { roles, permissions } from "@krag/database-web/src/schema";
+import { user, session } from "@krag/database-astro/src/schema";
+import { roles, permissions } from "@krag/database-astro/src/schema";
 
 // Permissions
 import { defineAbilitiesFor } from "@krag/casl-permissions";

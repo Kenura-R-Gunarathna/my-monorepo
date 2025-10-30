@@ -31,7 +31,7 @@ The tRPC implementation uses the **new TanStack React Query integration** (recom
 ```typescript
 export async function createContext(opts: { ctx: APIContext }): Promise<Context> {
   const session = await auth.api.getSession({ headers: ctx.request.headers })
-  const db = getWebDb() // From @krag/database-web
+  const db = getWebDb() // From @krag/database-astro
   return { session, db }
 }
 ```
@@ -73,11 +73,11 @@ const trpcClient = createTRPCClient<AppRouter>({
 
 **Uses both packages:**
 - `@krag/database-core` - Core database connection and shared schemas
-- `@krag/database-web` - Web-specific tables + re-exports Better Auth schemas
+- `@krag/database-astro` - Web-specific tables + re-exports Better Auth schemas
 
 **Available schemas in routers:**
 ```typescript
-import { user, session } from '@krag/database-web'
+import { user, session } from '@krag/database-astro'
 
 // Better Auth schemas are re-exported from database-web:
 // - user (with custom fields: firstName, lastName, roleId, etc.)

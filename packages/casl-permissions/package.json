@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@casl/ability": "^6.7.3",
-    "@krag/database-web": "workspace:*"
+    "@krag/database-astro": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

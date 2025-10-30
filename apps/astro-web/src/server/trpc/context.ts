@@ -1,7 +1,7 @@
 // apps/astro-web/src/server/trpc/context.ts
 import type { APIContext } from 'astro'
 import { auth } from '../../auth'
-import { getWebDb } from '@krag/database-web'
+import { getWebDb } from '@krag/database-astro'
 
 export interface Context {
   session: Awaited<ReturnType<typeof auth.api.getSession>>

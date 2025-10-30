@@ -2,13 +2,13 @@ import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 export default defineConfig({
   main: {
     plugins: [
       externalizeDepsPlugin({
-        exclude: ['@krag/config-electron', '@krag/database-desktop', '@krag/database-core']
+        exclude: ['@krag/config-electron', '@krag/database-electron']
       })
     ]
   },
@@ -22,8 +22,7 @@ export default defineConfig({
       }
     },
     plugins: [
-      // TanStack Router plugin must be placed before React plugin
-      TanStackRouterVite({
+      tanstackRouter({
         target: 'react',
         autoCodeSplitting: true
       }),

@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@krag/zod-schema": "workspace:*",
     "dotenv": "^16.4.0",
     "zod": "^3.22.0"
   },

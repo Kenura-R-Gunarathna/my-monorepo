@@ -17,7 +17,7 @@ pnpm install
 
 ```typescript
 import { defineAbilitiesFor } from '@krag/casl-permissions'
-import { getWebDb, users, roles } from '@krag/database-web'
+import { getWebDb, users, roles } from '@krag/database-astro'
 import { eq } from 'drizzle-orm'
 
 const db = getWebDb()

@@ -2,8 +2,8 @@ import crypto from "crypto";
 import { betterAuth } from "better-auth";
 import type { BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { getWebDb } from "@krag/database-web";
-import * as schema from "@krag/database-web/src/schema";
+import { getWebDb } from "@krag/database-astro";
+import * as schema from "@krag/database-astro";
 import { config } from "@krag/config-astro";
 
 const db = getWebDb();

@@ -1,11 +1,11 @@
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
+import { config } from '@krag/config-astro';
 
 export default defineConfig({
   out: './drizzle',
-  schema: ['./src/schema/*.ts', '../database-core/src/schema/*.ts'],
+  schema: './src/schema/*.ts',
   dialect: 'mysql',
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: config.DATABASE_URL,
   },
 });

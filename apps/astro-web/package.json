@@ -15,7 +15,7 @@
     "@krag/better-auth": "workspace:*",
     "@krag/casl-permissions": "workspace:*",
     "@krag/config-astro": "workspace:*",
-    "@krag/database-web": "workspace:*",
+    "@krag/database-astro": "workspace:*",
     "@krag/react-ui": "workspace:*",
     "@krag/zod-schema": "workspace:*",
     "@tailwindcss/vite": "^4.1.16",

@@ -13,8 +13,7 @@
     "./schema": "./auth-schema.ts"
   },
   "dependencies": {
-    "@krag/database-core": "workspace:*",
-    "@krag/database-web": "workspace:*",
+    "@krag/database-astro": "workspace:*",
     "@krag/config-astro": "workspace:*",
     "better-auth": "^1.3.32",
     "drizzle-orm": "^0.44.7"

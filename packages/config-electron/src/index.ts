@@ -1,5 +1,5 @@
+import { electronConfigSchema, type ElectronConfig } from '@krag/zod-schema'
 import { loadEnv } from './loader'
-import { electronConfigSchema, type ElectronConfig } from './schema'
 
 // Load environment variables
 loadEnv('../..')

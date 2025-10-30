@@ -1,13 +1,11 @@
 {
-  "name": "@krag/database-web",
+  "name": "@krag/database-astro",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./src/schema": "./src/schema/index.ts",
-    "./src/schema/*": "./src/schema/*.ts"
+    ".": "./src/index.ts"
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
@@ -16,7 +14,7 @@
     "db:seed": "tsx src/seed.ts"
   },
   "dependencies": {
-    "@krag/database-core": "workspace:*",
+    "@krag/config-astro": "workspace:*",
     "@krag/better-auth": "workspace:*",
     "drizzle-orm": "^0.44.7",
     "mysql2": "^3.15.3"

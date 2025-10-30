@@ -5,8 +5,8 @@ This guide shows how to set up and use the database packages in your monorepo.
 ## 📦 Package Structure
 
 - **`@krag/database-core`** - Shared tables (users, roles, settings, sync_queue)
-- **`@krag/database-web`** - Astro-specific tables (analytics, posts, etc.)
-- **`@krag/database-desktop`** - Electron-specific tables (local_cache, preferences, etc.)
+- **`@krag/database-astro`** - Astro-specific tables (analytics, posts, etc.)
+- **`@krag/database-electron`** - Electron-specific tables (local_cache, preferences, etc.)
 
 ## 🚀 Step 1: Install Dependencies
 
@@ -51,10 +51,10 @@ Generate migrations for each database package:
 pnpm --filter @krag/database-core db:generate
 
 # Generate web migrations
-pnpm --filter @krag/database-web db:generate
+pnpm --filter @krag/database-astro db:generate
 
 # Generate desktop migrations
-pnpm --filter @krag/database-desktop db:generate
+pnpm --filter @krag/database-electron db:generate
 ```
 
 ## 🔄 Step 4: Push Schema to Database
@@ -66,10 +66,10 @@ Push your schema directly to the database (for development):
 pnpm --filter @krag/database-core db:push
 
 # Push web schema
-pnpm --filter @krag/database-web db:push
+pnpm --filter @krag/database-astro db:push
 
 # Push desktop schema
-pnpm --filter @krag/database-desktop db:push
+pnpm --filter @krag/database-electron db:push
 ```
 
 **Note:** For production, use migrations instead of push.
@@ -80,10 +80,10 @@ Run seed files to populate initial data:
 
 ```cmd
 # Seed web database
-pnpm --filter @krag/database-web db:seed
+pnpm --filter @krag/database-astro db:seed
 
 # Seed desktop database
-pnpm --filter @krag/database-desktop db:seed
+pnpm --filter @krag/database-electron db:seed
 ```
 
 ## 🎨 Step 6: Open Drizzle Studio (Optional)
@@ -95,10 +95,10 @@ View and edit your database visually:
 pnpm --filter @krag/database-core db:studio
 
 # Open studio for web tables
-pnpm --filter @krag/database-web db:studio
+pnpm --filter @krag/database-astro db:studio
 
 # Open studio for desktop tables
-pnpm --filter @krag/database-desktop db:studio
+pnpm --filter @krag/database-electron db:studio
 ```
 
 ## 📖 Usage Examples
@@ -109,7 +109,7 @@ pnpm --filter @krag/database-desktop db:studio
 
 ```astro
 ---
-import { getWebDb, users } from '@krag/database-web';
+import { getWebDb, users } from '@krag/database-astro';
 import { eq } from 'drizzle-orm';
 
 const db = getWebDb();
@@ -129,7 +129,7 @@ const allUsers = await db.select().from(users);
 
 ```typescript
 import type { APIRoute } from 'astro';
-import { getWebDb, users } from '@krag/database-web';
+import { getWebDb, users } from '@krag/database-astro';
 
 export const GET: APIRoute = async () => {
   const db = getWebDb();
@@ -147,7 +147,7 @@ export const GET: APIRoute = async () => {
 #### In main process:
 
 ```typescript
-import { getDesktopDb, users, localCache } from '@krag/database-desktop';
+import { getDesktopDb, users, localCache } from '@krag/database-electron';
 import { eq } from 'drizzle-orm';
 
 const db = getDesktopDb();
@@ -177,22 +177,22 @@ pnpm install
 
 # Generate migrations
 pnpm --filter @krag/database-core db:generate
-pnpm --filter @krag/database-web db:generate
-pnpm --filter @krag/database-desktop db:generate
+pnpm --filter @krag/database-astro db:generate
+pnpm --filter @krag/database-electron db:generate
 
 # Push schema to database (development)
 pnpm --filter @krag/database-core db:push
-pnpm --filter @krag/database-web db:push
-pnpm --filter @krag/database-desktop db:push
+pnpm --filter @krag/database-astro db:push
+pnpm --filter @krag/database-electron db:push
 
 # Seed database
-pnpm --filter @krag/database-web db:seed
-pnpm --filter @krag/database-desktop db:seed
+pnpm --filter @krag/database-astro db:seed
+pnpm --filter @krag/database-electron db:seed
 
 # Open Drizzle Studio
 pnpm --filter @krag/database-core db:studio
-pnpm --filter @krag/database-web db:studio
-pnpm --filter @krag/database-desktop db:studio
+pnpm --filter @krag/database-astro db:studio
+pnpm --filter @krag/database-electron db:studio
 ```
 
 ## 📂 File Structure
@@ -226,9 +226,9 @@ my-monorepo/
 │       └── package.json
 └── apps/
     ├── astro-web/
-    │   └── package.json         # Uses @krag/database-web
+    │   └── package.json         # Uses @krag/database-astro
     └── electron-desktop/
-        └── package.json         # Uses @krag/database-desktop
+        └── package.json         # Uses @krag/database-electron
 ```
 
 ## 🎯 Benefits

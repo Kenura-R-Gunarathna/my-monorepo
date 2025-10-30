@@ -1,6 +1,6 @@
 // Example: Using database in Electron main process
 import { ipcMain } from 'electron'
-import { getDesktopDb, users, localCache, type DesktopDb } from '@krag/database-desktop'
+import { getDesktopDb, users, localCache, type DesktopDb } from '@krag/database-electron'
 import { eq } from 'drizzle-orm'
 
 // Initialize database connection

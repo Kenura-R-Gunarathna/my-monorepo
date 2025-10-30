@@ -26,7 +26,7 @@
     "@krag/zod-schema": "workspace:*",
     "@krag/better-auth": "workspace:*",
     "@krag/config-electron": "workspace:*",
-    "@krag/database-desktop": "workspace:*",
+    "@krag/database-electron": "workspace:*",
     "@krag/react-ui": "workspace:*",
     "@tanstack/react-router": "^1.133.32",
     "@tanstack/react-router-devtools": "^1.133.32",
