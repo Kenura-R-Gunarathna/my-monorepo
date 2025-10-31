@@ -1,0 +1,11 @@
+---
+import { TwoFactorComponent } from "@/components/two-factor";
+import Layout from '../layouts/AuthLayout.astro';
+
+---
+
+<Layout title="Sign In">
+  <div class="flex flex-col items-center justify-center py-12">
+    <TwoFactorComponent client:load />
+  </div>
+</Layout>
