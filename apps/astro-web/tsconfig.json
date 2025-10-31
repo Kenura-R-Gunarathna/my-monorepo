@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "**/*", "../../packages/react-ui/src/components/user-card.tsx"],
   "exclude": ["dist"],
   "compilerOptions": {
     "jsx": "react-jsx",

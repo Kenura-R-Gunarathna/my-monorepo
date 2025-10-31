@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "better-auth:generate:schema": "npx @better-auth/cli generate --output ../../packages/databse-astro/src/schema/auth.ts --config src/lib/auth.ts",
+    "better-auth:generate:schema": "npx @better-auth/cli generate --output ../../packages/database-astro/src/schema/auth.ts --config src/lib/auth.ts",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -12,7 +12,6 @@
   "dependencies": {
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.4.0",
-    "@astrojs/tailwind": "^6.0.2",
     "@krag/casl-permissions": "workspace:*",
     "@krag/config-astro": "workspace:*",
     "@krag/database-astro": "workspace:*",

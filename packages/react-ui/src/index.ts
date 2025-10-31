@@ -155,6 +155,9 @@ export {
 export { SigninForm, type SigninFormData } from './components/auth/signin-form';
 export { SignupForm, type SignupFormData } from './components/auth/signup-form';
 
+// Export account components
+export { UserCard } from './components/account/user-card';
+
 // Export dashboard components
 export { App } from './components/App';
 export { AppSidebar } from './components/app-sidebar';

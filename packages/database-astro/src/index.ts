@@ -1,5 +1,5 @@
 import { drizzle } from 'drizzle-orm/mysql2';
-import { config } from '@krag/config-electron';
+import { config } from '@krag/config-astro';
 
 const dbUrl = config.DATABASE_URL;
 

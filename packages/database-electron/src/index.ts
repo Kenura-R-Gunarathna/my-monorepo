@@ -1,4 +1,4 @@
-import { drizzle } from 'drizzle-orm/mysql2';
+import { drizzle } from 'drizzle-orm/libsql';
 import { config } from '@krag/config-electron';
 
 const dbFileName = config.DB_FILE_NAME;

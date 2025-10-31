@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { useEffect, useState } from "react";
 import { 
 	Button,
 	Card,
@@ -14,12 +14,12 @@ import {
 import { twoFactorActions } from "../lib/auth-client";
 
 export function TwoFactorComponent() {
-	const [otp, setOTP] = createSignal("");
+	const [otp, setOTP] = useState("");
 
-	createEffect(() => {
-		if (otp().length === 6) {
+	useEffect(() => {
+		if (otp.length === 6) {
 			twoFactorActions.verifyTotp({
-				code: otp(),
+				code: otp,
 				fetchOptions: {
 					onError(context) {
 						if (context.error.status === 429) {
@@ -38,10 +38,11 @@ export function TwoFactorComponent() {
 				},
 			});
 		}
-	});
+	}, [otp]);
+
 	return (
-		<main class="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
-			<Card class="w-[350px]">
+		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
+			<Card className="w-[350px]">
 				<CardHeader>
 					<CardTitle>TOTP Verification</CardTitle>
 					<CardDescription>
@@ -49,10 +50,10 @@ export function TwoFactorComponent() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div class="flex flex-col gap-2  items-center">
+					<div className="flex flex-col gap-2 items-center">
 						<OTPField
 							maxLength={6}
-							value={otp()}
+							value={otp}
 							onValueChange={(value) => {
 								setOTP(value);
 							}}
@@ -67,14 +68,14 @@ export function TwoFactorComponent() {
 								<OTPFieldSlot index={5} />
 							</OTPFieldGroup>
 						</OTPField>
-						<span class="text-center text-xs">
+						<span className="text-center text-xs">
 							Enter your one-time password.
 						</span>
 					</div>
-					<div class="flex justify-center">
+					<div className="flex justify-center">
 						<a
 							href="/two-factor/email"
-							class="text-xs border-b pb-1 mt-2  w-max hover:border-black transition-all"
+							className="text-xs border-b pb-1 mt-2 w-max hover:border-black transition-all"
 						>
 							Switch to Email Verification
 						</a>
@@ -86,12 +87,13 @@ export function TwoFactorComponent() {
 }
 
 export function TwoFactorEmail() {
-	const [otp, setOTP] = createSignal("");
+	const [otp, setOTP] = useState("");
+	const [sentEmail, setSentEmail] = useState(false);
 
-	createEffect(() => {
-		if (otp().length === 6) {
+	useEffect(() => {
+		if (otp.length === 6) {
 			twoFactorActions.verifyOtp({
-				code: otp(),
+				code: otp,
 				fetchOptions: {
 					onError(context) {
 						alert(context.error.message);
@@ -102,11 +104,11 @@ export function TwoFactorEmail() {
 				},
 			});
 		}
-	});
-	const [sentEmail, setSentEmail] = createSignal(false);
+	}, [otp]);
+
 	return (
-		<main class="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
-			<Card class="w-[350px]">
+		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
+			<Card className="w-[350px]">
 				<CardHeader>
 					<CardTitle>Email Verification</CardTitle>
 					<CardDescription>
@@ -114,43 +116,40 @@ export function TwoFactorEmail() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<Show
-						when={sentEmail()}
-						fallback={
-							<Button
-								onClick={async () => {
-									await twoFactorActions.sendOtp({
-										fetchOptions: {
-											onSuccess(context) {
-												setSentEmail(true);
-											},
-											onError(context) {
-												alert(context.error.message);
-											},
+					{!sentEmail ? (
+						<Button
+							onClick={async () => {
+								await twoFactorActions.sendOtp({
+									fetchOptions: {
+										onSuccess(context) {
+											setSentEmail(true);
 										},
-									});
-								}}
-								class="w-full gap-2"
+										onError(context) {
+											alert(context.error.message);
+										},
+									},
+								});
+							}}
+							className="w-full gap-2"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="1.2em"
+								height="1.2em"
+								viewBox="0 0 24 24"
 							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="1.2em"
-									height="1.2em"
-									viewBox="0 0 24 24"
-								>
-									<path
-										fill="currentColor"
-										d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7.175q.125 0 .263-.038t.262-.112L19.6 8.25q.2-.125.3-.312t.1-.413q0-.5-.425-.75T18.7 6.8L12 11L5.3 6.8q-.45-.275-.875-.012T4 7.525q0 .25.1.438t.3.287l7.075 4.425q.125.075.263.113t.262.037"
-									></path>
-								</svg>{" "}
-								Send OTP to Email
-							</Button>
-						}
-					>
-						<div class="flex flex-col gap-2  items-center">
+								<path
+									fill="currentColor"
+									d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7.175q.125 0 .263-.038t.262-.112L19.6 8.25q.2-.125.3-.312t.1-.413q0-.5-.425-.75T18.7 6.8L12 11L5.3 6.8q-.45-.275-.875-.012T4 7.525q0 .25.1.438t.3.287l7.075 4.425q.125.075.263.113t.262.037"
+								></path>
+							</svg>{" "}
+							Send OTP to Email
+						</Button>
+					) : (
+						<div className="flex flex-col gap-2 items-center">
 							<OTPField
 								maxLength={6}
-								value={otp()}
+								value={otp}
 								onValueChange={(value) => {
 									setOTP(value);
 								}}
@@ -165,15 +164,15 @@ export function TwoFactorEmail() {
 									<OTPFieldSlot index={5} />
 								</OTPFieldGroup>
 							</OTPField>
-							<span class="text-center text-xs">
+							<span className="text-center text-xs">
 								Enter your one-time password.
 							</span>
 						</div>
-					</Show>
-					<div class="flex justify-center">
+					)}
+					<div className="flex justify-center">
 						<a
 							href="/two-factor"
-							class="text-xs border-b pb-1 mt-2  w-max hover:border-black transition-all"
+							className="text-xs border-b pb-1 mt-2 w-max hover:border-black transition-all"
 						>
 							Switch to TOTP Verification
 						</a>

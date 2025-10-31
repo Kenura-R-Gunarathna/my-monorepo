@@ -38,7 +38,6 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
-    // @ts-ignore
     plugins: [tailwindcss()],
     
     server: {
@@ -51,7 +50,6 @@ export default defineConfig({
     },
     
     optimizeDeps: {
-      // ✅ Array from package.json dependencies
       exclude: workspacePackages,
       include: ['react', 'react-dom', 'react/jsx-runtime']
     }

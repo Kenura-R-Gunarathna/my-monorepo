@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Home, Menu, X } from 'lucide-react'
-import { NavLink } from './NavLink'
+import { NavLink } from './nav-link'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
