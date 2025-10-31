@@ -1,4 +1,4 @@
-import { auth } from "./auth";
+import { auth } from "@krag/database-astro";
 import { defineMiddleware } from "astro:middleware";
 
 // `context` and `next` are automatically typed

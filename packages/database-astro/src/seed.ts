@@ -1,15 +1,13 @@
-import { getWebDb } from './connection';
+import { dbConn } from "../";
 import { permissions, roles, rolePermissions } from './schema';
-// import { user } from '@krag/better-auth'
 
 async function seed() {
-  const db = getWebDb();
 
-  console.log('🌱 Starting database seed...');
+  console.log('Starting database seed...');
 
   try {
-    // 1. Seed Permissions
-    console.log('📝 Creating permissions...');
+    // Seed Permissions
+    console.log('Creating permissions...');
     const permissionData = [
       // User Management
       { name: 'users.create', resource: 'users', action: 'create', description: 'Create new users', category: 'users' },
@@ -51,7 +49,7 @@ async function seed() {
     const allPermissions = await db.select().from(permissions);
     const permissionMap = new Map(allPermissions.map(p => [p.name, p.id]));
 
-    // 2. Seed Roles
+    // Seed Roles
     console.log('👥 Creating roles...');
     const roleData = [
       {
@@ -93,7 +91,7 @@ async function seed() {
     const allRoles = await db.select().from(roles);
     const roleMap = new Map(allRoles.map(r => [r.name, r.id]));
 
-    // 3. Assign Permissions to Roles
+    // Assign Permissions to Roles
     console.log('🔗 Assigning permissions to roles...');
     
     const rolePermissionData = [
@@ -139,42 +137,20 @@ async function seed() {
     ];
 
     await db.insert(rolePermissions).values(rolePermissionData);
-    console.log(`✅ Assigned ${rolePermissionData.length} permissions to roles`);
-
-    // // 4. Create a sample Super Admin user
-    // console.log('👤 Creating sample Super Admin user...');
-    // await db.insert(user).values({
-    //   id: crypto.randomUUID(),
-    //   name: 'John Doe',
-    //   email: 'admin@example.com',
-    //   emailVerified: false,
-    //   image: null,
-    // });
-    // console.log('✅ Created Super Admin user (admin@example.com)');
-
-    // console.log('\n✨ Database seeding completed successfully!\n');
-    // console.log('📊 Summary:');
-    // console.log(`   - ${permissionData.length} permissions created`);
-    // console.log(`   - ${roleData.length} roles created`);
-    // console.log(`   - ${rolePermissionData.length} role-permission mappings created`);
-    // console.log(`   - 1 sample admin user created`);
-    // console.log('\n🔑 Default Login:');
-    // console.log('   Email: admin@example.com');
-    // console.log('   Role: Super Admin\n');
+    console.log(`Assigned ${rolePermissionData.length} permissions to roles`);
 
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('Error seeding database:', error);
     throw error;
   }
 }
 
-// Run the seed function
 seed()
   .then(() => {
-    console.log('✅ Seed script finished successfully');
+    console.log('Seed script finished successfully');
     process.exit(0);
   })
   .catch((error) => {
-    console.error('❌ Seed script failed:', error);
+    console.error('Seed script failed:', error);
     process.exit(1);
   });

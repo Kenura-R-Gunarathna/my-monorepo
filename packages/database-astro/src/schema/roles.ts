@@ -1,7 +1,7 @@
 import { mysqlTable, serial, varchar, text, boolean, timestamp } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
 import { rolePermissions } from './role-permissions'
-import { user } from '@krag/better-auth/schema'
+import { user } from './auth'
 
 // Roles table - defines roles in the system
 export const roles = mysqlTable('roles', {

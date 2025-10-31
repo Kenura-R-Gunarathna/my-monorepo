@@ -1,7 +1,7 @@
 "use client"
 
 import { useForm } from "@tanstack/react-form"
-import { cn } from "../../lib/utils"
+import { cn } from "../../lib/cn"
 import { Button } from "../../components/ui/button"
 import {
   Card,

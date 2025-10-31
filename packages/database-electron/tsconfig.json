@@ -16,7 +16,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/packages/database-desktop/*": ["./src/*"]
+      "@/packages/database-electron/*": ["./src/*"]
     }
   },
   "include": ["src/**/*", "drizzle.config.ts"],

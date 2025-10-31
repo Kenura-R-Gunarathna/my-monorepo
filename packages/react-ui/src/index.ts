@@ -172,7 +172,7 @@ export { NavUser } from './components/nav-user';
 export { QueryProvider } from './lib/query-provider';
 
 // Export utilities
-export { cn } from './lib/utils';
+export { cn } from './lib/cn';
 export { useRouteNavigation, usePageTitle } from './lib/route-utils';
 
 // Export hooks

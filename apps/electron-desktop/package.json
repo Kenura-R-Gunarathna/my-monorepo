@@ -24,7 +24,6 @@
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
     "@krag/zod-schema": "workspace:*",
-    "@krag/better-auth": "workspace:*",
     "@krag/config-electron": "workspace:*",
     "@krag/database-electron": "workspace:*",
     "@krag/react-ui": "workspace:*",

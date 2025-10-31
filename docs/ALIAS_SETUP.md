@@ -34,9 +34,9 @@ All packages in this monorepo have consistent aliases:   - Individual package co
 
 @/packages/database-core/*     → packages/database-core/src/*3. **Path resolution conflicts**
 
-@/packages/database-desktop/*  → packages/database-desktop/src/*   - Node.js module resolution vs TypeScript vs Vite
+@/packages/database-electron/*  → packages/database-desktop/src/*   - Node.js module resolution vs TypeScript vs Vite
 
-@/packages/database-web/*      → packages/database-web/src/*   - Symlinked dependencies in node_modules can cause confusion
+@/packages/database-astro/*      → packages/database-web/src/*   - Symlinked dependencies in node_modules can cause confusion
 
 @/packages/react-ui/*          → packages/react-ui/src/*
 
@@ -86,9 +86,9 @@ Located at: `my-monorepo/tsconfig.json`{
 
       "@/packages/database-core/*": ["packages/database-core/src/*"],```typescript
 
-      "@/packages/database-desktop/*": ["packages/database-desktop/src/*"],import { defineConfig } from 'vite'
+      "@/packages/database-electron/*": ["packages/database-desktop/src/*"],import { defineConfig } from 'vite'
 
-      "@/packages/database-web/*": ["packages/database-web/src/*"],import path from 'path'
+      "@/packages/database-astro/*": ["packages/database-web/src/*"],import path from 'path'
 
       "@/packages/trpc-api/*": ["packages/trpc-api/src/*"],
 
@@ -170,7 +170,7 @@ import { userSchema } from '@/packages/zod-schema/user'
 
 import { trpc } from '@/packages/trpc-api/client'
 
-import { db } from '@/packages/database-web/client'```typescript1. **TypeScript Compiler** - Needs to know how to resolve types
+import { db } from '@/packages/database-astro/client'```typescript1. **TypeScript Compiler** - Needs to know how to resolve types
 
 import { defineAbilityFor } from '@/packages/casl-permissions/abilities'
 
@@ -190,11 +190,11 @@ Use aliases within the same package:@/packages/database-core/*     → packages/
 
 
 
-```typescript@/packages/database-desktop/*  → packages/database-desktop/src/*
+```typescript@/packages/database-electron/*  → packages/database-desktop/src/*
 
 // In packages/better-auth/src/middleware/auth.ts
 
-import { authClient } from '@/packages/better-auth/client'@/packages/database-web/*      → packages/database-web/src/*### 1. Root `tsconfig.json`
+import { authClient } from '@/packages/better-auth/client'@/packages/database-astro/*      → packages/database-web/src/*### 1. Root `tsconfig.json`
 
 import { userSchema } from '@/packages/better-auth/schema'
 
@@ -218,17 +218,17 @@ import { userSchema } from '@/packages/better-auth/schema'
 
 // Web database (PostgreSQL/MySQL for web apps)
 
-import { db } from '@/packages/database-web/client'  "compilerOptions": {
+import { db } from '@/packages/database-astro/client'  "compilerOptions": {
 
-import { users, posts } from '@/packages/database-web/schema'
+import { users, posts } from '@/packages/database-astro/schema'
 
 Each alias is configured in **two places**:    "baseUrl": ".",
 
 // Desktop database (SQLite for Electron)
 
-import { db } from '@/packages/database-desktop/client'    "paths": {
+import { db } from '@/packages/database-electron/client'    "paths": {
 
-import { settings } from '@/packages/database-desktop/schema'
+import { settings } from '@/packages/database-electron/schema'
 
 ### 1. Root `tsconfig.json`      "@/packages/react-ui/*": ["packages/react-ui/src/*"]
 
@@ -282,11 +282,11 @@ import {
 
   signupSchema 
 
-} from '@/packages/zod-schema/auth'      "@/packages/database-desktop/*": ["packages/database-desktop/src/*"],
+} from '@/packages/zod-schema/auth'      "@/packages/database-electron/*": ["packages/database-desktop/src/*"],
 
 import { 
 
-  createPostSchema,       "@/packages/database-web/*": ["packages/database-web/src/*"],### 2. Package `tsconfig.app.json`
+  createPostSchema,       "@/packages/database-astro/*": ["packages/database-web/src/*"],### 2. Package `tsconfig.app.json`
 
   updatePostSchema 
 
@@ -450,7 +450,7 @@ export default defineConfig({
 
 })
 
-```import { db } from '@/packages/database-web/client'  // ... other config
+```import { db } from '@/packages/database-astro/client'  // ... other config
 
 
 
@@ -538,11 +538,11 @@ import { userSchema } from '@/packages/better-auth/schema'
 
 2. Check the package's own `tsconfig.json` has the alias
 
-3. If using Vite/Astro, check their config files have the aliasimport { db } from '@/packages/database-web/client'**Why?** This is a [project references file](https://www.typescriptlang.org/docs/handbook/project-references.html) that just points to other configs. The actual path configuration belongs in `tsconfig.app.json`.
+3. If using Vite/Astro, check their config files have the aliasimport { db } from '@/packages/database-astro/client'**Why?** This is a [project references file](https://www.typescriptlang.org/docs/handbook/project-references.html) that just points to other configs. The actual path configuration belongs in `tsconfig.app.json`.
 
 4. Restart your TypeScript server in VS Code (Cmd/Ctrl + Shift + P → "Restart TS Server")
 
-import { users, posts } from '@/packages/database-web/schema'
+import { users, posts } from '@/packages/database-astro/schema'
 
 ### Issue: Works in TypeScript but fails at runtime
 
@@ -554,11 +554,11 @@ import { users, posts } from '@/packages/database-web/schema'
 
 ### Issue: Circular dependencies
 
-import { db } from '@/packages/database-desktop/client'### Issue 1: "Cannot find module '@/packages/react-ui/...'"
+import { db } from '@/packages/database-electron/client'### Issue 1: "Cannot find module '@/packages/react-ui/...'"
 
 **Solution:** Aliases make it easier to create circular dependencies. Keep packages focused and avoid importing back to dependent packages.
 
-import { settings } from '@/packages/database-desktop/schema'
+import { settings } from '@/packages/database-electron/schema'
 
 ### Issue: Different paths in dev vs build
 
@@ -612,9 +612,9 @@ import { createTransaction } from '@/packages/database-core/utils'### Issue 2: T
 
 | database-core | `@/packages/database-core/*` | Shared DB utils |// Zod Schemas### Within the react-ui package:
 
-| database-desktop | `@/packages/database-desktop/*` | SQLite for Electron |
+| database-desktop | `@/packages/database-electron/*` | SQLite for Electron |
 
-| database-web | `@/packages/database-web/*` | PostgreSQL/MySQL for web |import { 
+| database-web | `@/packages/database-astro/*` | PostgreSQL/MySQL for web |import { 
 
 | react-ui | `@/packages/react-ui/*` | UI components |
 

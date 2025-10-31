@@ -1,26 +1,34 @@
-// loader.ts
-import { config } from 'dotenv'
-import { existsSync } from 'fs'
-import { join } from 'path'
+import { config as dotenvConfig } from 'dotenv'
+import { resolve } from 'path'
 
-export function loadEnv(projectRoot: string = process.cwd()): void {
-  // Always try to load the base .env (optional)
-  config({ path: join(projectRoot, '.env') })
+export function loadEnv(relativePath: string = '../..') {
+  const envPath = resolve(__dirname, relativePath, '.env')
+  dotenvConfig({ path: envPath })
+}
 
-  const mode = process.env.ASTRO_MODE || 'development'
-  const envFile = join(projectRoot, `.env.astro.${mode}`)
-
-  if (existsSync(envFile)) {
-    const result = config({ path: envFile })
-    if (result.error) {
-      console.error(`❌ Failed to load environment file: ${envFile}`)
-      throw result.error
-    }
-    console.log(`✓ Loaded environment: .env.astro.${mode}`)
-  } else if (process.env.NODE_ENV === 'production') {
-    console.log('✓ Using platform-injected environment variables (no local .env loaded)')
-  } else {
-    console.warn(`⚠ No env file found for mode: ${mode}`)
-    console.warn('Using whatever environment variables are currently set.')
+/**
+ * Get environment variable with fallback to process.env and default value
+ */
+export function getEnvVar(key: string, defaultValue?: string): string | undefined {
+  // First try the loaded .env value
+  let value = process.env[key]
+  
+  // If not found and default provided, use default
+  if (value === undefined && defaultValue !== undefined) {
+    console.warn(`⚠️  ${key} not found in environment, using default: ${defaultValue}`)
+    value = defaultValue
   }
+  
+  return value
+}
+
+/**
+ * Prepare environment with defaults before validation
+ */
+export function prepareEnv(defaults: Record<string, string>) {
+  Object.entries(defaults).forEach(([key, defaultValue]) => {
+    if (!process.env[key]) {
+      process.env[key] = defaultValue
+    }
+  })
 }

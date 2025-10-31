@@ -1,6 +1,6 @@
 import { mysqlTable, varchar, bigint, boolean, timestamp, primaryKey, index } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
-import { user } from '@krag/better-auth/schema'
+import { user } from './auth'
 import { permissions } from './permissions'
 
 // Junction table: individual permission overrides for specific users

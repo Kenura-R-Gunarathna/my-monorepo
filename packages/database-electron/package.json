@@ -8,13 +8,15 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
+    "better-auth:generate:schema": "npx @better-auth/cli generate --output src/schema/auth.ts --config src/lib/auth.ts",
+    "drizzle:generate:sql": "drizzle-kit generate",
+    "drizzle:push:sql": "drizzle-kit push",
+    "drizzle:studio": "drizzle-kit studio",
     "db:seed": "tsx src/seed.ts"
   },
   "dependencies": {
-    "@krag/config-electron": "workspace:*"
+    "@krag/config-electron": "workspace:*",
+    "drizzle-orm": "^0.44.7"
   },
   "keywords": [],
   "author": "",

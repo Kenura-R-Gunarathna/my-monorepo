@@ -1,32 +1,31 @@
-import { createAuthClient } from "better-auth/react";
 import { passkeyClient, twoFactorClient } from "better-auth/client/plugins";
-
-// Get the base URL from environment or default to localhost
-const getBaseURL = () => {
-	if (typeof window === 'undefined') {
-		return process.env.API_URL || "http://localhost:4321";
-	}
-	return window.location.origin;
-};
-
-// React client for Better Auth
+import { createAuthClient } from "better-auth/react";
+import { createAuthClient as createVanillaClient } from "better-auth/client";
+import { config } from "@krag/config-astro"
+ 
 export const {
 	signIn,
 	signOut,
-	signUp,
 	useSession,
+	signUp,
 	passkey: passkeyActions,
+	useListPasskeys,
 	twoFactor: twoFactorActions,
+	$Infer,
 	updateUser,
 	changePassword,
+	revokeSession,
+	revokeSessions,
 } = createAuthClient({
-	baseURL: getBaseURL(),
+	baseURL: config.BASE_URL,
 	plugins: [
 		passkeyClient(),
 		twoFactorClient({
-			onTwoFactorRedirect: () => {
-				window.location.href = "/two-factor";
-			},
+			twoFactorPage: "/two-factor",
 		}),
 	],
+});
+
+export const { useSession: useVanillaSession } = createVanillaClient({
+	baseURL: config.BASE_URL,
 });
