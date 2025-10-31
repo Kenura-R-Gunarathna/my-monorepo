@@ -7,7 +7,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		.getSession({
 			headers: context.request.headers,
 		})
-		.catch((e) => {
+		.catch((e: any) => {
 			console.error("Auth session error:", e);
 			return null;
 		});
