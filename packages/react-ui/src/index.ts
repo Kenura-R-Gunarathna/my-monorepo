@@ -1,6 +1,15 @@
 // Import styles
 import './styles/globals.css';
 
+// Export providers
+export { TRPCProvider } from './providers/TRPCProvider';
+
+// Export hooks
+export { usePlatformFeatures, useElectronStore, usePermissions } from './hooks/usePlatformFeatures';
+
+// Export trpc utilities
+export { trpc, isElectron, getPlatform, isFeatureAvailable, createUnifiedTRPCClient } from './lib/trpc';
+
 // Export all UI components
 export { Button, buttonVariants } from './components/ui/button';
 export { 

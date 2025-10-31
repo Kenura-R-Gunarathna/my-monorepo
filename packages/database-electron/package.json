@@ -18,7 +18,8 @@
     "@krag/config-electron": "workspace:*",
     "@libsql/client": "^0.15.15",
     "dotenv": "^16.6.1",
-    "drizzle-orm": "^0.44.7"
+    "drizzle-orm": "^0.44.7",
+    "electron-store": "^11.0.2"
   },
   "keywords": [],
   "author": "",

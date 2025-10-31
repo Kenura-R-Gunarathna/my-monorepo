@@ -1,5 +1,14 @@
 ---
-import { Account } from "../components/account";
+import { UserCard } from "@krag/react-ui";
+import {
+	signOut,
+	useSession,
+	passkeyActions,
+	useListPasskeys,
+	twoFactorActions,
+	updateUser,
+	revokeSession,
+} from "../lib/auth-client";
 import Layout from '../layouts/DashboardLayout.astro';
 import { auth } from "../lib/auth";
 
@@ -22,10 +31,19 @@ const sessionsArray = Array.isArray(activeSessions) ? activeSessions : [];
 <Layout title="Account">
   <div class="container mx-auto py-12 max-w-4xl">
     <h1 class="text-3xl font-bold mb-8">Account Settings</h1>
-    <Account 
-      client:load
-      activeSessions={sessionsArray}
-      initialSession={session}
-    />
+    <div class="container mx-auto py-8">
+			<UserCard 
+				client:load
+				activeSessions={sessionsArray}
+				initialSession={session}
+				useSession={useSession}
+				signOut={signOut}
+				updateUser={updateUser}
+				revokeSession={revokeSession}
+				passkeyActions={passkeyActions}
+				useListPasskeys={useListPasskeys}
+				twoFactorActions={twoFactorActions}
+			/>
+    </div>
   </div>
 </Layout>
