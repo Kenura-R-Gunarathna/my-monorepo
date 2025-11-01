@@ -1,3 +1,11 @@
-import type { $Infer } from "./auth-client";
+// Re-export auth types from centralized schema package
+export type {
+	User,
+	Session,
+	Account,
+	ExtendedUser,
+	ActiveSession,
+	ExtendedActiveSession,
+	UserSessionData
+} from '@krag/zod-schema'
 
-export type ActiveSession = typeof $Infer.Session;

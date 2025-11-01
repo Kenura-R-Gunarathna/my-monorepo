@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@krag/config-electron": "workspace:*",
+    "@krag/zod-schema": "workspace:*",
     "@libsql/client": "^0.15.15",
     "dotenv": "^16.6.1",
     "drizzle-orm": "^0.44.7",

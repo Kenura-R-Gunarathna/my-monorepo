@@ -1,4 +1,3 @@
-// apps/astro-web/src/server/trpc/routers/admin/permissions.ts
 import { router, protectedProcedure } from '../../trpc'
 import { z } from 'zod'
 import { eq, and, like, desc, asc } from 'drizzle-orm'

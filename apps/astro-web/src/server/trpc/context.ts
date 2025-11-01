@@ -1,32 +1,31 @@
-// apps/astro-web/src/server/trpc/context.ts
 import type { APIContext } from 'astro'
-import { auth } from '../../auth'
-import { getWebDb } from '@krag/database-astro'
+import { auth } from '../../lib/auth'
+import { dbConn } from '@krag/database-astro'
 
 export interface Context {
   session: Awaited<ReturnType<typeof auth.api.getSession>>
-  db: ReturnType<typeof getWebDb>
+  db: typeof dbConn
 }
 
 /**
  * Creates tRPC context for API requests
  * - Fetches session from Better Auth
  * - Provides database access via database-web
+ * 
+ * Supports both Astro APIContext and raw Request objects
  */
-export async function createContext(opts: { ctx: APIContext }): Promise<Context> {
-  const { ctx } = opts
+export async function createContext(
+  opts: { ctx: APIContext } | { req: Request }
+): Promise<Context> {
+  // Extract request headers from either APIContext or Request
+  const headers = 'ctx' in opts ? opts.ctx.request.headers : opts.req.headers
 
   // Get session from Better Auth
-  const session = await auth.api.getSession({ 
-    headers: ctx.request.headers 
-  })
-
-  // Get database instance
-  const db = getWebDb()
+  const session = await auth.api.getSession({ headers })
 
   return {
     session,
-    db,
+    db: dbConn,
   }
 }
 

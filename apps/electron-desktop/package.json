@@ -1,10 +1,13 @@
 {
-  "name": "electron-desktop",
+  "name": "@krag/electron-desktop",
   "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
+  "exports": {
+    "./trpc": "./trpc.ts"
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",

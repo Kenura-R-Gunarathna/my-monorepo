@@ -9,4 +9,4 @@ const dbPath = join(app.getPath('userData'), 'app.db');
 export const db = drizzle(`file:${dbPath}`);
 
 // Export all schemas
-export * from './schema';
+export * from '../schema';

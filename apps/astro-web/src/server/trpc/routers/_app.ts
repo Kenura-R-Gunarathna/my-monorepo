@@ -1,4 +1,3 @@
-// apps/astro-web/src/server/trpc/routers/_app.ts
 import { router } from '../trpc'
 import { authRouter } from './auth'
 import { userRouter } from './user'

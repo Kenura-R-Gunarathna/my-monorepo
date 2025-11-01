@@ -1,19 +1,7 @@
 import { createSecureStore } from './index';
-import type { User } from 'better-auth/types';
+import type { UserSessionData } from '@krag/zod-schema';
 
-interface UserSessionData {
-  token: string;
-  user: User & {
-    roleId?: number;
-    roleName?: string;
-    permissions?: string[];
-  };
-  roles: string[];
-  permissions: string[];
-  createdAt: number;
-}
-
-interface SessionStore {
+export interface SessionStore {
   session: UserSessionData | null;
 }
 

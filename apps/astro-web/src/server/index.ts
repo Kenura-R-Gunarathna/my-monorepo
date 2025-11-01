@@ -1,8 +1,7 @@
-// apps/astro-web/src/server/index.ts
 import { Hono } from 'hono'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { appRouter } from './trpc/routers/_app'
-import { config } from '@krag/config-astro'
+import { createContext } from './trpc/context'
 
 const app = new Hono().basePath('/api')
 
@@ -20,13 +19,7 @@ app.on(['GET', 'POST'], '/trpc/*', async (c) => {
     router: appRouter,
     endpoint: '/api/trpc',
     req: c.req.raw,
-    createContext: async () => {
-      // TODO: Add proper context creation with session and DB
-      return {
-        session: null,
-        db: null as any,
-      }
-    },
+    createContext: () => createContext({ req: c.req.raw }),
   })
 })
 
@@ -40,14 +33,18 @@ app.post('/upload', async (c) => {
   }
 
   try {
-    // Save file to public/uploads/
     const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
     const fileName = `${Date.now()}-${file.name}`
-    const filePath = `./public/uploads/${fileName}`
+    const uploadDir = './public/uploads'
+    const filePath = `${uploadDir}/${fileName}`
     
-    // In a real app, you'd use fs to write the file
-    // For now, we'll just return the file info
-    // TODO: Implement actual file saving with fs/promises
+    // Create directory if it doesn't exist
+    const fs = await import('fs/promises')
+    await fs.mkdir(uploadDir, { recursive: true })
+    
+    // Write file
+    await fs.writeFile(filePath, buffer)
     
     return c.json({ 
       success: true,
@@ -57,6 +54,7 @@ app.post('/upload', async (c) => {
       name: file.name
     })
   } catch (error) {
+    console.error('Upload error:', error)
     return c.json({ error: 'Failed to upload file' }, 500)
   }
 })

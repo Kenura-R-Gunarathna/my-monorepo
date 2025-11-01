@@ -1,6 +1,6 @@
 import { createSecureStore } from './index';
 
-interface AppSettings {
+export interface AppSettings {
   theme: 'light' | 'dark' | 'system';
   language: string;
   notifications: boolean;

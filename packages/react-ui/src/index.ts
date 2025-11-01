@@ -168,7 +168,7 @@ export { SignupForm, type SignupFormData } from './components/auth/signup-form';
 export { UserCard } from './components/account/user-card';
 
 // Export dashboard components
-export { App } from './components/App';
+export { App, type AppProps } from './components/App';
 export { AppSidebar } from './components/app-sidebar';
 export { ChartAreaInteractive } from './components/chart-area-interactive';
 export { DataTable } from './components/data-table';

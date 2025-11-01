@@ -1,7 +1,10 @@
 {
-  "name": "astro-web",
+  "name": "@krag/astro-web",
   "type": "module",
   "version": "0.0.1",
+  "exports": {
+    "./trpc": "./trpc.ts"
+  },
   "scripts": {
     "better-auth:generate:schema": "npx @better-auth/cli generate --output ../../packages/database-astro/src/schema/auth.ts --config src/lib/auth.ts",
     "dev": "astro dev",

@@ -302,6 +302,9 @@ importers:
       '@krag/config-electron':
         specifier: workspace:*
         version: link:../config-electron
+      '@krag/zod-schema':
+        specifier: workspace:*
+        version: link:../zod-schema
       '@libsql/client':
         specifier: ^0.15.15
         version: 0.15.15
@@ -432,6 +435,9 @@ importers:
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      superjson:
+        specifier: ^2.2.5
+        version: 2.2.5
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -454,6 +460,12 @@ importers:
       '@eslint/js':
         specifier: ^9.36.0
         version: 9.38.0
+      '@krag/astro-web':
+        specifier: workspace:*
+        version: link:../../apps/astro-web
+      '@krag/electron-desktop':
+        specifier: workspace:*
+        version: link:../../apps/electron-desktop
       '@tailwindcss/vite':
         specifier: ^4.1.16
         version: 4.1.16(vite@7.1.12(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1))
@@ -505,6 +517,9 @@ importers:
 
   packages/zod-schema:
     dependencies:
+      better-auth:
+        specifier: ^1.3.34
+        version: 1.3.34(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(solid-js@1.9.10)
       zod:
         specifier: ^3.22.0
         version: 3.25.76

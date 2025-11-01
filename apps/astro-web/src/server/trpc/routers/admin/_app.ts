@@ -1,4 +1,3 @@
-// apps/astro-web/src/server/trpc/routers/admin/_app.ts
 import { router } from '../../trpc'
 import { permissionsRouter } from './permissions'
 

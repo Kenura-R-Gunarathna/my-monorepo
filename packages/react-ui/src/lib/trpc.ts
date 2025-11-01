@@ -2,23 +2,46 @@ import { createTRPCReact } from '@trpc/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { ipcLink } from 'trpc-electron/renderer';
 import { splitLink } from '@trpc/client';
+import type { CreateTRPCReact } from '@trpc/react-query';
+import superjson from 'superjson';
 
 // Import router types from both backends
-import type { AppRouter as ElectronRouter } from '../../../apps/electron-desktop/src/main/trpc';
-// TODO: Add Astro router type when created
-// import type { AppRouter as AstroRouter } from '../../../apps/astro-web/src/server/trpc';
+import type { AppRouter as ElectronRouter } from '@krag/electron-desktop/trpc';
+import type { AppRouter as AstroRouter } from '@krag/astro-web/trpc';
 
-// For now, use Electron router as base
-export type AppRouter = ElectronRouter;
+// Unified router type that includes both Electron and Astro routers
+// This allows the tRPC client to work with both backends
+export type AppRouter = ElectronRouter & AstroRouter;
 
-export const trpc = createTRPCReact<AppRouter>();
+export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
+
+// Store platform from AppProps for platform detection
+let _platformFromProps: 'astro' | 'electron' | undefined;
+
+/**
+ * Set platform from App component props
+ * This is called when the App component initializes
+ */
+export const setPlatform = (platform: 'astro' | 'electron' | undefined): void => {
+  _platformFromProps = platform;
+};
 
 /**
  * Detect if running in Electron environment
+ * 1. First checks if platform was explicitly set via AppProps
+ * 2. Falls back to environment detection (checking for electronAPI/electron globals)
  */
 export const isElectron = (): boolean => {
+  // 1. Check if platform was explicitly set from AppProps
+  if (_platformFromProps !== undefined) {
+    return _platformFromProps === 'electron';
+  }
+  
+  // 2. Fall back to environment detection
   if (typeof window === 'undefined') return false;
-  return !!(window as any).electronAPI || !!((window as any).electron);
+  
+  const win = window as { electronAPI?: unknown; electron?: unknown };
+  return !!win.electronAPI || !!win.electron;
 };
 
 /**
@@ -76,6 +99,7 @@ export function createUnifiedTRPCClient() {
         // False branch: Use HTTP link for Web/Astro backend
         false: httpBatchLink({
           url: `${getAPIUrl()}/api/trpc`,
+          transformer: superjson,
           
           // Add authentication headers
           headers() {

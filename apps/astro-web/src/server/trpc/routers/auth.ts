@@ -1,4 +1,3 @@
-// apps/astro-web/src/server/trpc/routers/auth.ts
 import { router, publicProcedure } from '../trpc'
 
 export const authRouter = router({

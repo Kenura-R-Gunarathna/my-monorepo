@@ -1,3 +1,4 @@
+export * from './auth'
 export * from './analytics'
 export * from './roles'
 export * from './permissions'

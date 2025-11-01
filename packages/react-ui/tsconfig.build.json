@@ -13,5 +13,5 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["src/main.tsx", "src/App.tsx", "**/*.test.ts", "**/*.test.tsx"]
+  "exclude": ["src/main.tsx", "src/App.tsx", "src/components/user-card.tsx", "**/*.test.ts", "**/*.test.tsx"]
 }

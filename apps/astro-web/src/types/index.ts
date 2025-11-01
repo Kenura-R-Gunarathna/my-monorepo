@@ -1,6 +1,11 @@
-import type { Session, User } from "better-auth/types";
+// Re-export auth types from centralized schema package
+export type {
+	User,
+	Session,
+	Account,
+	ExtendedUser,
+	ActiveSession,
+	ExtendedActiveSession,
+	UserSessionData
+} from '@krag/zod-schema'
 
-export interface ActiveSession {
-	session: Session;
-	user: User;
-}

@@ -1,4 +1,3 @@
-// apps/astro-web/src/pages/api/[...all].ts
 import type { APIRoute } from 'astro'
 import app from '../../server/index'
 

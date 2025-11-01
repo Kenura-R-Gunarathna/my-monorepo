@@ -1,4 +1,3 @@
-// apps/astro-web/src/server/trpc/trpc.ts
 import { initTRPC, TRPCError } from '@trpc/server'
 import type { TRPCContext } from './context'
 import superjson from 'superjson'
