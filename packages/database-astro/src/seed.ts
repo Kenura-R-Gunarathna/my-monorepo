@@ -1,10 +1,8 @@
-import { dbConn } from "../";
+import { dbConn } from "./index";
 import { permissions, roles, rolePermissions } from './schema';
 
 async function seed() {
-
   console.log('Starting database seed...');
-
   try {
     // Seed Permissions
     console.log('Creating permissions...');
@@ -42,11 +40,11 @@ async function seed() {
       { name: 'all.manage', resource: 'all', action: 'manage', description: 'Full system access', category: 'system' },
     ];
 
-    await db.insert(permissions).values(permissionData);
+    await dbConn.insert(permissions).values(permissionData);
     console.log(`✅ Created ${permissionData.length} permissions`);
 
     // Get permission IDs for role assignment
-    const allPermissions = await db.select().from(permissions);
+    const allPermissions = await dbConn.select().from(permissions);
     const permissionMap = new Map(allPermissions.map(p => [p.name, p.id]));
 
     // Seed Roles
@@ -84,11 +82,11 @@ async function seed() {
       },
     ];
 
-    await db.insert(roles).values(roleData);
+    await dbConn.insert(roles).values(roleData);
     console.log(`✅ Created ${roleData.length} roles`);
 
     // Get role IDs
-    const allRoles = await db.select().from(roles);
+    const allRoles = await dbConn.select().from(roles);
     const roleMap = new Map(allRoles.map(r => [r.name, r.id]));
 
     // Assign Permissions to Roles
@@ -136,7 +134,7 @@ async function seed() {
       })),
     ];
 
-    await db.insert(rolePermissions).values(rolePermissionData);
+    await dbConn.insert(rolePermissions).values(rolePermissionData);
     console.log(`Assigned ${rolePermissionData.length} permissions to roles`);
 
   } catch (error) {

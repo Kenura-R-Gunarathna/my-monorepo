@@ -6,7 +6,7 @@ import { join } from 'path';
 const dbPath = join(app.getPath('userData'), 'app.db');
 
 // Initialize database with file path
-export const db = drizzle(`file:${dbPath}`);
+export const dbConn = drizzle(`file:${dbPath}`);
 
 // Export all schemas
 export * from '../schema';

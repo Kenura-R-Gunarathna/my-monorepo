@@ -324,6 +324,9 @@ importers:
       drizzle-kit:
         specifier: ^0.31.6
         version: 0.31.6
+      electron:
+        specifier: ^38.1.2
+        version: 38.5.0
       tsx:
         specifier: ^4.20.6
         version: 4.20.6

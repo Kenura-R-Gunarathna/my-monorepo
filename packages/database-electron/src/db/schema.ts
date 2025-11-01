@@ -6,6 +6,3 @@ export * from '../schema/permissions';
 export * from '../schema/roles';
 export * from '../schema/role-permissions';
 export * from '../schema/user-permissions';
-
-// Settings
-export * from '../schema/settings';
