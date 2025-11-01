@@ -1,6 +1,6 @@
 import { z } from 'zod'
 // Import types from better-auth - they already provide proper schemas
-import type { User, Session, Account, Verification } from 'better-auth/types'
+import type { User, Session } from 'better-auth/types'
 
 // ============================================================
 // Re-export Better Auth Types
