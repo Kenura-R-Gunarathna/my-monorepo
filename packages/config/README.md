@@ -105,7 +105,7 @@ import { configSecurityPlugin } from '@krag/config/vite-plugin'
 All configuration in a single `.env` file at the project root.
 
 **Loading Priority (last wins):**
-1. `.env` - Base defaults (committed)
+1. `.env` - Base defaults (committed/gitignored - your preference)
 2. `.env.${NODE_ENV}` - Environment-specific (`.env.development` or `.env.production`)
 3. `.env.${NODE_ENV}.local` - Environment + local overrides (gitignored)
 4. `.env.local` - Local overrides (gitignored, highest priority)

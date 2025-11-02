@@ -5,8 +5,8 @@
       "@/packages/react-ui/*": ["packages/react-ui/src/*"],
       "@/packages/casl-permissions/*": ["packages/casl-permissions/src/*"],
       "@/packages/config/*": ["packages/config/src/*"],
-  "@/packages/drizzle-orm-client/*": ["packages/drizzle-orm-client/src/*"],
-  "@/packages/drizzle-orm-server/*": ["packages/drizzle-orm-server/src/*"],
+      "@/packages/drizzle-orm-client/*": ["packages/drizzle-orm-client/src/*"],
+      "@/packages/drizzle-orm-server/*": ["packages/drizzle-orm-server/src/*"],
       "@/packages/zod-schema/*": ["packages/zod-schema/src/*"]
     }
   }
