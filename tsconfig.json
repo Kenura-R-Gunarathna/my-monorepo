@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "moduleResolution": "bundler",
     "paths": {
       "@/packages/react-ui/*": ["packages/react-ui/src/*"],
       "@/packages/casl-permissions/*": ["packages/casl-permissions/src/*"],

@@ -34,12 +34,13 @@ export const rolesRouter = router({
     if (online) {
       astroClient.roles.list
         .query(input)
-        .then(async (remoteData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then(async (remoteData: any) => {
           for (const role of remoteData.data) {
             await db.insert(roles).values(role).onConflictDoUpdate({ target: roles.id, set: role })
           }
         })
-        .catch((err) => console.warn('Background sync failed:', err))
+        .catch((err: unknown) => console.warn('Background sync failed:', err))
     }
     return {
       data: localData,

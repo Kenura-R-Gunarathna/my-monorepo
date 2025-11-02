@@ -20,13 +20,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     
     "baseUrl": ".",
     "paths": {
-      "@/packages/react-ui/*": ["./src/*"]
+      "@/packages/react-ui/*": ["./src/*"],
+      "@krag/astro-web/trpc": ["../../apps/astro-web/trpc.ts"]
     }
   },
   "include": ["src"]

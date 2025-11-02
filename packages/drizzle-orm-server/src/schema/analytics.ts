@@ -1,4 +1,4 @@
-import { mysqlTable, serial, varchar, text, timestamp, boolean, json, int, index } from 'drizzle-orm/mysql-core'
+import { mysqlTable, serial, varchar, text, timestamp, json, int, index } from 'drizzle-orm/mysql-core'
 
 export const analytics = mysqlTable('analytics', {
   id: serial('id').primaryKey(),

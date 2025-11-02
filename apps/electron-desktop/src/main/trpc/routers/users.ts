@@ -39,12 +39,13 @@ export const usersRouter = router({
     if (online) {
       astroClient.users.list
         .query(input)
-        .then(async (remoteData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then(async (remoteData: any) => {
           for (const user of remoteData.data) {
             await db.insert(users).values(user).onConflictDoUpdate({ target: users.id, set: user })
           }
         })
-        .catch((err) => console.warn('Background sync failed:', err))
+        .catch((err: unknown) => console.warn('Background sync failed:', err))
     }
     return {
       data: localData,

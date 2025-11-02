@@ -57,7 +57,8 @@ export const documentsRouter = router({
       // Fire and forget - sync in background
       astroClient.documents.list
         .query(input)
-        .then(async (remoteData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then(async (remoteData: any) => {
           // Merge remote data into local SQLite
           for (const doc of remoteData.data) {
             await db.insert(documents).values(doc).onConflictDoUpdate({
@@ -66,7 +67,7 @@ export const documentsRouter = router({
             })
           }
         })
-        .catch((err) => console.warn('Background sync failed:', err))
+        .catch((err: unknown) => console.warn('Background sync failed:', err))
     }
 
     return {

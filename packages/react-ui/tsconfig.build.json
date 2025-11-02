@@ -8,9 +8,14 @@
     "noEmit": false,
     "allowImportingTsExtensions": false,
     "verbatimModuleSyntax": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/packages/react-ui/*": ["./src/*"],
+      "@krag/astro-web/trpc": ["../../apps/astro-web/trpc.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/main.tsx", "src/App.tsx", "src/components/user-card.tsx", "**/*.test.ts", "**/*.test.tsx"]

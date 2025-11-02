@@ -10,6 +10,7 @@
     "composite": true,
     "types": ["electron-vite/node"],
     "moduleResolution": "bundler",
+    "skipLibCheck": true,
     "paths": {
       "@krag/astro-web/trpc": ["../../apps/astro-web/trpc.ts"]
     }

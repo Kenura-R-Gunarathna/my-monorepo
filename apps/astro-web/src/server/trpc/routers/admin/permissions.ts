@@ -1,11 +1,10 @@
 import { router, protectedProcedure } from '../../trpc'
 import { z } from 'zod'
-import { eq, and, like, desc, asc } from 'drizzle-orm'
-import { permissions, roles, rolePermissions, userPermissions } from '@krag/drizzle-orm-server'
+import { eq, and, like, asc } from 'drizzle-orm'
+import { permissions, rolePermissions, userPermissions } from '@krag/drizzle-orm-server'
 import { 
   getUserPermissions, 
   userHasPermission, 
-  userCan,
   getUserPermissionsByCategory 
 } from '../../../utils/permissions'
 

@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import type { TRPCContext } from './context'
 import superjson from 'superjson'
+import type { Session } from 'better-auth/types'
 
 /**
  * Initialize tRPC with context type
@@ -16,9 +17,16 @@ export const router = t.router
 export const publicProcedure = t.procedure
 
 /**
+ * Protected context with guaranteed session
+ */
+type ProtectedContext = TRPCContext & {
+  session: Session
+}
+
+/**
  * Protected procedure - requires authentication
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+export const protectedProcedure: ReturnType<typeof t.procedure.use<ProtectedContext>> = t.procedure.use<ProtectedContext>(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ 
       code: 'UNAUTHORIZED',

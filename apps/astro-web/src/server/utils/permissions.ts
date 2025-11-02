@@ -24,8 +24,8 @@ export interface ResolvedPermission {
  * - isActive flag controls if permission is active
  */
 export async function getUserPermissions(
-  userId: string,
-  db: MySql2Database<any>
+  _userId?: string,
+  _db?: MySql2Database<any>
 ): Promise<ResolvedPermission[]> {
   // For now, returning empty array until proper schema is set up
   // TODO: Implement proper query when relational queries are configured

@@ -1,4 +1,4 @@
-import { TRPCProvider } from '@krag/react-ui/providers/TRPCProvider'
+import { TRPCProvider } from '@krag/react-ui'
 import { App as SharedApp } from '@krag/react-ui'
 
 function ElectronApp(): React.JSX.Element {

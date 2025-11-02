@@ -38,7 +38,8 @@ export const settingsRouter = router({
     if (online) {
       astroClient.settings.list
         .query(input)
-        .then(async (remoteData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then(async (remoteData: any) => {
           for (const setting of remoteData.data) {
             await db
               .insert(settings)
@@ -46,7 +47,7 @@ export const settingsRouter = router({
               .onConflictDoUpdate({ target: settings.id, set: setting })
           }
         })
-        .catch((err) => console.warn('Background sync failed:', err))
+        .catch((err: unknown) => console.warn('Background sync failed:', err))
     }
     return {
       data: localData,
