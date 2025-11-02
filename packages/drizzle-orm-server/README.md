@@ -124,186 +124,235 @@ pnpm --filter @krag/drizzle-orm-server db:studio
 ### 1. Get Database Connection
 
 ```typescript
-import { getWebDb } from '@krag/drizzle-orm-server'
+import { dbConn } from '@krag/drizzle-orm-server'
 
-const db = getWebDb()
+// Use dbConn directly - it's a singleton instance
+const users = await dbConn.query.user.findMany()
 ```
 
-### 2. Import Schema
+**Note**: The package exports `dbConn` (not `db` or `getWebDb()`).
+
+### 2. Import Schema Tables
 
 ```typescript
 import { 
-  users, 
-  roles, 
-  permissions,
-  analytics,
-  sessions,
-  oauthAccounts 
+  user,              // Better Auth user table
+  session,           // Better Auth session table
+  account,           // Better Auth account/OAuth table
+  verification,      // Better Auth verification table
+  roles,             // Custom roles table
+  permissions,       // Custom permissions table
+  rolePermissions,   // Role-Permission junction
+  userPermissions,   // User-Permission junction
+  analytics,         // Analytics tracking
+  documents          // Document management
 } from '@krag/drizzle-orm-server'
 ```
 
 ### 3. Query Data
 
 ```typescript
-import { getWebDb, users } from '@krag/drizzle-orm-server'
+import { dbConn, user } from '@krag/drizzle-orm-server'
 import { eq, and, desc } from 'drizzle-orm'
 
-const db = getWebDb()
-
 // Find all users
-const allUsers = await db.query.users.findMany()
+const allUsers = await dbConn.query.user.findMany()
 
 // Find one user with relations
-const user = await db.query.users.findFirst({
-  where: eq(users.id, 1),
+const foundUser = await dbConn.query.user.findFirst({
+  where: eq(user.id, 'user-uuid'),
   with: {
-    role: true,
-    permissions: true,
+    sessions: true,
+    accounts: true,
   }
 })
 
-// Complex query
-const activeAdmins = await db.query.users.findMany({
+// Complex query with filtering
+const activeUsers = await dbConn.query.user.findMany({
   where: and(
-    eq(users.active, true),
-    eq(users.roleId, 1)
+    eq(user.isActive, true),
+    eq(user.emailVerified, true)
   ),
-  orderBy: [desc(users.createdAt)],
+  orderBy: [desc(user.createdAt)],
   limit: 10,
 })
+
+// Using select for specific columns
+const userEmails = await dbConn
+  .select({ 
+    id: user.id, 
+    email: user.email,
+    name: user.name 
+  })
+  .from(user)
+  .where(eq(user.isActive, true))
 ```
 
 ### 4. Insert Data
 
 ```typescript
-import { getWebDb, users } from '@krag/drizzle-orm-server'
-
-const db = getWebDb()
+import { dbConn, user } from '@krag/drizzle-orm-server'
+import { generateId } from 'lucia' // or any UUID generator
 
 // Insert single user
-const [newUser] = await db.insert(users).values({
+await dbConn.insert(user).values({
+  id: generateId(15),
   name: 'John Doe',
   email: 'john@example.com',
-  password: hashedPassword,
+  emailVerified: false,
   roleId: 2,
 })
 
 // Insert multiple users
-await db.insert(users).values([
-  { name: 'Alice', email: 'alice@example.com' },
-  { name: 'Bob', email: 'bob@example.com' },
+await dbConn.insert(user).values([
+  { 
+    id: generateId(15),
+    name: 'Alice', 
+    email: 'alice@example.com',
+    emailVerified: false 
+  },
+  { 
+    id: generateId(15),
+    name: 'Bob', 
+    email: 'bob@example.com',
+    emailVerified: false 
+  },
 ])
 ```
 
 ### 5. Update Data
 
 ```typescript
-import { getWebDb, users } from '@krag/drizzle-orm-server'
+import { dbConn, user } from '@krag/drizzle-orm-server'
 import { eq } from 'drizzle-orm'
 
-const db = getWebDb()
+// Update user (updatedAt is automatic via $onUpdate)
+await dbConn.update(user)
+  .set({ name: 'Jane Doe' })
+  .where(eq(user.id, 'user-uuid'))
 
-// Update user
-await db.update(users)
-  .set({ name: 'Jane Doe', updatedAt: new Date() })
-  .where(eq(users.id, 1))
+// Update multiple users
+await dbConn.update(user)
+  .set({ isActive: false })
+  .where(eq(user.roleId, 3))
 
-// Update multiple
-await db.update(users)
-  .set({ active: false })
-  .where(eq(users.roleId, 3))
+// Conditional update
+await dbConn.update(user)
+  .set({ emailVerified: true })
+  .where(eq(user.email, 'john@example.com'))
 ```
 
 ### 6. Delete Data
 
 ```typescript
-import { getWebDb, users } from '@krag/drizzle-orm-server'
-import { eq } from 'drizzle-orm'
+import { dbConn, user, session } from '@krag/drizzle-orm-server'
+import { eq, lt } from 'drizzle-orm'
 
-const db = getWebDb()
+// Delete user (sessions cascade automatically)
+await dbConn.delete(user).where(eq(user.id, 'user-uuid'))
 
-// Delete user
-await db.delete(users).where(eq(users.id, 1))
+// Delete expired sessions
+await dbConn.delete(session).where(lt(session.expiresAt, new Date()))
 
-// Delete with condition
-await db.delete(sessions).where(lt(sessions.expiresAt, new Date()))
+// Delete inactive users
+await dbConn.delete(user).where(eq(user.isActive, false))
 ```
 
 ### 7. Analytics Tracking
 
 ```typescript
-import { getWebDb, analytics } from '@krag/drizzle-orm-server'
-
-const db = getWebDb()
+import { dbConn, analytics } from '@krag/drizzle-orm-server'
+import { eq, desc } from 'drizzle-orm'
 
 // Track event
-await db.insert(analytics).values({
-  userId: 1,
-  event: 'page_view',
-  data: {
+await dbConn.insert(analytics).values({
+  eventName: 'page_view',
+  eventCategory: 'navigation',
+  userId: 123, // optional
+  sessionId: 'session-uuid',
+  metadata: {
     page: '/dashboard',
     referrer: 'https://google.com',
-    userAgent: req.headers['user-agent'],
-  }
+    duration: 5000,
+  },
+  ipAddress: req.ip,
+  userAgent: req.headers['user-agent'],
 })
 
-// Get analytics
-const pageViews = await db.query.analytics.findMany({
-  where: eq(analytics.event, 'page_view'),
+// Get analytics by event name
+const pageViews = await dbConn.query.analytics.findMany({
+  where: eq(analytics.eventName, 'page_view'),
   orderBy: [desc(analytics.createdAt)],
   limit: 100,
 })
+
+// Get analytics by category
+const userActions = await dbConn.query.analytics.findMany({
+  where: eq(analytics.eventCategory, 'user_action'),
+  orderBy: [desc(analytics.createdAt)],
+})
 ```
 
-### 8. Session Management
+### 8. Session Management (Better Auth)
 
 ```typescript
-import { getWebDb, sessions } from '@krag/drizzle-orm-server'
-
-const db = getWebDb()
+import { dbConn, session, user } from '@krag/drizzle-orm-server'
+import { eq, lt } from 'drizzle-orm'
+import { generateId } from 'lucia'
 
 // Create session
-await db.insert(sessions).values({
-  id: generateSessionId(),
-  userId: user.id,
+await dbConn.insert(session).values({
+  id: generateId(15),
+  userId: 'user-uuid',
   expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-  data: { loginAt: new Date(), ipAddress: req.ip }
+  token: generateSessionToken(),
+  ipAddress: req.ip,
+  userAgent: req.headers['user-agent'],
 })
 
-// Get session
-const session = await db.query.sessions.findFirst({
-  where: eq(sessions.id, sessionId),
+// Get session with user
+const userSession = await dbConn.query.session.findFirst({
+  where: eq(session.token, sessionToken),
   with: { user: true }
 })
 
 // Clean expired sessions
-await db.delete(sessions).where(lt(sessions.expiresAt, new Date()))
+await dbConn.delete(session).where(lt(session.expiresAt, new Date()))
+
+// Delete all user sessions (logout all devices)
+await dbConn.delete(session).where(eq(session.userId, 'user-uuid'))
 ```
 
-### 9. OAuth Integration
+### 9. OAuth Integration (Better Auth)
 
 ```typescript
-import { getWebDb, oauthAccounts } from '@krag/drizzle-orm-server'
-
-const db = getWebDb()
+import { dbConn, account, user } from '@krag/drizzle-orm-server'
+import { eq, and } from 'drizzle-orm'
+import { generateId } from 'lucia'
 
 // Link OAuth account
-await db.insert(oauthAccounts).values({
-  userId: user.id,
-  provider: 'google',
-  providerAccountId: googleProfile.id,
+await dbConn.insert(account).values({
+  id: generateId(15),
+  userId: 'user-uuid',
+  providerId: 'google',
+  accountId: googleProfile.id,
   accessToken: tokens.access_token,
   refreshToken: tokens.refresh_token,
+  expiresAt: new Date(Date.now() + 3600 * 1000),
 })
 
-// Find user by OAuth
-const account = await db.query.oauthAccounts.findFirst({
+// Find user by OAuth provider
+const userAccount = await dbConn.query.account.findFirst({
   where: and(
-    eq(oauthAccounts.provider, 'google'),
-    eq(oauthAccounts.providerAccountId, googleId)
+    eq(account.providerId, 'google'),
+    eq(account.accountId, googleId)
   ),
   with: { user: true }
 })
+
+if (userAccount) {
+  console.log('User found:', userAccount.user)
+}
 ```
 
 ## 🔧 Configuration
@@ -326,54 +375,67 @@ export default defineConfig({
 })
 ```
 
-### Connection (src/db/index.ts)
+### Connection (src/index.ts)
 
 ```typescript
 import { drizzle } from 'drizzle-orm/mysql2'
-import mysql from 'mysql2/promise'
 import { getServerConfig } from '@krag/config/server'
-import * as schema from '../schema'
 
 const config = getServerConfig()
-const connection = mysql.createPool(config.DATABASE_URL)
+const dbUrl = config.DATABASE_URL
 
-export const db = drizzle(connection, { schema, mode: 'default' })
-
-export function getWebDb() {
-  return db
+if (!dbUrl) {
+  throw new Error('DATABASE_URL is required')  
 }
+
+// Export schema
+export * from './schema'
+
+// Export database connection
+export const dbConn = drizzle(dbUrl)
 ```
+
+**Note**: The package uses the simple `drizzle(dbUrl)` pattern which internally creates a mysql2 connection. Schema and relations are exported separately.
 
 ## 🌱 Seeding
 
 Edit `src/seed.ts`:
 
 ```typescript
-import { getWebDb } from './db'
-import { users, roles, permissions } from './schema'
+import { dbConn, user, roles, permissions } from './index'
+import { generateId } from 'lucia'
+import bcrypt from 'bcrypt'
 
 async function seed() {
-  const db = getWebDb()
+  console.log('🌱 Seeding database...')
   
   // Create roles
-  const [admin, editor, viewer] = await db.insert(roles).values([
-    { name: 'admin', description: 'Administrator' },
-    { name: 'editor', description: 'Content Editor' },
-    { name: 'viewer', description: 'Read-only User' },
-  ])
+  const roleData = [
+    { id: 1, name: 'admin', description: 'Administrator with full access' },
+    { id: 2, name: 'editor', description: 'Can create and edit content' },
+    { id: 3, name: 'viewer', description: 'Read-only access' },
+  ]
+  
+  await dbConn.insert(roles).values(roleData)
   
   // Create admin user
-  await db.insert(users).values({
+  const hashedPassword = await bcrypt.hash('admin123', 10)
+  
+  await dbConn.insert(user).values({
+    id: generateId(15),
     name: 'Admin User',
     email: 'admin@example.com',
-    password: await hashPassword('admin123'),
-    roleId: admin.id,
+    emailVerified: true,
+    roleId: 1,
+    isActive: true,
   })
   
-  console.log('✅ Database seeded')
+  console.log('✅ Database seeded successfully')
 }
 
 seed()
+  .catch(console.error)
+  .finally(() => process.exit(0))
 ```
 
 Run with:
@@ -420,51 +482,102 @@ Opens at `https://local.drizzle.studio`
 ## 📦 Exports
 
 ```typescript
-// Database connection
-export { getWebDb } from './db'
+// From @krag/drizzle-orm-server
 
-// All tables
-export * from './schema'
+// Database connection (singleton)
+export { dbConn }
 
-// Specific exports
+// Better Auth tables
 export { 
-  users, 
-  roles, 
-  permissions,
-  rolePermissions,
-  userPermissions,
-  analytics,
-  sessions,
-  oauthAccounts 
-} from './schema'
+  user,          // Better Auth user table
+  session,       // Better Auth session table  
+  account,       // Better Auth OAuth account table
+  verification   // Better Auth verification table
+}
+
+// Custom tables
+export { 
+  roles,            // User roles
+  permissions,      // Permissions
+  rolePermissions,  // Role-Permission junction
+  userPermissions,  // User-Permission junction
+  analytics,        // Analytics tracking
+  documents         // Document management
+}
+
+// Type exports
+export type { User, NewUser } from './schema/auth'
+export type { Analytics, NewAnalytics } from './schema/analytics'
+// ... other types
+```
+
+### Usage Pattern
+
+```typescript
+// ✅ Correct - Import dbConn directly
+import { dbConn, user, roles } from '@krag/drizzle-orm-server'
+const users = await dbConn.query.user.findMany()
+
+// ❌ Incorrect - These don't exist
+import { db } from '@krag/drizzle-orm-server'        // Wrong
+import { getWebDb } from '@krag/drizzle-orm-server'  // Wrong
 ```
 
 ## 🧪 Testing
 
 ```typescript
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { getWebDb, users } from '@krag/drizzle-orm-server'
+import { describe, it, expect, afterEach } from 'vitest'
+import { dbConn, user } from '@krag/drizzle-orm-server'
+import { eq, like } from 'drizzle-orm'
+import { generateId } from 'lucia'
 
 describe('Users', () => {
-  let db: ReturnType<typeof getWebDb>
-  
-  beforeEach(() => {
-    db = getWebDb()
-  })
-  
   afterEach(async () => {
     // Clean up test data
-    await db.delete(users).where(like(users.email, '%@test.com'))
+    await dbConn.delete(user).where(like(user.email, '%@test.com'))
   })
   
   it('should create user', async () => {
-    const [user] = await db.insert(users).values({
+    const userId = generateId(15)
+    
+    await dbConn.insert(user).values({
+      id: userId,
       name: 'Test User',
       email: 'test@test.com',
+      emailVerified: false,
     })
     
-    expect(user.id).toBeDefined()
-    expect(user.email).toBe('test@test.com')
+    const found = await dbConn.query.user.findFirst({
+      where: eq(user.email, 'test@test.com')
+    })
+    
+    expect(found).toBeDefined()
+    expect(found?.email).toBe('test@test.com')
+    expect(found?.id).toBe(userId)
+  })
+  
+  it('should update user', async () => {
+    const userId = generateId(15)
+    
+    // Create
+    await dbConn.insert(user).values({
+      id: userId,
+      name: 'Original Name',
+      email: 'update@test.com',
+      emailVerified: false,
+    })
+    
+    // Update
+    await dbConn.update(user)
+      .set({ name: 'Updated Name' })
+      .where(eq(user.id, userId))
+    
+    // Verify
+    const updated = await dbConn.query.user.findFirst({
+      where: eq(user.id, userId)
+    })
+    
+    expect(updated?.name).toBe('Updated Name')
   })
 })
 ```

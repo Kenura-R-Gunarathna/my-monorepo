@@ -137,11 +137,12 @@ OAuth and social authentication:
 // src/lib/auth.ts
 import { betterAuth } from 'better-auth'
 import { getServerConfig } from '@krag/config/server'
+import { dbConn } from '@krag/drizzle-orm-server'
 
 const config = getServerConfig()
 
 export const auth = betterAuth({
-  database: getWebDb(),
+  database: dbConn,
   secret: config.AUTH_SECRET,
   socialProviders: {
     google: {
@@ -168,18 +169,18 @@ import { UserList } from '@krag/react-ui/features/users'
 
 ### Database Access
 ```typescript
-import { getWebDb, users } from '@krag/drizzle-orm-server'
+import { dbConn, user } from '@krag/drizzle-orm-server'
 import { eq } from 'drizzle-orm'
 
-const db = getWebDb()
-
 // Query users
-const allUsers = await db.query.users.findMany()
+const allUsers = await dbConn.query.user.findMany()
 
 // Insert user
-await db.insert(users).values({
+await dbConn.insert(user).values({
+  id: generateId(15),
   name: 'John Doe',
   email: 'john@example.com',
+  emailVerified: false,
 })
 ```
 

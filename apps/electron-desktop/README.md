@@ -193,10 +193,9 @@ const users = await trpc.db.users.list.query()
 await trpc.db.users.create.mutate({ name: 'John', email: 'john@example.com' })
 
 // In main process (direct access)
-import { getDesktopDb } from '@krag/drizzle-orm-client'
+import { dbConn } from '@krag/drizzle-orm-client'
 
-const db = getDesktopDb()
-const users = await db.query.users.findMany()
+const users = await dbConn.query.users.findMany()
 ```
 
 ### System Integration

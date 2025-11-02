@@ -59,14 +59,12 @@ pnpm install
 
 ```typescript
 import { defineAbilitiesFor } from '@krag/casl-permissions'
-import { getWebDb, users } from '@krag/drizzle-orm-server'
+import { dbConn, user } from '@krag/drizzle-orm-server'
 import { eq } from 'drizzle-orm'
 
-const db = getWebDb()
-
 // Get user with role and permissions
-const user = await db.query.users.findFirst({
-  where: eq(users.id, userId),
+const foundUser = await dbConn.query.user.findFirst({
+  where: eq(user.id, userId),
   with: {
     role: {
       with: {
@@ -86,7 +84,7 @@ const user = await db.query.users.findFirst({
 })
 
 // Build abilities
-const ability = defineAbilitiesFor(user)
+const ability = defineAbilitiesFor(foundUser)
 ```
 
 ### 2. Check Permissions
@@ -121,7 +119,7 @@ if (ability.can('update', post)) {
 ```typescript
 // src/pages/api/posts.ts
 import { defineAbilitiesFor } from '@krag/casl-permissions'
-import { getWebDb, posts } from '@krag/drizzle-orm-server'
+import { dbConn, posts } from '@krag/drizzle-orm-server'
 
 export async function POST({ request, locals }) {
   const user = locals.user // From auth middleware
@@ -133,8 +131,7 @@ export async function POST({ request, locals }) {
   
   // Create post
   const data = await request.json()
-  const db = getWebDb()
-  const newPost = await db.insert(posts).values(data)
+  const newPost = await dbConn.insert(posts).values(data)
   
   return Response.json(newPost)
 }
