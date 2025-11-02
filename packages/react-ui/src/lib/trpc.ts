@@ -4,6 +4,7 @@ import { ipcLink } from 'trpc-electron/renderer';
 import { splitLink } from '@trpc/client';
 import type { CreateTRPCReact } from '@trpc/react-query';
 import superjson from 'superjson';
+import { getServerPublicConfig, getClientPublicConfig } from '@krag/config/public';
 
 // Import router types from both backends
 import type { AppRouter as ElectronRouter } from '@krag/electron-desktop/trpc';
@@ -52,15 +53,22 @@ export const isElectron = (): boolean => {
 const getAPIUrl = (): string => {
   if (typeof window === 'undefined') return '';
   
-  // Check for environment variable
-  const envUrl = import.meta.env?.VITE_API_URL || 
-                 import.meta.env?.PUBLIC_API_URL ||
-                 import.meta.env?.ASTRO_API_URL;
-  
-  if (envUrl) return envUrl;
-  
-  // Default to localhost in development
-  return 'http://localhost:4321';
+  try {
+    // Use @krag/config for consistent configuration
+    if (isElectron()) {
+      // In Electron: use client config (has API_URL and ASTRO_BASE_URL)
+      const config = getClientPublicConfig();
+      return config.API_URL || config.ASTRO_BASE_URL || '';
+    } else {
+      // In Web: use server config (has API_ENDPOINT and BASE_URL)
+      const config = getServerPublicConfig();
+      return config.API_ENDPOINT || config.BASE_URL || '';
+    }
+  } catch {
+    // Fallback if config not available (shouldn't happen in production)
+    console.warn('⚠️ Config not available, using fallback API URL');
+    return 'http://localhost:4321';
+  }
 };
 
 /**

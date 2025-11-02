@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
 import { trpc, createUnifiedTRPCClient, isElectron } from '../lib/trpc';
+import { getServerPublicConfig, getClientPublicConfig } from '@krag/config/public';
 
 interface TRPCProviderProps {
   children: React.ReactNode;
@@ -49,12 +50,24 @@ export function TRPCProvider({ children }: TRPCProviderProps) {
 
   const [trpcClient] = useState(() => createUnifiedTRPCClient());
 
+  // Get IS_DEV from config instead of import.meta.env
+  const isDev = (() => {
+    try {
+      // Try Electron config first, then fall back to server config for web
+      const config = isElectron() ? getClientPublicConfig() : getServerPublicConfig();
+      return config.IS_DEV;
+    } catch {
+      // Fallback for build environments where config might not be set yet
+      return false;
+    }
+  })();
+
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         {children}
         {/* Show React Query devtools in development */}
-        {import.meta.env?.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+        {isDev && <ReactQueryDevtools initialIsOpen={false} />}
       </QueryClientProvider>
     </trpc.Provider>
   );

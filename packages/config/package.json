@@ -4,12 +4,28 @@
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./server": "./src/server.ts",
-    "./client": "./src/client.ts",
-    "./public": "./src/public.ts",
-    "./vite-plugin": "./src/vite-plugin-config-security.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./server": {
+      "types": "./src/server.ts",
+      "default": "./src/server.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./public": {
+      "types": "./src/public.ts",
+      "default": "./src/public.ts"
+    },
+    "./vite-plugin": {
+      "types": "./src/vite-plugin-config-security.ts",
+      "default": "./src/vite-plugin-config-security.ts"
+    }
   },
   "dependencies": {
     "dotenv": "^16.4.0",

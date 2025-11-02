@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { getConfig } from '@krag/config/client'
 import { setupTRPCHandler } from './trpc/handler'
 import icon from '../../resources/icon.png?asset'
@@ -30,9 +30,11 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+  // Load the renderer - use config for dev server URL
+  if (config.IS_DEV && config.RENDERER_DEV_URL) {
+    mainWindow.loadURL(config.RENDERER_DEV_URL)
+  } else if (config.IS_DEV && process.env['ELECTRON_RENDERER_URL']) {
+    // Fallback to process.env if RENDERER_DEV_URL not set in config
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))

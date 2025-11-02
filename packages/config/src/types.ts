@@ -99,6 +99,7 @@ export const clientPublicConfigSchema = z.object({
   WINDOW_WIDTH: z.number().int().positive().default(1200),
   WINDOW_HEIGHT: z.number().int().positive().default(800),
   ENABLE_DEV_TOOLS: z.boolean().default(false),
+  RENDERER_DEV_URL: z.string().url().optional(), // Vite dev server URL for Electron renderer
 })
 
 /**
