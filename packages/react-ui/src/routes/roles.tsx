@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { IconBriefcase } from '@tabler/icons-react'
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
-import dashboardData from '../data/dashboard.json'
+import { createUnifiedTRPCClient } from "../lib/trpc"
 
 export interface DashboardProps {
   data?: DashboardTable[],
@@ -18,7 +18,12 @@ export const Route = createFileRoute('/roles')({
     groupOrder: 2,
   },
   loader: async () => {
-    return { data: dashboardData }
+    const trpcClient = createUnifiedTRPCClient()
+    const result = await trpcClient.roles.list.query({ 
+      page: 1, 
+      pageSize: 10 
+    })
+    return { data: result.data }
   }
 })
 

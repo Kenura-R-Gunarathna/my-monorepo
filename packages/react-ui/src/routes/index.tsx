@@ -1,6 +1,6 @@
 import { ChartAreaInteractive, DataTable, SectionCards } from "../index"
 import { createFileRoute } from '@tanstack/react-router'
-import dashboardData from '../data/dashboard.json'
+import { createUnifiedTRPCClient } from "../lib/trpc"
 import { IconDashboard } from '@tabler/icons-react'
 
 export const Route = createFileRoute('/')({
@@ -13,7 +13,12 @@ export const Route = createFileRoute('/')({
     groupOrder: 1,
   },
   loader: async () => {
-    return { data: dashboardData }
+    const trpcClient = createUnifiedTRPCClient()
+    const result = await trpcClient.documents.list.query({ 
+      page: 1, 
+      pageSize: 10 
+    })
+    return { data: result.data }
   }
 })
 

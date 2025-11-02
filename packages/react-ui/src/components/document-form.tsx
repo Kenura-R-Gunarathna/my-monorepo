@@ -1,5 +1,4 @@
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import { trpc } from '../lib/trpc'
 import { createDocumentSchema, type Document, type CreateDocument } from '@krag/zod-schema'
 import { Button } from './ui/button'
@@ -64,7 +63,9 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
         await createMutation.mutateAsync(value)
       }
     },
-    validatorAdapter: zodValidator(),
+		validators: {
+			onChange: createDocumentSchema,
+		},
   })
 
   const isPending = createMutation.isPending || updateMutation.isPending
@@ -105,7 +106,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                   placeholder="Document header"
                 />
                 {field.state.meta.errors?.length > 0 && (
-                  <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                  <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                 )}
               </div>
             )}
@@ -138,7 +139,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                     </SelectContent>
                   </Select>
                   {field.state.meta.errors?.length > 0 && (
-                    <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                    <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                   )}
                 </div>
               )}
@@ -170,7 +171,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                     </SelectContent>
                   </Select>
                   {field.state.meta.errors?.length > 0 && (
-                    <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                    <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                   )}
                 </div>
               )}
@@ -197,7 +198,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                     placeholder="0"
                   />
                   {field.state.meta.errors?.length > 0 && (
-                    <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                    <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                   )}
                 </div>
               )}
@@ -222,7 +223,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                     placeholder="0"
                   />
                   {field.state.meta.errors?.length > 0 && (
-                    <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                    <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                   )}
                 </div>
               )}
@@ -247,7 +248,7 @@ export function DocumentForm({ document, onClose, onSuccess }: DocumentFormProps
                   placeholder="Reviewer name"
                 />
                 {field.state.meta.errors?.length > 0 && (
-                  <p className="text-sm text-destructive">{field.state.meta.errors[0]}</p>
+                  <p className="text-sm text-destructive">{field.state.meta.errors[0]?.message}</p>
                 )}
               </div>
             )}

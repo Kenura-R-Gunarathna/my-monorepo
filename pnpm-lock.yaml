@@ -153,6 +153,12 @@ importers:
       electron-updater:
         specifier: ^6.3.9
         version: 6.6.2
+      lucide-react:
+        specifier: ^0.548.0
+        version: 0.548.0(react@19.2.0)
+      superjson:
+        specifier: ^2.2.5
+        version: 2.2.5
       trpc-electron:
         specifier: ^0.1.2
         version: 0.1.2(@trpc/client@11.7.1(@trpc/server@11.7.1(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.7.1(typescript@5.9.3))(electron@38.5.0)

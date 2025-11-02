@@ -16,7 +16,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-  "@/packages/drizzle-orm-client/*": ["./src/*"]
+      "@/packages/drizzle-orm-client/*": ["./src/*"]
     }
   },
   "include": ["src/**/*", "drizzle.config.ts"],

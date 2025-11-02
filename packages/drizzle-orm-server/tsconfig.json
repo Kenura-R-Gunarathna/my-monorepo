@@ -16,7 +16,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-  "@/packages/drizzle-orm-server/*": ["./src/*"] // Path alias can be used. but use if only needed!
+      "@/packages/drizzle-orm-server/*": ["./src/*"] // Path alias can be used. but use if only needed!
     }
   },
   "include": ["src/**/*", "drizzle.config.ts"],

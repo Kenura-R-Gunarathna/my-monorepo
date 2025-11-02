@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Home, Menu, X } from 'lucide-react'
 
-export default function Header() {
+export default function Header(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -18,11 +18,7 @@ export default function Header() {
         </button>
         <h1 className="ml-4 text-xl font-semibold">
           <Link to="/">
-            <img
-              src="/tanstack-word-logo-white.svg"
-              alt="TanStack Logo"
-              className="h-10"
-            />
+            <img src="/tanstack-word-logo-white.svg" alt="TanStack Logo" className="h-10" />
           </Link>
         </h1>
       </header>
@@ -50,7 +46,7 @@ export default function Header() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2'
             }}
           >
             <Home size={20} />

@@ -2,43 +2,39 @@
  * This should be a simple ui as it uses deep links for authentication
  */
 
-import { cn } from "@/packages/react-ui/lib/utils"
-import { Button } from "@/packages/react-ui/components/ui/button"
 import {
+  cn,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/packages/react-ui/components/ui/card"
-import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/packages/react-ui/components/ui/field"
-import { Input } from "@/packages/react-ui/components/ui/input"
-import { useNavigate } from "@tanstack/react-router"
+  Input
+} from '@krag/react-ui'
+import { useNavigate } from '@tanstack/react-router'
 
 export function SignupForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<'div'>): React.JSX.Element {
   const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
     navigate({ to: '/dashboard' })
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create your account</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
-          </CardDescription>
+          <CardDescription>Enter your email below to create your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -49,12 +45,7 @@ export function SignupForm({
               </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
+                <Input id="email" type="email" placeholder="m@example.com" required />
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
@@ -63,15 +54,11 @@ export function SignupForm({
                     <Input id="password" type="password" required />
                   </Field>
                   <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
+                    <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
                     <Input id="confirm-password" type="password" required />
                   </Field>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
+                <FieldDescription>Must be at least 8 characters long.</FieldDescription>
               </Field>
               <Field>
                 <Button type="submit">Create Account</Button>
@@ -84,8 +71,8 @@ export function SignupForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )

@@ -4,3 +4,6 @@ export * from './roles';
 export * from './role-permissions';
 export * from './user-permissions';
 export * from './documents';
+export * from './users';
+export * from './settings';
+export * from './sync-queue';

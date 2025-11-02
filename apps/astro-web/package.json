@@ -17,7 +17,7 @@
     "@astrojs/react": "^4.4.0",
     "@krag/casl-permissions": "workspace:*",
     "@krag/config": "workspace:*",
-  "@krag/drizzle-orm-server": "workspace:*",
+    "@krag/drizzle-orm-server": "workspace:*",
     "@krag/react-ui": "workspace:*",
     "@krag/zod-schema": "workspace:*",
     "@tailwindcss/vite": "^4.1.16",

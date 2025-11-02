@@ -1,7 +1,7 @@
 import { DataTable } from "../index"
 import type { DashboardTable } from "@krag/zod-schema"
 import { createFileRoute } from '@tanstack/react-router'
-import dashboardData from '../data/dashboard.json'
+import { createUnifiedTRPCClient } from "../lib/trpc"
 import { IconHelp } from '@tabler/icons-react'
 
 export interface DashboardProps {
@@ -18,7 +18,12 @@ export const Route = createFileRoute('/help')({
     groupOrder: 1,
   },
   loader: async () => {
-    return { data: dashboardData }
+    const trpcClient = createUnifiedTRPCClient()
+    const result = await trpcClient.documents.list.query({ 
+      page: 1, 
+      pageSize: 10 
+    })
+    return { data: result.data }
   }
 })
 
