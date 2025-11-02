@@ -3,8 +3,6 @@
 // Vite plugin to catch wrong imports during development
 // ============================================================================
 
-import type { Plugin } from 'vite'
-
 export interface ConfigSecurityOptions {
   /** Server-only modules that should never be in client code */
   serverModules: string[]
@@ -14,7 +12,7 @@ export interface ConfigSecurityOptions {
   verbose?: boolean
 }
 
-export function configSecurityPlugin(options: ConfigSecurityOptions): Plugin {
+export function configSecurityPlugin(options: ConfigSecurityOptions): any {
   const { serverModules, clientPatterns, verbose = false } = options
   
   let violationsFound = 0

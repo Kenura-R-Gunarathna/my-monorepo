@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import node from '@astrojs/node';
+import { configSecurityPlugin } from '@krag/config/vite-plugin';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -38,7 +39,23 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      // @ts-ignore
+      tailwindcss(),
+      configSecurityPlugin({
+        serverModules: [
+          '@krag/config/server',
+          '@krag/config/client',
+          '@krag/drizzle-orm-server'
+        ],
+        clientPatterns: [
+          /src\/components\//,
+          /src\/pages\/(?!api\/)/,  // Pages except API routes
+          /\.astro$/
+        ],
+        verbose: false
+      })
+    ],
     
     server: {
       hmr: {
