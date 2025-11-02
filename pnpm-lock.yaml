@@ -23,12 +23,12 @@ importers:
       '@krag/casl-permissions':
         specifier: workspace:*
         version: link:../../packages/casl-permissions
-      '@krag/config-astro':
+      '@krag/config':
         specifier: workspace:*
-        version: link:../../packages/config-astro
-      '@krag/database-astro':
+        version: link:../../packages/config
+      '@krag/drizzle-orm-server':
         specifier: workspace:*
-        version: link:../../packages/database-astro
+        version: link:../../packages/drizzle-orm-server
       '@krag/react-ui':
         specifier: workspace:*
         version: link:../../packages/react-ui
@@ -120,12 +120,12 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^4.0.0
         version: 4.0.0(electron@38.5.0)
-      '@krag/config-electron':
+      '@krag/config':
         specifier: workspace:*
-        version: link:../../packages/config-electron
-      '@krag/database-electron':
+        version: link:../../packages/config
+      '@krag/drizzle-orm-client':
         specifier: workspace:*
-        version: link:../../packages/database-electron
+        version: link:../../packages/drizzle-orm-client
       '@krag/react-ui':
         specifier: workspace:*
         version: link:../../packages/react-ui
@@ -232,19 +232,16 @@ importers:
       '@casl/ability':
         specifier: ^6.7.3
         version: 6.7.3
-      '@krag/database-astro':
+      '@krag/drizzle-orm-server':
         specifier: workspace:*
-        version: link:../database-astro
+        version: link:../drizzle-orm-server
     devDependencies:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
 
-  packages/config-astro:
+  packages/config:
     dependencies:
-      '@krag/zod-schema':
-        specifier: workspace:*
-        version: link:../zod-schema
       dotenv:
         specifier: ^16.4.0
         version: 16.6.1
@@ -255,53 +252,18 @@ importers:
       '@types/node':
         specifier: ^24.9.2
         version: 24.9.2
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.1
+        version: 6.4.1(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.1)
 
-  packages/config-electron:
+  packages/drizzle-orm-client:
     dependencies:
-      '@krag/zod-schema':
+      '@krag/config':
         specifier: workspace:*
-        version: link:../zod-schema
-      dotenv:
-        specifier: ^16.4.0
-        version: 16.6.1
-      zod:
-        specifier: ^3.22.0
-        version: 3.25.76
-    devDependencies:
-      '@types/node':
-        specifier: ^24.9.2
-        version: 24.9.2
-
-  packages/database-astro:
-    dependencies:
-      '@krag/config-astro':
-        specifier: workspace:*
-        version: link:../config-astro
-      better-auth:
-        specifier: ^1.3.32
-        version: 1.3.34(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(solid-js@1.9.10)
-      drizzle-orm:
-        specifier: ^0.44.7
-        version: 0.44.7(@libsql/client@0.15.15)(kysely@0.28.8)(mysql2@3.15.3)
-      mysql2:
-        specifier: ^3.15.3
-        version: 3.15.3
-    devDependencies:
-      '@types/node':
-        specifier: ^24.9.1
-        version: 24.9.2
-      drizzle-kit:
-        specifier: ^0.31.5
-        version: 0.31.6
-      tsx:
-        specifier: ^4.20.6
-        version: 4.20.6
-
-  packages/database-electron:
-    dependencies:
-      '@krag/config-electron':
-        specifier: workspace:*
-        version: link:../config-electron
+        version: link:../config
       '@krag/zod-schema':
         specifier: workspace:*
         version: link:../zod-schema
@@ -330,6 +292,31 @@ importers:
       electron:
         specifier: ^38.1.2
         version: 38.5.0
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
+
+  packages/drizzle-orm-server:
+    dependencies:
+      '@krag/config':
+        specifier: workspace:*
+        version: link:../config
+      better-auth:
+        specifier: ^1.3.32
+        version: 1.3.34(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(solid-js@1.9.10)
+      drizzle-orm:
+        specifier: ^0.44.7
+        version: 0.44.7(@libsql/client@0.15.15)(kysely@0.28.8)(mysql2@3.15.3)
+      mysql2:
+        specifier: ^3.15.3
+        version: 3.15.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.9.1
+        version: 24.9.2
+      drizzle-kit:
+        specifier: ^0.31.5
+        version: 0.31.6
       tsx:
         specifier: ^4.20.6
         version: 4.20.6

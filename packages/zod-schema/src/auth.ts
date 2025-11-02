@@ -44,7 +44,7 @@ export interface ExtendedActiveSession {
 
 /**
  * User Session Data for Electron store persistence
- * Used by database-electron package for local storage
+ * Used by drizzle-orm-client package for local storage
  */
 export interface UserSessionData {
   token: string

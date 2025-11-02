@@ -32,10 +32,13 @@ export function TRPCProvider({ children }: TRPCProviderProps) {
           },
           mutations: {
             // Retry mutations once on network error
-            retry: (failureCount, error: any) => {
+            retry: (failureCount, error: unknown) => {
               // Don't retry on 4xx errors
-              if (error?.data?.httpStatus >= 400 && error?.data?.httpStatus < 500) {
-                return false;
+              if (error && typeof error === 'object' && 'data' in error) {
+                const errorData = error.data as { httpStatus?: number };
+                if (errorData?.httpStatus && errorData.httpStatus >= 400 && errorData.httpStatus < 500) {
+                  return false;
+                }
               }
               return failureCount < 1;
             },

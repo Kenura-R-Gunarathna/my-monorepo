@@ -2,8 +2,10 @@ import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { passkey } from "better-auth/plugins/passkey";
 import { twoFactor } from "better-auth/plugins";
-import { config } from "@krag/config-astro";
-import { dbConn } from "@krag/database-astro";
+import { getServerConfig } from "@krag/config/server";
+import { dbConn } from "@krag/drizzle-orm-server";
+
+const config = getServerConfig();
 
 const authConfig = {
   database: drizzleAdapter(dbConn, {
@@ -61,7 +63,7 @@ const authConfig = {
 		passkey(),
 		twoFactor({
 			otpOptions: {
-				async sendOTP(user, otp) {
+				async sendOTP({ user, otp }) {
 					console.log(`Sending OTP to ${user.email}: ${otp}`);
 					// await resend.emails.send({
 					// 	from: "Acme <no-reply@demo.better-auth.com>",

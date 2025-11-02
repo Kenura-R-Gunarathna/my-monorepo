@@ -15,14 +15,16 @@ export type AppRouter = ElectronRouter & AstroRouter;
 
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
+export type PlatformFromProps = 'astro' | 'electron' | undefined;
+
 // Store platform from AppProps for platform detection
-let _platformFromProps: 'astro' | 'electron' | undefined;
+let _platformFromProps: PlatformFromProps;
 
 /**
  * Set platform from App component props
  * This is called when the App component initializes
  */
-export const setPlatform = (platform: 'astro' | 'electron' | undefined): void => {
+export const setPlatform = (platform: PlatformFromProps): void => {
   _platformFromProps = platform;
 };
 

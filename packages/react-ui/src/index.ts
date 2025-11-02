@@ -179,6 +179,8 @@ export { NavDocuments } from './components/nav-documents';
 export { NavMain } from './components/nav-main';
 export { NavSecondary } from './components/nav-secondary';
 export { NavUser } from './components/nav-user';
+export { DocumentsPage } from './components/documents-page';
+export { DocumentForm } from './components/document-form';
 
 // Export providers
 export { QueryProvider } from './lib/query-provider';

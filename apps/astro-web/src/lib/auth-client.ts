@@ -1,7 +1,9 @@
 import { passkeyClient, twoFactorClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { createAuthClient as createVanillaClient } from "better-auth/client";
-import { config } from "@krag/config-astro"
+import { getServerPublicConfig } from "@krag/config/public"
+
+const config = getServerPublicConfig()
  
 export const {
 	signIn,

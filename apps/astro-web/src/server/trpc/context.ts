@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro'
 import { auth } from '../../lib/auth'
-import { dbConn } from '@krag/database-astro'
+import { dbConn } from '@krag/drizzle-orm-server'
 
 export interface Context {
   session: Awaited<ReturnType<typeof auth.api.getSession>>

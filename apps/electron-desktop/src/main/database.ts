@@ -1,16 +1,17 @@
 // Example: Using database in Electron main process
-import { ipcMain } from 'electron'
-import { getDesktopDb, users, localCache, type DesktopDb } from '@krag/database-electron'
-import { eq } from 'drizzle-orm'
+// import { ipcMain } from 'electron'
+import { dbConn } from '@krag/drizzle-orm-client'
+import type { LibSQLDatabase } from 'drizzle-orm/libsql'
 
-// Initialize database connection
-// Option 1: Use environment variable
-const db: DesktopDb = getDesktopDb()
+// The database connection is already initialized in the package
+const db: LibSQLDatabase = dbConn
 
-// Option 2: Pass DATABASE_URL directly (useful for dynamic DB paths)
-// const DATABASE_URL = `mysql://root:@localhost:3306/electron_${app.getName()}`;
-// const db = getDesktopDb(DATABASE_URL);
+// Note: This is example code. Adjust table names and schema to match your actual schema
+// Available schemas can be imported from '@krag/drizzle-orm-client'
 
+// Example IPC handlers (commented out until you define your actual schema)
+
+/*
 // IPC Handler: Get all users
 ipcMain.handle('db:getUsers', async () => {
   try {
@@ -32,50 +33,6 @@ ipcMain.handle('db:createUser', async (_event, userData) => {
     return { success: false, error: 'Failed to create user' }
   }
 })
-
-// IPC Handler: Get cache
-ipcMain.handle('db:getCache', async (_event, key: string) => {
-  try {
-    const cache = await db.select().from(localCache).where(eq(localCache.key, key)).limit(1)
-
-    if (cache.length > 0 && cache[0].expiresAt && cache[0].expiresAt < new Date()) {
-      // Cache expired, delete it
-      await db.delete(localCache).where(eq(localCache.key, key))
-      return { success: true, data: null }
-    }
-
-    return { success: true, data: cache[0] || null }
-  } catch (error) {
-    console.error('Failed to get cache:', error)
-    return { success: false, error: 'Failed to fetch cache' }
-  }
-})
-
-// IPC Handler: Set cache
-ipcMain.handle('db:setCache', async (_event, key: string, value: string, expiresInDays = 7) => {
-  try {
-    const expiresAt = new Date()
-    expiresAt.setDate(expiresAt.getDate() + expiresInDays)
-
-    await db
-      .insert(localCache)
-      .values({
-        key,
-        value: JSON.stringify(value),
-        expiresAt
-      })
-      .onDuplicateKeyUpdate({
-        set: {
-          value: JSON.stringify(value),
-          expiresAt
-        }
-      })
-
-    return { success: true }
-  } catch (error) {
-    console.error('Failed to set cache:', error)
-    return { success: false, error: 'Failed to save cache' }
-  }
-})
+*/
 
 export { db }

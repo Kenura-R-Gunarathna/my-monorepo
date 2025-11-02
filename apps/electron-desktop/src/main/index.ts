@@ -1,8 +1,11 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { config } from '@krag/config-electron'
+import { getConfig } from '@krag/config/client'
+import { setupTRPCHandler } from './trpc/handler'
 import icon from '../../resources/icon.png?asset'
+
+const config = getConfig()
 
 function createWindow(): void {
   // Create the browser window.
@@ -42,6 +45,9 @@ function createWindow(): void {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
+
+  // Setup tRPC IPC handler
+  setupTRPCHandler()
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.

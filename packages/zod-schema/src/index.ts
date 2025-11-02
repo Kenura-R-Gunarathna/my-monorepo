@@ -1,5 +1,6 @@
 export * from './data-tables'
 export * from './auth'
+export * from './documents'
 
 export * from './config'
 

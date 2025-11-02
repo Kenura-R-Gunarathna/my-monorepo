@@ -12,7 +12,8 @@
     "build:ui": "pnpm --filter @krag/react-ui build",
     "build:astro": "pnpm --filter astro-web build",
     "build:electron": "pnpm --filter electron-desktop build",
-    "dev:astro:ui": "pnpm --parallel --filter astro-web --filter @krag/react-ui dev"
+    "dev:astro:ui": "pnpm --parallel --filter astro-web --filter @krag/react-ui dev",
+    "validate": "node scripts/quick-validate.js"
   },
   "keywords": [],
   "author": "Kenura R. Gunarathna",

@@ -1,0 +1,23 @@
+{
+  "name": "@krag/config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./client": "./src/client.ts",
+    "./public": "./src/public.ts",
+    "./vite-plugin": "./src/vite-plugin-config-security.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.1"
+  }
+}

@@ -8,7 +8,7 @@ export default defineConfig({
   main: {
     plugins: [
       externalizeDepsPlugin({
-        exclude: ['@krag/config-electron', '@krag/database-electron']
+        exclude: ['@krag/config', '@krag/drizzle-orm-client']
       })
     ]
   },

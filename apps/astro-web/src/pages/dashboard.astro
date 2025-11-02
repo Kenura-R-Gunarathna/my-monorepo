@@ -1,5 +1,5 @@
 ---
-import { App } from "@krag/react-ui";
+import { App, TRPCProvider } from "@krag/react-ui";
 import Layout from '../layouts/DashboardLayout.astro';
 import { auth } from "../lib/auth";
 
@@ -13,10 +13,11 @@ if (!session) {
 ---
 
 <Layout title="Dashboard">
-  <App 
-    client:only="react" 
-    basepath="/dashboard" 
-    platform="astro"
-    initialSession={session}
-  />
+  <TRPCProvider client:only="react">
+    <App 
+      basepath="/dashboard" 
+      platform="astro"
+      initialSession={session}
+    />
+  </TRPCProvider>
 </Layout>

@@ -29,8 +29,16 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "../ui/table";
-import type { ActiveSession } from "../../libs/types";
+} from "../ui/table";// Re-export auth types from centralized schema package
+import type {
+	// User,
+	// Session,
+	// Account,
+	// ExtendedUser,
+	ActiveSession,
+	// ExtendedActiveSession,
+	// UserSessionData
+} from '@krag/zod-schema'
 
 interface UserWithTwoFactor extends User {
 	twoFactorEnabled?: boolean;

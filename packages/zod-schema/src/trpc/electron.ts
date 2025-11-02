@@ -77,3 +77,14 @@ export const settingsUpdateSchema = z.record(z.any())
 
 export const themeSetSchema = themeSchema
 
+// ============================================================
+// Documents Schemas (re-export from main documents module)
+// ============================================================
+
+export {
+  paginationSchema,
+  documentIdSchema,
+  createDocumentSchema,
+  updateDocumentSchema,
+  documentSchema
+} from '../documents'

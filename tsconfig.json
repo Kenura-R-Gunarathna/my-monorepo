@@ -3,14 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/packages/react-ui/*": ["packages/react-ui/src/*"],
-      "@/packages/better-auth/*": ["packages/better-auth/src/*"],
       "@/packages/casl-permissions/*": ["packages/casl-permissions/src/*"],
-      "@/packages/config-astro/*": ["packages/config-astro/src/*"],
-      "@/packages/config-electron/*": ["packages/config-electron/src/*"],
-      "@/packages/database-core/*": ["packages/database-core/src/*"],
-      "@/packages/database-electron/*": ["packages/database-desktop/src/*"],
-      "@/packages/database-astro/*": ["packages/database-web/src/*"],
-      "@/packages/trpc-api/*": ["packages/trpc-api/src/*"],
+      "@/packages/config/*": ["packages/config/src/*"],
+  "@/packages/drizzle-orm-client/*": ["packages/drizzle-orm-client/src/*"],
+  "@/packages/drizzle-orm-server/*": ["packages/drizzle-orm-server/src/*"],
       "@/packages/zod-schema/*": ["packages/zod-schema/src/*"]
     }
   }

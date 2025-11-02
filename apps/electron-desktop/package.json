@@ -25,8 +25,8 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "@krag/config-electron": "workspace:*",
-    "@krag/database-electron": "workspace:*",
+    "@krag/config": "workspace:*",
+  "@krag/drizzle-orm-client": "workspace:*",
     "@krag/react-ui": "workspace:*",
     "@krag/zod-schema": "workspace:*",
     "@tanstack/react-router": "^1.133.32",
