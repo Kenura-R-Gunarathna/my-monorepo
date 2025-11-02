@@ -82,29 +82,53 @@ pnpm install
 
 ### Environment Setup
 
-Create environment files in the root directory:
+Create a `.env` file in the root directory. Copy from `.env.example`:
 
-**`.env` (Shared)**
-```env
-DATABASE_URL=mysql://root:@localhost:3306/my_monorepo
+```bash
+# Copy template
+cp .env.example .env
+
+# Edit with your values
+# Add secrets to .env.local (gitignored)
 ```
 
-**`.env.astro.development` (Web)**
+**`.env` (All configuration in one file)**
 ```env
+# Environment
+NODE_ENV=development
+
+# Shared
+LOG_LEVEL=info
+
+# Server (Astro Web App)
 BASE_URL=http://localhost:4321
+API_ENDPOINT=http://localhost:4321/api
 DATABASE_URL=mysql://root:@localhost:3306/my_monorepo
-AUTH_SECRET=your-secret-key-here
+SESSION_SECRET=your-secret-key-here-minimum-32-chars
+BETTER_AUTH_URL=http://localhost:4321/api/auth
+
+# Server - OAuth
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Client (Electron Desktop App)
+API_URL=http://localhost:4321
+ASTRO_BASE_URL=http://localhost:4321
+WINDOW_WIDTH=1200
+WINDOW_HEIGHT=800
+DB_FILE_NAME=app.db
+DB_ENCRYPTION_KEY=your-encryption-key-here
 ```
 
-**`.env.electron.development` (Desktop)**
-```env
-API_ENDPOINT=http://localhost:4321
-DB_FILE_NAME=local.db
-DB_ENCRYPTION_KEY=your-encryption-key-here
-STORE_ENCRYPTION_KEY=another-encryption-key
-```
+**Environment File Loading:**
+- `.env` - Base configuration (all apps)
+- `.env.development` - Development overrides (optional)
+- `.env.production` - Production overrides (optional)
+- `.env.local` - Local secrets (gitignored, highest priority)
+
+Managed by `@krag/config` package.
 
 ### Database Setup
 

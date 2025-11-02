@@ -102,16 +102,60 @@ import { configSecurityPlugin } from '@krag/config/vite-plugin'
 
 ## Environment Files
 
-Priority (last wins):
-1. `.env` - Committed defaults
-2. `.env.development` / `.env.production` - Environment-specific
-3. `.env.development.local` / `.env.production.local` - Git-ignored
-4. `.env.local` - Git-ignored, highest priority
+All configuration in a single `.env` file at the project root.
+
+**Loading Priority (last wins):**
+1. `.env` - Base defaults (committed)
+2. `.env.${NODE_ENV}` - Environment-specific (`.env.development` or `.env.production`)
+3. `.env.${NODE_ENV}.local` - Environment + local overrides (gitignored)
+4. `.env.local` - Local overrides (gitignored, highest priority)
+
+**Example Setup:**
 
 ```bash
-# Setup
-cp .env.example .env.local
-# Edit .env.local with your secrets
+# 1. Copy template
+cp .env.example .env
+
+# 2. Add secrets to .env.local (gitignored)
+echo "DATABASE_URL=mysql://root:secret@localhost:3306/mydb" >> .env.local
+echo "SESSION_SECRET=your-32-char-secret-here" >> .env.local
+```
+
+**`.env` (Base configuration):**
+```env
+NODE_ENV=development
+LOG_LEVEL=info
+
+# Server (Astro)
+BASE_URL=http://localhost:4321
+API_ENDPOINT=http://localhost:4321/api
+DATABASE_URL=mysql://root:@localhost:3306/devdb
+SESSION_SECRET=generate-random-32-char-string
+BETTER_AUTH_URL=http://localhost:4321/api/auth
+
+# Client (Electron)
+API_URL=http://localhost:4321
+WINDOW_WIDTH=1200
+WINDOW_HEIGHT=800
+DB_FILE_NAME=app.db
+```
+
+**`.env.production` (Production overrides - optional):**
+```env
+NODE_ENV=production
+LOG_LEVEL=error
+BASE_URL=https://myapp.com
+DATABASE_URL=mysql://user:pass@prod-server:3306/proddb
+ENABLE_ANALYTICS=true
+```
+
+**`.env.local` (Secrets - gitignored):**
+```env
+# Real secrets here - never commit
+DATABASE_URL=mysql://root:MyS3cr3t@localhost:3306/mydb
+SESSION_SECRET=actual-32-character-secret-key
+GITHUB_CLIENT_SECRET=real-github-secret
+STRIPE_SECRET_KEY=sk_live_actual_key
 ```
 
 ## Security Features
