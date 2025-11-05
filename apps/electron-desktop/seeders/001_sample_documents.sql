@@ -1,5 +1,22 @@
--- Initial sample documents
-INSERT INTO documents (title, content, status) VALUES
-  ('Welcome Document', 'Welcome to your offline-first app!', 'published'),
-  ('Getting Started', 'This is a sample document to help you get started.', 'draft'),
-  ('Features', 'Explore the amazing features of this application.', 'published');
+-- Insert sample documents
+INSERT INTO `documents` (`header`, `type`, `status`, `target`, `limit`, `reviewer`) VALUES
+('Web Application Architecture', 'Technical content', 'Done', 25, 30, 'Sarah Chen'),
+('API Documentation', 'Technical content', 'Done', 18, 20, 'Sarah Chen'),
+('User Authentication Guide', 'Narrative', 'In Process', 12, 15, 'Michael Roberts'),
+('Database Schema Design', 'Technical content', 'Done', 22, 25, 'Sarah Chen'),
+('Security Best Practices', 'Narrative', 'In Process', 15, 18, 'Michael Roberts'),
+('Cloud Deployment Strategy', 'Narrative', 'In Process', 10, 12, 'Michael Roberts'),
+('Performance Optimization', 'Technical content', 'Done', 20, 23, 'Emma Wilson'),
+('Microservices Architecture', 'Technical content', 'Done', 28, 32, 'Emma Wilson'),
+('DevOps Pipeline Setup', 'Narrative', 'In Process', 8, 10, 'David Park'),
+('Monitoring and Logging', 'Narrative', 'Done', 14, 16, 'David Park'),
+('API Rate Limiting', 'Plain language', 'Done', 6, 8, 'Emma Wilson'),
+('Caching Strategies', 'Technical content', 'Done', 11, 13, 'Sarah Chen'),
+('Real-time Communication', 'Narrative', 'In Process', 16, 19, 'Michael Roberts'),
+('GraphQL Integration', 'Technical content', 'Done', 19, 22, 'Emma Wilson'),
+('Testing Strategy Overview', 'Narrative', 'Done', 13, 15, 'David Park'),
+('CI/CD Best Practices', 'Narrative', 'In Process', 9, 11, 'David Park'),
+('Container Orchestration', 'Technical content', 'Done', 24, 27, 'Sarah Chen'),
+('Service Mesh Implementation', 'Narrative', 'In Process', 17, 20, 'Michael Roberts'),
+('Data Privacy Compliance', 'Plain language', 'Done', 7, 9, 'Emma Wilson'),
+('Disaster Recovery Plan', 'Narrative', 'Done', 21, 24, 'David Park');
