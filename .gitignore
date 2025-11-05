@@ -10,3 +10,18 @@ node_modules
 !.env.example
 !.env.development
 !.env.production
+
+# DoltHub binary and data files
+.dolt/
+*.dolt
+dolt.lock
+.doltcfg
+dolthub/
+dolt_backup/
+dolt_temp/
+dolt_logs/
+.dolt_history/
+.dolt_transaction/
+
+# temp files added as docs
+electron-app

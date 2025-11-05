@@ -49,7 +49,6 @@ export const createSecureStore = <T extends Record<string, any>>(
   });
 };
 
-// Export all store modules
+// Only export session and cache (settings moved to electron-desktop)
 export * from './session';
-export * from './settings';
 export * from './cache';

@@ -1,7 +1,8 @@
 import { initTRPC } from '@trpc/server'
 import { observable } from '@trpc/server/observable'
 import { EventEmitter } from 'events'
-import { sessionManager, settingsManager, type AppSettings } from '@krag/drizzle-orm-client'
+import { sessionManager } from '@krag/drizzle-orm-client'
+import { settingsManager, type AppSettings } from '../services/settings-manager'
 import { getConfig } from '@krag/config/client'
 import {
   setSessionSchema,

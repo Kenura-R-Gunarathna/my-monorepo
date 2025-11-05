@@ -1,0 +1,10 @@
+# This is a TEMPLATE file.
+# The application will replace the __PLACEHOLDER__ values on startup.
+
+listener:
+  host: 127.0.0.1
+  port: 13306
+  max_connections: 100
+
+remotesapi:
+  port: 22222 # A different port for the remote API

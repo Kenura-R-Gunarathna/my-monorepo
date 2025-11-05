@@ -1,0 +1,30 @@
+{
+  "name": "dolt-config",
+  "version": "1.0.0",
+  "dolt": {
+    "version": "1.43.14",
+    "baseUrl": "https://github.com/dolthub/dolt/releases/download",
+    "platforms": {
+      "win32-x64": {
+        "filename": "dolt-windows-amd64.zip",
+        "executable": "dolt.exe",
+        "extractedFolder": "dolt-windows-amd64"
+      },
+      "darwin-x64": {
+        "filename": "dolt-darwin-amd64.tar.gz",
+        "executable": "dolt",
+        "extractedFolder": "dolt-darwin-amd64"
+      },
+      "darwin-arm64": {
+        "filename": "dolt-darwin-arm64.tar.gz",
+        "executable": "dolt",
+        "extractedFolder": "dolt-darwin-arm64"
+      },
+      "linux-x64": {
+        "filename": "dolt-linux-amd64.tar.gz",
+        "executable": "dolt",
+        "extractedFolder": "dolt-linux-amd64"
+      }
+    }
+  }
+}
