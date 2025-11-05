@@ -1,9 +1,9 @@
 import { passkeyClient, twoFactorClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { createAuthClient as createVanillaClient } from "better-auth/client";
-import { getServerPublicConfig } from "@krag/config/public"
+import { getServerPublicConfig } from "@krag/config/public";
 
-const config = getServerPublicConfig()
+const config = getServerPublicConfig();
  
 export const {
 	signIn,
@@ -12,22 +12,22 @@ export const {
 	signUp,
 	passkey: passkeyActions,
 	useListPasskeys,
-	twoFactor: twoFactorActions,
+	// twoFactor: twoFactorActions,
 	$Infer,
 	updateUser,
 	changePassword,
 	revokeSession,
 	revokeSessions,
 } = createAuthClient({
-	baseURL: config.BASE_URL,
+	baseURL: config.BETTER_AUTH_URL,
 	plugins: [
 		passkeyClient(),
-		twoFactorClient({
-			twoFactorPage: "/two-factor",
-		}),
+		// twoFactorClient({
+		// 	twoFactorPage: "/two-factor",
+		// }),
 	],
 });
 
 export const { useSession: useVanillaSession } = createVanillaClient({
-	baseURL: config.BASE_URL,
+	baseURL: config.BETTER_AUTH_URL,
 });

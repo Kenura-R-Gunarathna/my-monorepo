@@ -28,6 +28,7 @@ export const sharedConfigSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
   IS_DEV: z.boolean().default(true),
+  BETTER_AUTH_URL: z.string().url(),
 })
 
 export type SharedConfig = z.infer<typeof sharedConfigSchema>
@@ -58,7 +59,6 @@ export const serverPrivateConfigSchema = z.object({
   DATABASE_POOL_MAX: z.number().int().positive().default(10),
   
   // Auth
-  BETTER_AUTH_URL: z.string().url(),
   SESSION_SECRET: z.string().min(32),
   
   // API Keys (PRIVATE)
@@ -80,7 +80,7 @@ export const serverConfigSchema = sharedConfigSchema
   .merge(serverPublicConfigSchema)
   .merge(serverPrivateConfigSchema)
 
-export type ServerPublicConfig = z.infer<typeof serverPublicConfigSchema> & Pick<SharedConfig, 'NODE_ENV' | 'IS_DEV' | 'LOG_LEVEL'>
+export type ServerPublicConfig = z.infer<typeof serverPublicConfigSchema> & Pick<SharedConfig, 'NODE_ENV' | 'IS_DEV' | 'LOG_LEVEL' | 'BETTER_AUTH_URL'>
 export type ServerPrivateConfig = z.infer<typeof serverPrivateConfigSchema>
 export type ServerConfig = z.infer<typeof serverConfigSchema>
 
@@ -131,6 +131,6 @@ export const clientConfigSchema = sharedConfigSchema
   .merge(clientPublicConfigSchema)
   .merge(clientPrivateConfigSchema)
 
-export type ClientPublicConfig = z.infer<typeof clientPublicConfigSchema> & Pick<SharedConfig, 'NODE_ENV' | 'IS_DEV' | 'LOG_LEVEL'>
+export type ClientPublicConfig = z.infer<typeof clientPublicConfigSchema> & Pick<SharedConfig, 'NODE_ENV' | 'IS_DEV' | 'LOG_LEVEL' | 'BETTER_AUTH_URL'>
 export type ClientPrivateConfig = z.infer<typeof clientPrivateConfigSchema>
 export type ClientConfig = z.infer<typeof clientConfigSchema>

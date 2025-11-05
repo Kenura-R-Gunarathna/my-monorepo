@@ -68,27 +68,75 @@ export function prepareEnv(defaults: Record<string, string>) {
 }
 
 /**
+ * Interpolate environment variables in the format ${VAR_NAME} or {VAR_NAME}
+ * Similar to Laravel's env variable interpolation
+ */
+export function interpolateEnvVars(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+  const interpolated: Record<string, string> = {}
+  
+  // First pass: copy all values
+  for (const [key, value] of Object.entries(env)) {
+    if (typeof value === 'string') {
+      interpolated[key] = value
+    }
+  }
+  
+  // Second pass: interpolate variables (support multiple passes for nested references)
+  let hasChanges = true
+  let maxIterations = 10 // Prevent infinite loops
+  
+  while (hasChanges && maxIterations > 0) {
+    hasChanges = false
+    maxIterations--
+    
+    for (const [key, value] of Object.entries(interpolated)) {
+      if (typeof value !== 'string') continue
+      
+      // Match both ${VAR} and {VAR} patterns
+      const interpolatedValue = value.replace(/\$?\{([^}]+)\}/g, (match, varName) => {
+        const replacement = interpolated[varName.trim()]
+        if (replacement !== undefined) {
+          hasChanges = true
+          return replacement
+        }
+        // Keep original if variable not found
+        return match
+      })
+      
+      if (interpolatedValue !== value) {
+        interpolated[key] = interpolatedValue
+      }
+    }
+  }
+  
+  return interpolated as NodeJS.ProcessEnv
+}
+
+/**
  * Transform string env vars to typed values
  */
 export function transformEnvVars(env: NodeJS.ProcessEnv): Record<string, any> {
+  // First interpolate any variable references
+  const interpolated = interpolateEnvVars(env)
+  
   return {
-    ...env,
+    ...interpolated,
     // Booleans
-    IS_DEV: env.IS_DEV === 'true' || env.NODE_ENV !== 'production',
-    ENABLE_ANALYTICS: env.ENABLE_ANALYTICS === 'true',
-    ENABLE_DEV_TOOLS: env.ENABLE_DEV_TOOLS === 'true',
-    RATE_LIMIT_ENABLED: env.RATE_LIMIT_ENABLED !== 'false',
-    AUTO_UPDATE_ENABLED: env.AUTO_UPDATE_ENABLED === 'true',
-    ENABLE_CONTEXT_ISOLATION: env.ENABLE_CONTEXT_ISOLATION !== 'false',
-    ENABLE_NODE_INTEGRATION: env.ENABLE_NODE_INTEGRATION === 'true',
-    ENABLE_CAMERA: env.ENABLE_CAMERA === 'true',
-    ENABLE_MICROPHONE: env.ENABLE_MICROPHONE === 'true',
+    IS_DEV: interpolated.IS_DEV === 'true' || interpolated.NODE_ENV !== 'production',
+    ENABLE_ANALYTICS: interpolated.ENABLE_ANALYTICS === 'true',
+    ENABLE_DEV_TOOLS: interpolated.ENABLE_DEV_TOOLS === 'true',
+    RATE_LIMIT_ENABLED: interpolated.RATE_LIMIT_ENABLED !== 'false',
+    AUTO_UPDATE_ENABLED: interpolated.AUTO_UPDATE_ENABLED === 'true',
+    ENABLE_CONTEXT_ISOLATION: interpolated.ENABLE_CONTEXT_ISOLATION !== 'false',
+    ENABLE_NODE_INTEGRATION: interpolated.ENABLE_NODE_INTEGRATION === 'true',
+    ENABLE_CAMERA: interpolated.ENABLE_CAMERA === 'true',
+    ENABLE_MICROPHONE: interpolated.ENABLE_MICROPHONE === 'true',
     
     // Numbers
-    WINDOW_WIDTH: env.WINDOW_WIDTH ? parseInt(env.WINDOW_WIDTH, 10) : 1200,
-    WINDOW_HEIGHT: env.WINDOW_HEIGHT ? parseInt(env.WINDOW_HEIGHT, 10) : 800,
-    DATABASE_POOL_MIN: env.DATABASE_POOL_MIN ? parseInt(env.DATABASE_POOL_MIN, 10) : 2,
-    DATABASE_POOL_MAX: env.DATABASE_POOL_MAX ? parseInt(env.DATABASE_POOL_MAX, 10) : 10,
-    RATE_LIMIT_MAX_REQUESTS: env.RATE_LIMIT_MAX_REQUESTS ? parseInt(env.RATE_LIMIT_MAX_REQUESTS, 10) : 100,
+    WINDOW_WIDTH: interpolated.WINDOW_WIDTH ? parseInt(interpolated.WINDOW_WIDTH, 10) : 1200,
+    WINDOW_HEIGHT: interpolated.WINDOW_HEIGHT ? parseInt(interpolated.WINDOW_HEIGHT, 10) : 800,
+    DATABASE_POOL_MIN: interpolated.DATABASE_POOL_MIN ? parseInt(interpolated.DATABASE_POOL_MIN, 10) : 2,
+    DATABASE_POOL_MAX: interpolated.DATABASE_POOL_MAX ? parseInt(interpolated.DATABASE_POOL_MAX, 10) : 10,
+    RATE_LIMIT_MAX_REQUESTS: interpolated.RATE_LIMIT_MAX_REQUESTS ? parseInt(interpolated.RATE_LIMIT_MAX_REQUESTS, 10) : 100,
   }
 }

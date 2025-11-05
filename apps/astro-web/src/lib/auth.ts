@@ -1,16 +1,23 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { passkey } from "better-auth/plugins/passkey";
-import { twoFactor } from "better-auth/plugins";
+// import { twoFactor } from "better-auth/plugins";
 import { getServerConfig } from "@krag/config/server";
-import { dbConn } from "@krag/drizzle-orm-server";
+import { dbConn, user, session, account, verification } from "@krag/drizzle-orm-server";
 
 const config = getServerConfig();
 
 const authConfig = {
+  baseURL: config.BETTER_AUTH_URL,
   database: drizzleAdapter(dbConn, {
     provider: "mysql",
     usePlural: false,
+    schema: {
+      user,
+      session,
+      account,
+      verification,
+    },
   }),
 	account: {
 		accountLinking: {
@@ -47,11 +54,15 @@ const authConfig = {
   databaseHooks: {
     user: {
       create: {
-        before: async (user) => {
+        before: async (userData) => {
+          // Check if this is the first user in the system
+          const existingUsers = await dbConn.select().from(user).limit(1);
+          const isFirstUser = existingUsers.length === 0;
+          
           return {
             data: {
-              ...user,
-              roleId: user.roleId ?? 3, // Default to basic user role
+              ...userData,
+              roleId: isFirstUser ? 1 : (userData.roleId ?? 5), // First user = Super Admin (1), others = User (5)
               isActive: true,
             },
           };
@@ -61,19 +72,19 @@ const authConfig = {
   },
 	plugins: [
 		passkey(),
-		twoFactor({
-			otpOptions: {
-				async sendOTP({ user, otp }) {
-					console.log(`Sending OTP to ${user.email}: ${otp}`);
-					// await resend.emails.send({
-					// 	from: "Acme <no-reply@demo.better-auth.com>",
-					// 	to: user.email,
-					// 	subject: "Your OTP",
-					// 	html: `Your OTP is ${otp}`,
-					// });
-				},
-			},
-		}),
+		// twoFactor({
+		// 	otpOptions: {
+		// 		async sendOTP({ user, otp }) {
+		// 			console.log(`Sending OTP to ${user.email}: ${otp}`);
+		// 			await resend.emails.send({
+		// 				from: "Acme <no-reply@demo.better-auth.com>",
+		// 				to: user.email,
+		// 				subject: "Your OTP",
+		// 				html: `Your OTP is ${otp}`,
+		// 			});
+		// 		},
+		// 	},
+		// }),
 	],
 	rateLimit: {
 		enabled: true,

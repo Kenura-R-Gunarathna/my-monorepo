@@ -7,7 +7,8 @@
 // SERVER-ONLY MODULE - DO NOT IMPORT IN CLIENT CODE
 // This module contains private data and must never be bundled for the browser
 
-import { resolve } from 'path'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 import {
   serverConfigSchema,
   type ServerConfig,
@@ -17,6 +18,25 @@ import {
 import { loadEnv, transformEnvVars } from './loader'
 import { filterPublicConfig, redactSecrets, SECURITY_BOUNDARIES } from './security'
 import { guardModule, createDevModeGuard } from './dev-guard'
+
+// Get directory - works in both ESM and CJS
+function getPackageDir(): string {
+  try {
+    // Try ESM first
+    // @ts-ignore - import.meta may not exist in CJS
+    if (typeof import.meta !== 'undefined' && import.meta?.url) {
+      // @ts-ignore
+      return dirname(fileURLToPath(import.meta.url))
+    }
+  } catch {
+    // Ignore errors
+  }
+  
+  // Fallback to process.cwd() for CJS or when ESM fails
+  return process.cwd()
+}
+
+const __dirname = getPackageDir()
 
 // 🛡️ Module-level guard (runs once at import)
 // Prevents this module from loading at all in browser
@@ -84,18 +104,6 @@ export function getPrivateConfig(): ServerConfig {
  */
 export function getServerConfig(): ServerConfig {
   return getPrivateConfig()
-}
-
-// HMR handling for Vite dev server
-if (typeof (import.meta as any)?.hot !== 'undefined') {
-  (import.meta as any).hot.accept(() => {
-    console.log('🔄 Server config module hot-reloaded')
-  })
-  
-  // Warn if HMR tries to send to client
-  ;(import.meta as any).hot.on('vite:beforeUpdate', () => {
-    console.warn('⚠️  Server config received HMR update - ensure no client imports!')
-  })
 }
 
 export { config }

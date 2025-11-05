@@ -12,6 +12,7 @@ export const SECURITY_BOUNDARIES = {
     public: [
       'BASE_URL',
       'API_ENDPOINT',
+      'BETTER_AUTH_URL',
       'ENABLE_ANALYTICS',
       'APP_VERSION',
       'NODE_ENV',
@@ -27,7 +28,6 @@ export const SECURITY_BOUNDARIES = {
       'STRIPE_SECRET_KEY',
       'GITHUB_CLIENT_SECRET',
       'GOOGLE_CLIENT_SECRET',
-      'BETTER_AUTH_URL',
       'DB_ENCRYPTION_KEY',
       'LICENSE_KEY',
     ] as const,

@@ -100,6 +100,15 @@ export {
   SelectScrollDownButton,
 } from './components/ui/select';
 export {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from './components/ui/otp-field';
+export type {
+  
+} from './components/ui/otp-field';
+export {
   Sheet,
   SheetTrigger,
   SheetClose,

@@ -6,10 +6,9 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-	OTPField,
-	OTPFieldGroup,
-	OTPFieldInput,
-	OTPFieldSlot,
+	InputOTP,
+	InputOTPGroup,
+	InputOTPSlot,
 } from "@krag/react-ui";
 import { twoFactorActions } from "../lib/auth-client";
 
@@ -43,31 +42,32 @@ export function TwoFactorComponent() {
 	return (
 		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
 			<Card className="w-[350px]">
-				<CardHeader>
-					<CardTitle>TOTP Verification</CardTitle>
-					<CardDescription>
+				<CardHeader className="">
+					<CardTitle className="">TOTP Verification</CardTitle>
+					<CardDescription className="">
 						Enter your 6-digit TOTP code to authenticate
 					</CardDescription>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="">
 					<div className="flex flex-col gap-2 items-center">
-						<OTPField
+						{/* @ts-expect-error - Type definitions issue in dev mode */}
+						<InputOTP
 							maxLength={6}
 							value={otp}
-							onValueChange={(value) => {
+							onChange={(value) => {
 								setOTP(value);
 							}}
 						>
-							<OTPFieldInput />
-							<OTPFieldGroup>
-								<OTPFieldSlot index={0} />
-								<OTPFieldSlot index={1} />
-								<OTPFieldSlot index={2} />
-								<OTPFieldSlot index={3} />
-								<OTPFieldSlot index={4} />
-								<OTPFieldSlot index={5} />
-							</OTPFieldGroup>
-						</OTPField>
+							{/* @ts-expect-error - Type definitions issue in dev mode */}
+							<InputOTPGroup>
+								<InputOTPSlot index={0} />
+								<InputOTPSlot index={1} />
+								<InputOTPSlot index={2} />
+								<InputOTPSlot index={3} />
+								<InputOTPSlot index={4} />
+								<InputOTPSlot index={5} />
+							</InputOTPGroup>
+						</InputOTP>
 						<span className="text-center text-xs">
 							Enter your one-time password.
 						</span>
@@ -109,13 +109,13 @@ export function TwoFactorEmail() {
 	return (
 		<main className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
 			<Card className="w-[350px]">
-				<CardHeader>
-					<CardTitle>Email Verification</CardTitle>
-					<CardDescription>
+				<CardHeader className="">
+					<CardTitle className="">Email Verification</CardTitle>
+					<CardDescription className="">
 						Enter your 6-digit TOTP code to authenticate
 					</CardDescription>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="">
 					{!sentEmail ? (
 						<Button
 							onClick={async () => {
@@ -131,6 +131,8 @@ export function TwoFactorEmail() {
 								});
 							}}
 							className="w-full gap-2"
+							variant="default"
+							size="default"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -147,23 +149,24 @@ export function TwoFactorEmail() {
 						</Button>
 					) : (
 						<div className="flex flex-col gap-2 items-center">
-							<OTPField
+							{/* @ts-expect-error - Type definitions issue in dev mode */}
+							<InputOTP
 								maxLength={6}
 								value={otp}
-								onValueChange={(value) => {
+								onChange={(value) => {
 									setOTP(value);
 								}}
 							>
-								<OTPFieldInput />
-								<OTPFieldGroup>
-									<OTPFieldSlot index={0} />
-									<OTPFieldSlot index={1} />
-									<OTPFieldSlot index={2} />
-									<OTPFieldSlot index={3} />
-									<OTPFieldSlot index={4} />
-									<OTPFieldSlot index={5} />
-								</OTPFieldGroup>
-							</OTPField>
+								{/* @ts-expect-error - Type definitions issue in dev mode */}
+								<InputOTPGroup>
+									<InputOTPSlot index={0} />
+									<InputOTPSlot index={1} />
+									<InputOTPSlot index={2} />
+									<InputOTPSlot index={3} />
+									<InputOTPSlot index={4} />
+									<InputOTPSlot index={5} />
+								</InputOTPGroup>
+							</InputOTP>
 							<span className="text-center text-xs">
 								Enter your one-time password.
 							</span>

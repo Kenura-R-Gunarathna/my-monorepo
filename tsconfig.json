@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "preserve",
     "moduleResolution": "bundler",
     "paths": {
       "@/packages/react-ui/*": ["packages/react-ui/src/*"],
