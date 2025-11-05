@@ -2,7 +2,7 @@
   "name": "dolt-config",
   "version": "1.0.0",
   "dolt": {
-    "version": "1.43.14",
+    "version": "1.76.4",
     "baseUrl": "https://github.com/dolthub/dolt/releases/download",
     "platforms": {
       "win32-x64": {
