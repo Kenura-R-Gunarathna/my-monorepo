@@ -1,9 +1,27 @@
 import { dbConn } from "./index";
-import { permissions, roles, rolePermissions, documents } from './schema';
+import { permissions, roles, rolePermissions, documents, settings } from './schema';
 
 async function seed() {
   console.log('Starting database seed...');
   try {
+    // Check if database is already seeded
+    console.log('🔍 Checking if database is already seeded...');
+    const existingPermissions = await dbConn.select().from(permissions).limit(1);
+    const existingRoles = await dbConn.select().from(roles).limit(1);
+    
+    if (existingPermissions.length > 0 || existingRoles.length > 0) {
+      console.log('\n⚠️  WARNING: Database is already seeded!');
+      console.log('   Found existing data in the database.');
+      console.log('\n   To re-seed the database:');
+      console.log('   1. Manually clear the tables, or');
+      console.log('   2. Drop and recreate the database, or');
+      console.log('   3. Run migrations to reset schema\n');
+      console.log('❌ Seed operation cancelled to prevent duplicate data.\n');
+      return;
+    }
+    
+    console.log('✅ Database is empty, proceeding with seed...\n');
+    
     // Seed Permissions
     console.log('Creating permissions...');
     const permissionData = [
@@ -135,7 +153,155 @@ async function seed() {
     ];
 
     await dbConn.insert(rolePermissions).values(rolePermissionData);
-        console.log('✅ Assigned permissions to roles');
+    console.log('✅ Assigned permissions to roles');
+
+    // Note: No users are created in seed
+    // The first user to sign up will automatically be assigned Super Admin role
+    console.log('\n👤 User Strategy: First signup = Super Admin');
+    console.log('   Subsequent users will get default "User" role (roleId: 5)');
+
+    // Seed Settings
+    console.log('⚙️  Creating application settings...');
+    const settingsData = [
+      // Application Settings
+      {
+        key: 'app.name',
+        value: JSON.stringify('My Monorepo App'),
+        category: 'application',
+        description: 'Application name',
+        isPublic: true,
+      },
+      {
+        key: 'app.version',
+        value: JSON.stringify('1.0.0'),
+        category: 'application',
+        description: 'Application version',
+        isPublic: true,
+      },
+      {
+        key: 'app.description',
+        value: JSON.stringify('A full-stack monorepo application'),
+        category: 'application',
+        description: 'Application description',
+        isPublic: true,
+      },
+      {
+        key: 'app.theme',
+        value: JSON.stringify('light'),
+        category: 'application',
+        description: 'Default application theme',
+        isPublic: true,
+      },
+      
+      // Email Settings
+      {
+        key: 'email.smtp_host',
+        value: JSON.stringify('smtp.example.com'),
+        category: 'email',
+        description: 'SMTP server host',
+        isPublic: false,
+      },
+      {
+        key: 'email.smtp_port',
+        value: JSON.stringify(587),
+        category: 'email',
+        description: 'SMTP server port',
+        isPublic: false,
+      },
+      {
+        key: 'email.from_address',
+        value: JSON.stringify('noreply@example.com'),
+        category: 'email',
+        description: 'Default from email address',
+        isPublic: false,
+      },
+      {
+        key: 'email.from_name',
+        value: JSON.stringify('My Monorepo App'),
+        category: 'email',
+        description: 'Default from name',
+        isPublic: false,
+      },
+      
+      // Security Settings
+      {
+        key: 'security.session_timeout',
+        value: JSON.stringify(3600),
+        category: 'security',
+        description: 'Session timeout in seconds (1 hour)',
+        isPublic: false,
+      },
+      {
+        key: 'security.max_login_attempts',
+        value: JSON.stringify(5),
+        category: 'security',
+        description: 'Maximum login attempts before lockout',
+        isPublic: false,
+      },
+      {
+        key: 'security.password_min_length',
+        value: JSON.stringify(8),
+        category: 'security',
+        description: 'Minimum password length',
+        isPublic: true,
+      },
+      {
+        key: 'security.require_email_verification',
+        value: JSON.stringify(true),
+        category: 'security',
+        description: 'Require email verification for new accounts',
+        isPublic: true,
+      },
+      
+      // Feature Flags
+      {
+        key: 'features.analytics_enabled',
+        value: JSON.stringify(true),
+        category: 'features',
+        description: 'Enable analytics tracking',
+        isPublic: false,
+      },
+      {
+        key: 'features.registration_enabled',
+        value: JSON.stringify(true),
+        category: 'features',
+        description: 'Allow new user registration',
+        isPublic: true,
+      },
+      {
+        key: 'features.maintenance_mode',
+        value: JSON.stringify(false),
+        category: 'features',
+        description: 'Enable maintenance mode',
+        isPublic: true,
+      },
+      
+      // UI Settings
+      {
+        key: 'ui.items_per_page',
+        value: JSON.stringify(20),
+        category: 'ui',
+        description: 'Default items per page in tables',
+        isPublic: true,
+      },
+      {
+        key: 'ui.date_format',
+        value: JSON.stringify('YYYY-MM-DD'),
+        category: 'ui',
+        description: 'Default date format',
+        isPublic: true,
+      },
+      {
+        key: 'ui.time_format',
+        value: JSON.stringify('HH:mm:ss'),
+        category: 'ui',
+        description: 'Default time format',
+        isPublic: true,
+      },
+    ];
+
+    await dbConn.insert(settings).values(settingsData);
+    console.log(`✅ Created ${settingsData.length} settings`);
 
     // Seed Documents (Web-specific data)
     console.log('Creating documents...');
@@ -165,7 +331,18 @@ async function seed() {
     await dbConn.insert(documents).values(documentsData);
     console.log(`✅ Created ${documentsData.length} documents`);
 
-    console.log('✅ Assigned permissions to roles');
+    console.log('\n🎉 Database seed completed successfully!');
+    console.log('\n📊 Summary:');
+    console.log(`   - ${permissionData.length} permissions`);
+    console.log(`   - ${roleData.length} roles`);
+    console.log(`   - ${rolePermissionData.length} role-permission mappings`);
+    console.log(`   - 0 users (will be created on first signup)`);
+    console.log(`   - ${settingsData.length} application settings`);
+    console.log(`   - ${documentsData.length} documents`);
+    console.log('\n👤 First User Setup:');
+    console.log('   ⚠️  The FIRST user to sign up will automatically become Super Admin');
+    console.log('   📝 Go to your app and create your admin account via sign up');
+    console.log('   🔒 All subsequent users will get the default "User" role\n');
 
   } catch (error) {
     console.error('Error seeding database:', error);
